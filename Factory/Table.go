@@ -32,6 +32,7 @@ var RESOURCE_FACTORY = map[string]interface{}{
 
 var FUNCTION_FACTORY = map[string]interface{}{
 	"CommonPanicHandle": Handler.CommonPanicHandle{},
+	"GenerateLinkHandler": Handler.GenerateLinkHandler{},
 }
 var MIDDLEWARE_FACTORY = map[string]interface{}{
 	"CheckTokenMiddleware": Middleware.CheckTokenMiddleware{},

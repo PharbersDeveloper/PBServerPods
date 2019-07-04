@@ -16,6 +16,7 @@ require (
 	github.com/mattn/go-xmpp v0.0.0-20190124093244-6093f50721ed // indirect
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/sirupsen/logrus v1.4.2 // indirect
+	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a
 	golang.org/x/sys v0.0.0-20190626221950-04f50cda93cb // indirect
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
 	gopkg.in/yaml.v2 v2.2.2 // indirect

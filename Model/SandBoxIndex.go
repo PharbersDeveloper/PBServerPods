@@ -10,7 +10,7 @@ import (
 type SandBoxIndex struct {
 	ID					string			`json:"-"`
 	Id_					bson.ObjectId	`json:"-" bson:"_id"`
-	AccountID			string			`json:"-" bson:"account-id"`
+	AccountID			string			`json:"account-id" bson:"account-id"`
 	FileMetaDataIDs		[]string		`json:"-" bson:"file-meta-data-ids"`
 	FileMetaDatum		[]*FileMetaData	`json:"-"`
 }
