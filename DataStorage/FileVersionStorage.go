@@ -1,3 +1,4 @@
+// Package DataStorage
 package DataStorage
 
 import (
@@ -10,12 +11,13 @@ import (
 	"net/http"
 )
 
+// FileVersionStorage 注入MongoDB
 type FileVersionStorage struct {
 	db *BmMongodb.BmMongodb
 }
 
-// NewCitySalesReportStorage initialize parameter
-func (s FileVersionStorage) NewCitySalesReportStorage(args []BmDaemons.BmDaemon) *FileVersionStorage {
+// NewFileVersionStorage initialize parameter
+func (s FileVersionStorage) NewFileVersionStorage(args []BmDaemons.BmDaemon) *FileVersionStorage {
 	mdb := args[0].(*BmMongodb.BmMongodb)
 	return &FileVersionStorage{mdb}
 }
@@ -77,4 +79,10 @@ func (s *FileVersionStorage) Update(c Model.FileVersion) error {
 	}
 
 	return nil
+}
+
+// Count MongoDB Query amount
+func (s *FileVersionStorage) Count(req api2go.Request, c Model.FileVersion) int {
+	r, _ := s.db.Count(req, &c)
+	return r
 }

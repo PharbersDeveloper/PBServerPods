@@ -1,8 +1,11 @@
 package Factory
 
 import (
+	"SandBox/DataStorage"
 	"SandBox/Handler"
 	"SandBox/Middleware"
+	"SandBox/Model"
+	"SandBox/Resource"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
 )
@@ -10,15 +13,21 @@ import (
 type Table struct{}
 
 var MODEL_FACTORY = map[string]interface{}{
-
+	"SandBoxIndex": Model.SandBoxIndex{},
+	"FileMetaData": Model.FileMetaData{},
+	"FileVersion": 	Model.FileVersion{},
 }
 
 var STORAGE_FACTORY = map[string]interface{}{
-
+	"SandBoxIndexStorage": DataStorage.SandBoxIndexStorage{},
+	"FileMetaDataStorage": DataStorage.FileMetaDataStorage{},
+	"FileVersionStorage":  DataStorage.FileVersionStorage{},
 }
 
 var RESOURCE_FACTORY = map[string]interface{}{
-
+	"SandBoxIndexResource": Resource.SandBoxIndexResource{},
+	"FileMetaDataResource": Resource.FileMetaDataResource{},
+	"FileVersionResource": Resource.FileVersionResource{},
 }
 
 var FUNCTION_FACTORY = map[string]interface{}{
