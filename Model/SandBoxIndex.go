@@ -12,7 +12,7 @@ type SandBoxIndex struct {
 	Id_					bson.ObjectId	`json:"-" bson:"_id"`
 	AccountID			string			`json:"account-id" bson:"account-id"`
 	FileMetaDataIDs		[]string		`json:"-" bson:"file-meta-data-ids"`
-	FileMetaDatum		[]*FileMetaData	`json:"-"`
+	FileMetaDatas		[]*FileMetaData	`json:"-"`
 }
 
 
@@ -32,8 +32,8 @@ func (f *SandBoxIndex) SetID(id string) error {
 func (f SandBoxIndex) GetReferences() []jsonapi.Reference {
 	return []jsonapi.Reference{
 		{
-			Type: "fileMetaDatum",
-			Name: "fileMetaDatum",
+			Type: "fileMetaDatas",
+			Name: "fileMetaDatas",
 		},
 	}
 }
@@ -45,8 +45,8 @@ func (f SandBoxIndex) GetReferencedIDs() []jsonapi.ReferenceID {
 	for _, kID := range f.FileMetaDataIDs {
 		result = append(result, jsonapi.ReferenceID{
 			ID:   kID,
-			Type: "fileMetaDatum",
-			Name: "fileMetaDatum",
+			Type: "fileMetaDatas",
+			Name: "fileMetaDatas",
 		})
 	}
 
@@ -57,8 +57,8 @@ func (f SandBoxIndex) GetReferencedIDs() []jsonapi.ReferenceID {
 func (f SandBoxIndex) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 	result := []jsonapi.MarshalIdentifier{}
 
-	for key := range f.FileMetaDataIDs {
-		result = append(result, f.FileMetaDatum[key])
+	for key := range f.FileMetaDatas {
+		result = append(result, f.FileMetaDatas[key])
 	}
 
 	return result
@@ -66,7 +66,7 @@ func (f SandBoxIndex) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 
 // SetToManyReferenceIDs 设置关联ID
 func (f *SandBoxIndex) SetToManyReferenceIDs(name string, IDs []string) error {
-	if name == "fileMetaDatum" {
+	if name == "fileMetaDatas" {
 		f.FileMetaDataIDs = IDs
 		return nil
 	}
@@ -76,7 +76,7 @@ func (f *SandBoxIndex) SetToManyReferenceIDs(name string, IDs []string) error {
 
 // AddToManyIDs
 func (f *SandBoxIndex) AddToManyIDs(name string, IDs []string) error {
-	if name == "fileMetaDatum" {
+	if name == "fileMetaDatas" {
 		f.FileMetaDataIDs = append(f.FileMetaDataIDs, IDs...)
 		return nil
 	}
@@ -97,6 +97,8 @@ func (f *SandBoxIndex) GetConditionsBsonM(parameters map[string][]string) bson.M
 			}
 			r["$in"] = ids
 			rst["_id"] = r
+		case "account-id":
+			rst[k] = v[0]
 		}
 	}
 	return rst

@@ -14,24 +14,57 @@ import (
 
 // FileMetaDataResource
 type FileMetaDataResource struct {
-	FileMetaDataStorage   *DataStorage.FileMetaDataStorage
+	FileMetaDataStorage   	*DataStorage.FileMetaDataStorage
+	SandBoxIndexStorage		*DataStorage.SandBoxIndexStorage
+	GroupMetaDataStorage	*DataStorage.GroupMetaDataStorage
 }
 
 // NewFileMetaDataResource Initialize Parameter And injection Storage Or Resource
 func (s FileMetaDataResource) NewFileMetaDataResource(args []BmDataStorage.BmStorage) *FileMetaDataResource {
 	var dcs *DataStorage.FileMetaDataStorage
+	var sbi *DataStorage.SandBoxIndexStorage
+	var gmds *DataStorage.GroupMetaDataStorage
 	for _, arg := range args {
 		tp := reflect.ValueOf(arg).Elem().Type()
 		if tp.Name() == "FileMetaDataStorage" {
 			dcs = arg.(*DataStorage.FileMetaDataStorage)
+		} else if tp.Name() == "SandBoxIndexStorage" {
+			sbi = arg.(*DataStorage.SandBoxIndexStorage)
+		} else if tp.Name() == "GroupMetaDataStorage" {
+			gmds = arg.(*DataStorage.GroupMetaDataStorage)
 		}
 	}
 	return &FileMetaDataResource{
-		FileMetaDataStorage:    	dcs,
+		FileMetaDataStorage: dcs,
+		SandBoxIndexStorage: sbi,
+		GroupMetaDataStorage: gmds,
 	}
 }
 
 func (s FileMetaDataResource) FindAll(r api2go.Request) (api2go.Responder, error) {
+
+	sandBoxIndicesID, sok := r.QueryParams["sandBoxIndicesID"]
+
+	if sok {
+		modelRootID := sandBoxIndicesID[0]
+
+		modelRoot, err := s.SandBoxIndexStorage.GetOne(modelRootID)
+
+		if err != nil {
+			return  &Response{}, nil
+		}
+
+		r.QueryParams["ids"] = modelRoot.FileMetaDataIDs
+
+		result := s.FileMetaDataStorage.GetAll(r, -1, -1)
+
+		return &Response{Res: result}, nil
+	}
+
+	// TODO : 根据OAuth account id 查询GroupID与Role
+
+	r.QueryParams["group-id"] = []string{"5cb9952d82a4a74375fa41fd"}
+
 	result := s.FileMetaDataStorage.GetAll(r, -1, -1)
 	return &Response{Res: result}, nil
 }
@@ -134,7 +167,6 @@ func (s FileMetaDataResource) Update(obj interface{}, r api2go.Request) (api2go.
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New("Invalid_Instance_Given"), "Invalid Instance Given", http.StatusBadRequest)
 	}
-
 	err := s.FileMetaDataStorage.Update(model)
 	return &Response{Res: model, Code: http.StatusNoContent}, err
 }

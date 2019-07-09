@@ -88,7 +88,7 @@ func (h GenerateLinkHandler) GenerateLink(w http.ResponseWriter, r *http.Request
 
 	uid, _ := uuid.NewRandom()
 
-	link := fmt.Sprint("/", uid.String())
+	link := fmt.Sprint(uid.String())
 	bmlog.StandardLogger().Info(link)
 	result["status"] = "ok"
 	result["link"] = link

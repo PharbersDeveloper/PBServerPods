@@ -46,7 +46,7 @@ func (s SandBoxIndexStorage) GetOne(id string) (Model.SandBoxIndex, error) {
 	if err == nil {
 		return out, nil
 	}
-	errMessage := fmt.Sprintf("CitySalesReport for id %s not found", id)
+	errMessage := fmt.Sprintf("SandBoxIndex for id %s not found", id)
 	return Model.SandBoxIndex{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
 }
 
@@ -65,7 +65,7 @@ func (s *SandBoxIndexStorage) Delete(id string) error {
 	in := Model.SandBoxIndex{ID: id}
 	err := s.db.Delete(&in)
 	if err != nil {
-		return fmt.Errorf("CitySalesReport with id %s does not exist", id)
+		return fmt.Errorf("SandBoxIndex with id %s does not exist", id)
 	}
 
 	return nil
@@ -75,7 +75,7 @@ func (s *SandBoxIndexStorage) Delete(id string) error {
 func (s *SandBoxIndexStorage) Update(c Model.SandBoxIndex) error {
 	err := s.db.Update(&c)
 	if err != nil {
-		return fmt.Errorf("CitySalesReport with id does not exist")
+		return fmt.Errorf("SandBoxIndex with id does not exist")
 	}
 
 	return nil

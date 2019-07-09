@@ -13,21 +13,24 @@ import (
 type Table struct{}
 
 var MODEL_FACTORY = map[string]interface{}{
-	"SandBoxIndex": Model.SandBoxIndex{},
-	"FileMetaData": Model.FileMetaData{},
-	"FileVersion": 	Model.FileVersion{},
+	"SandBoxIndex": 	Model.SandBoxIndex{},
+	"FileMetaData": 	Model.FileMetaData{},
+	"FileVersion": 		Model.FileVersion{},
+	"GroupMetaData": 	Model.GroupMetaData{},
 }
 
 var STORAGE_FACTORY = map[string]interface{}{
-	"SandBoxIndexStorage": DataStorage.SandBoxIndexStorage{},
-	"FileMetaDataStorage": DataStorage.FileMetaDataStorage{},
-	"FileVersionStorage":  DataStorage.FileVersionStorage{},
+	"SandBoxIndexStorage": 		DataStorage.SandBoxIndexStorage{},
+	"FileMetaDataStorage": 		DataStorage.FileMetaDataStorage{},
+	"FileVersionStorage":  		DataStorage.FileVersionStorage{},
+	"GroupMetaDataStorage":		DataStorage.GroupMetaDataStorage{},
 }
 
 var RESOURCE_FACTORY = map[string]interface{}{
-	"SandBoxIndexResource": Resource.SandBoxIndexResource{},
-	"FileMetaDataResource": Resource.FileMetaDataResource{},
-	"FileVersionResource": Resource.FileVersionResource{},
+	"SandBoxIndexResource": 	Resource.SandBoxIndexResource{},
+	"FileMetaDataResource": 	Resource.FileMetaDataResource{},
+	"FileVersionResource": 		Resource.FileVersionResource{},
+	"GroupMetaDataResource":	Resource.GroupMetaDataResource{},
 }
 
 var FUNCTION_FACTORY = map[string]interface{}{

@@ -12,34 +12,34 @@ import (
 	"strconv"
 )
 
-// SandBoxIndexResource
-type SandBoxIndexResource struct {
-	SandBoxIndexStorage   *DataStorage.SandBoxIndexStorage
+// GroupMetaDataResource
+type GroupMetaDataResource struct {
+	GroupMetaDataStorage   *DataStorage.GroupMetaDataStorage
 }
 
-// NewSandBoxIndexResource Initialize Parameter And injection Storage Or Resource
-func (s SandBoxIndexResource) NewSandBoxIndexResource(args []BmDataStorage.BmStorage) *SandBoxIndexResource {
-	var dcs *DataStorage.SandBoxIndexStorage
+// NewGroupMetaDataResource Initialize Parameter And injection Storage Or Resource
+func (s GroupMetaDataResource) NewGroupMetaDataResource(args []BmDataStorage.BmStorage) *GroupMetaDataResource {
+	var dcs *DataStorage.GroupMetaDataStorage
 	for _, arg := range args {
 		tp := reflect.ValueOf(arg).Elem().Type()
-		if tp.Name() == "SandBoxIndexStorage" {
-			dcs = arg.(*DataStorage.SandBoxIndexStorage)
+		if tp.Name() == "GroupMetaDataStorage" {
+			dcs = arg.(*DataStorage.GroupMetaDataStorage)
 		}
 	}
-	return &SandBoxIndexResource{
-		SandBoxIndexStorage:	dcs,
+	return &GroupMetaDataResource{
+		GroupMetaDataStorage:    	dcs,
 	}
 }
 
-func (s SandBoxIndexResource) FindAll(r api2go.Request) (api2go.Responder, error) {
-	result := s.SandBoxIndexStorage.GetAll(r, -1, -1)
+func (s GroupMetaDataResource) FindAll(r api2go.Request) (api2go.Responder, error) {
+	result := s.GroupMetaDataStorage.GetAll(r, -1, -1)
 	return &Response{Res: result}, nil
 }
 
 // PaginatedFindAll can be used to load models in chunks
-func (s SandBoxIndexResource) PaginatedFindAll(r api2go.Request) (uint, api2go.Responder, error) {
+func (s GroupMetaDataResource) PaginatedFindAll(r api2go.Request) (uint, api2go.Responder, error) {
 	var (
-		result                      []Model.SandBoxIndex
+		result                      []Model.GroupMetaData
 		number, size, offset, limit string
 	)
 
@@ -72,7 +72,7 @@ func (s SandBoxIndexResource) PaginatedFindAll(r api2go.Request) (uint, api2go.R
 		}
 
 		start := sizeI * (numberI - 1)
-		for _, iter := range s.SandBoxIndexStorage.GetAll(r, int(start), int(sizeI)) {
+		for _, iter := range s.GroupMetaDataStorage.GetAll(r, int(start), int(sizeI)) {
 			result = append(result, *iter)
 		}
 
@@ -87,21 +87,21 @@ func (s SandBoxIndexResource) PaginatedFindAll(r api2go.Request) (uint, api2go.R
 			return 0, &Response{}, err
 		}
 
-		for _, iter := range s.SandBoxIndexStorage.GetAll(r, int(offsetI), int(limitI)) {
+		for _, iter := range s.GroupMetaDataStorage.GetAll(r, int(offsetI), int(limitI)) {
 			result = append(result, *iter)
 		}
 	}
 
-	in := Model.SandBoxIndex{}
-	count := s.SandBoxIndexStorage.Count(r, in)
+	in := Model.GroupMetaData{}
+	count := s.GroupMetaDataStorage.Count(r, in)
 
 	return uint(count), &Response{Res: result}, nil
 }
 
 // FindOne to satisfy `api2go.DataSource` interface
 // this method should return the model with the given ID, otherwise an error
-func (s SandBoxIndexResource) FindOne(ID string, r api2go.Request) (api2go.Responder, error) {
-	modelRoot, err := s.SandBoxIndexStorage.GetOne(ID)
+func (s GroupMetaDataResource) FindOne(ID string, r api2go.Request) (api2go.Responder, error) {
+	modelRoot, err := s.GroupMetaDataStorage.GetOne(ID)
 	if err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusNotFound)
 	}
@@ -110,31 +110,31 @@ func (s SandBoxIndexResource) FindOne(ID string, r api2go.Request) (api2go.Respo
 }
 
 // Create method to satisfy `api2go.DataSource` interface
-func (s SandBoxIndexResource) Create(obj interface{}, r api2go.Request) (api2go.Responder, error) {
-	model, ok := obj.(Model.SandBoxIndex)
+func (s GroupMetaDataResource) Create(obj interface{}, r api2go.Request) (api2go.Responder, error) {
+	model, ok := obj.(Model.GroupMetaData)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New("Invalid_Instance_Given"), "Invalid Instance Given", http.StatusBadRequest)
 	}
 
-	id := s.SandBoxIndexStorage.Insert(model)
+	id := s.GroupMetaDataStorage.Insert(model)
 	model.ID = id
 
 	return &Response{Res: model, Code: http.StatusCreated}, nil
 }
 
 // Delete to satisfy `api2go.DataSource` interface
-func (s SandBoxIndexResource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
-	err := s.SandBoxIndexStorage.Delete(id)
+func (s GroupMetaDataResource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
+	err := s.GroupMetaDataStorage.Delete(id)
 	return &Response{Code: http.StatusNoContent}, err
 }
 
 //Update stores all changes on the model
-func (s SandBoxIndexResource) Update(obj interface{}, r api2go.Request) (api2go.Responder, error) {
-	model, ok := obj.(Model.SandBoxIndex)
+func (s GroupMetaDataResource) Update(obj interface{}, r api2go.Request) (api2go.Responder, error) {
+	model, ok := obj.(Model.GroupMetaData)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New("Invalid_Instance_Given"), "Invalid Instance Given", http.StatusBadRequest)
 	}
 
-	err := s.SandBoxIndexStorage.Update(model)
+	err := s.GroupMetaDataStorage.Update(model)
 	return &Response{Res: model, Code: http.StatusNoContent}, err
 }

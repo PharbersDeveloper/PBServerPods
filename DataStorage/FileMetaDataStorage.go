@@ -46,7 +46,7 @@ func (s FileMetaDataStorage) GetOne(id string) (Model.FileMetaData, error) {
 	if err == nil {
 		return out, nil
 	}
-	errMessage := fmt.Sprintf("CitySalesReport for id %s not found", id)
+	errMessage := fmt.Sprintf("FileMetaData for id %s not found", id)
 	return Model.FileMetaData{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
 }
 
@@ -65,7 +65,7 @@ func (s *FileMetaDataStorage) Delete(id string) error {
 	in := Model.FileMetaData{ID: id}
 	err := s.db.Delete(&in)
 	if err != nil {
-		return fmt.Errorf("CitySalesReport with id %s does not exist", id)
+		return fmt.Errorf("FileMetaData with id %s does not exist", id)
 	}
 
 	return nil
@@ -75,7 +75,7 @@ func (s *FileMetaDataStorage) Delete(id string) error {
 func (s *FileMetaDataStorage) Update(c Model.FileMetaData) error {
 	err := s.db.Update(&c)
 	if err != nil {
-		return fmt.Errorf("CitySalesReport with id does not exist")
+		return fmt.Errorf("FileMetaData with id does not exist")
 	}
 
 	return nil

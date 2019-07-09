@@ -46,7 +46,7 @@ func (s FileVersionStorage) GetOne(id string) (Model.FileVersion, error) {
 	if err == nil {
 		return out, nil
 	}
-	errMessage := fmt.Sprintf("CitySalesReport for id %s not found", id)
+	errMessage := fmt.Sprintf(" FileVersion for id %s not found", id)
 	return Model.FileVersion{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
 }
 
@@ -65,7 +65,7 @@ func (s *FileVersionStorage) Delete(id string) error {
 	in := Model.FileVersion{ID: id}
 	err := s.db.Delete(&in)
 	if err != nil {
-		return fmt.Errorf("CitySalesReport with id %s does not exist", id)
+		return fmt.Errorf(" FileVersion with id %s does not exist", id)
 	}
 
 	return nil
@@ -75,7 +75,7 @@ func (s *FileVersionStorage) Delete(id string) error {
 func (s *FileVersionStorage) Update(c Model.FileVersion) error {
 	err := s.db.Update(&c)
 	if err != nil {
-		return fmt.Errorf("CitySalesReport with id does not exist")
+		return fmt.Errorf(" FileVersion with id does not exist")
 	}
 
 	return nil

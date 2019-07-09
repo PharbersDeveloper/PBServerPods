@@ -15,8 +15,8 @@ type FileMetaData struct {
 	Extension		string			`json:"extension" bson:"extension"`
 	Created 		int64			`json:"created" bson:"created"`
 	Kind 			string			`json:"kind" bson:"kind"`
-	OwnerID			string			`json:"-" bson:"owner-id"`
-	GroupID			string			`json:"-" bson:"group-id"`
+	OwnerID			string			`json:"owner-id" bson:"owner-id"`
+	GroupID			string			`json:"group-id" bson:"group-id"`
 	Mod 			string			`json:"mod" bson:"mod"`
 	FileVersionIDs	[]string		`json:"-" bson:"file-version-ids"`
 	FileVersions	[]*FileVersion	`json:"-"`
@@ -103,6 +103,10 @@ func (f *FileMetaData) GetConditionsBsonM(parameters map[string][]string) bson.M
 			}
 			r["$in"] = ids
 			rst["_id"] = r
+		case "group-id":
+			rst[k] = v[0]
+		case "kind":
+			rst[k] = v[0]
 		}
 	}
 	return rst
