@@ -8,11 +8,11 @@ import (
 )
 
 type SandBoxIndex struct {
-	ID					string			`json:"-"`
-	Id_					bson.ObjectId	`json:"-" bson:"_id"`
-	AccountID			string			`json:"account-id" bson:"account-id"`
-	FileMetaDataIDs		[]string		`json:"-" bson:"file-meta-data-ids"`
-	FileMetaDatas		[]*FileMetaData	`json:"-"`
+	ID					string				`json:"-"`
+	Id_					bson.ObjectId		`json:"-" bson:"_id"`
+	AccountID			string				`json:"account-id" bson:"account-id"`
+	FileMetaDatumIDs	[]string			`json:"-" bson:"file-meta-data-ids"`
+	FileMetaDatums		[]*FileMetaDatum	`json:"-"`
 }
 
 
@@ -32,7 +32,7 @@ func (f *SandBoxIndex) SetID(id string) error {
 func (f SandBoxIndex) GetReferences() []jsonapi.Reference {
 	return []jsonapi.Reference{
 		{
-			Type: "fileMetaDatas",
+			Type: "fileMetaData",
 			Name: "fileMetaDatas",
 		},
 	}
@@ -42,10 +42,10 @@ func (f SandBoxIndex) GetReferences() []jsonapi.Reference {
 func (f SandBoxIndex) GetReferencedIDs() []jsonapi.ReferenceID {
 	result := []jsonapi.ReferenceID{}
 
-	for _, kID := range f.FileMetaDataIDs {
+	for _, kID := range f.FileMetaDatumIDs {
 		result = append(result, jsonapi.ReferenceID{
 			ID:   kID,
-			Type: "fileMetaDatas",
+			Type: "fileMetaData",
 			Name: "fileMetaDatas",
 		})
 	}
@@ -57,8 +57,8 @@ func (f SandBoxIndex) GetReferencedIDs() []jsonapi.ReferenceID {
 func (f SandBoxIndex) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 	result := []jsonapi.MarshalIdentifier{}
 
-	for key := range f.FileMetaDatas {
-		result = append(result, f.FileMetaDatas[key])
+	for key := range f.FileMetaDatums {
+		result = append(result, f.FileMetaDatums[key])
 	}
 
 	return result
@@ -67,7 +67,7 @@ func (f SandBoxIndex) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 // SetToManyReferenceIDs 设置关联ID
 func (f *SandBoxIndex) SetToManyReferenceIDs(name string, IDs []string) error {
 	if name == "fileMetaDatas" {
-		f.FileMetaDataIDs = IDs
+		f.FileMetaDatumIDs = IDs
 		return nil
 	}
 
@@ -77,7 +77,7 @@ func (f *SandBoxIndex) SetToManyReferenceIDs(name string, IDs []string) error {
 // AddToManyIDs
 func (f *SandBoxIndex) AddToManyIDs(name string, IDs []string) error {
 	if name == "fileMetaDatas" {
-		f.FileMetaDataIDs = append(f.FileMetaDataIDs, IDs...)
+		f.FileMetaDatumIDs = append(f.FileMetaDatumIDs, IDs...)
 		return nil
 	}
 

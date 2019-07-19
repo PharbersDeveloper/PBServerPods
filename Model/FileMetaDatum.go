@@ -1,4 +1,4 @@
-// Package Model FileMetaData
+// Package Model FileMetaDatum
 package Model
 
 import (
@@ -7,8 +7,8 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// FileMetaData 文件源数据
-type FileMetaData struct {
+// FileMetaDatum 文件源数据
+type FileMetaDatum struct {
 	ID				string			`json:"-"`
 	Id_ 			bson.ObjectId	`json:"-" bson:"_id"`
 	Name			string			`json:"name" bson:"name"`
@@ -23,19 +23,19 @@ type FileMetaData struct {
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface
-func (f FileMetaData) GetID() string {
+func (f FileMetaDatum) GetID() string {
 	return f.ID
 }
 
 // SetID to satisfy jsonapi.UnmarshalIdentifier interface
-func (f *FileMetaData) SetID(id string) error {
+func (f *FileMetaDatum) SetID(id string) error {
 	f.ID = id
 	return nil
 }
 
 // GetReferences 设置关联关系详情参考JSONAPI定义的Reference
 // https://jsonapi.org/format/#document-resource-object-relationships
-func (f FileMetaData) GetReferences() []jsonapi.Reference {
+func (f FileMetaDatum) GetReferences() []jsonapi.Reference {
 	return []jsonapi.Reference{
 		{
 			Type: "fileVersions",
@@ -45,7 +45,7 @@ func (f FileMetaData) GetReferences() []jsonapi.Reference {
 }
 
 // GetReferencedIDs 获取关联ID
-func (f FileMetaData) GetReferencedIDs() []jsonapi.ReferenceID {
+func (f FileMetaDatum) GetReferencedIDs() []jsonapi.ReferenceID {
 	result := []jsonapi.ReferenceID{}
 
 	for _, kID := range f.FileVersionIDs {
@@ -60,10 +60,10 @@ func (f FileMetaData) GetReferencedIDs() []jsonapi.ReferenceID {
 }
 
 // GetReferencedStructs 设置Reference内容
-func (f FileMetaData) GetReferencedStructs() []jsonapi.MarshalIdentifier {
+func (f FileMetaDatum) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 	result := []jsonapi.MarshalIdentifier{}
 
-	for key := range f.FileVersionIDs {
+	for key := range f.FileVersions {
 		result = append(result, f.FileVersions[key])
 	}
 	
@@ -71,7 +71,7 @@ func (f FileMetaData) GetReferencedStructs() []jsonapi.MarshalIdentifier {
 }
 
 // SetToManyReferenceIDs 设置关联ID
-func (f *FileMetaData) SetToManyReferenceIDs(name string, IDs []string) error {
+func (f *FileMetaDatum) SetToManyReferenceIDs(name string, IDs []string) error {
 	if name == "fileVersions" {
 		f.FileVersionIDs = IDs
 		return nil
@@ -81,7 +81,7 @@ func (f *FileMetaData) SetToManyReferenceIDs(name string, IDs []string) error {
 }
 
 // AddToManyIDs
-func (f *FileMetaData) AddToManyIDs(name string, IDs []string) error {
+func (f *FileMetaDatum) AddToManyIDs(name string, IDs []string) error {
 	if name == "fileVersions" {
 		f.FileVersionIDs = append(f.FileVersionIDs, IDs...)
 		return nil
@@ -91,7 +91,7 @@ func (f *FileMetaData) AddToManyIDs(name string, IDs []string) error {
 }
 
 // GetConditionsBsonM MongoDB的拼接Condition
-func (f *FileMetaData) GetConditionsBsonM(parameters map[string][]string) bson.M {
+func (f *FileMetaDatum) GetConditionsBsonM(parameters map[string][]string) bson.M {
 	rst := make(map[string]interface{})
 	for k, v := range parameters {
 		switch k {

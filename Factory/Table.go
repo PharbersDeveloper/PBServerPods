@@ -14,21 +14,21 @@ type Table struct{}
 
 var MODEL_FACTORY = map[string]interface{}{
 	"SandBoxIndex": 	Model.SandBoxIndex{},
-	"FileMetaData": 	Model.FileMetaData{},
+	"FileMetaDatum": 	Model.FileMetaDatum{},
 	"FileVersion": 		Model.FileVersion{},
 	"GroupMetaData": 	Model.GroupMetaData{},
 }
 
 var STORAGE_FACTORY = map[string]interface{}{
 	"SandBoxIndexStorage": 		DataStorage.SandBoxIndexStorage{},
-	"FileMetaDataStorage": 		DataStorage.FileMetaDataStorage{},
+	"FileMetaDatumStorage": 		DataStorage.FileMetaDatumStorage{},
 	"FileVersionStorage":  		DataStorage.FileVersionStorage{},
 	"GroupMetaDataStorage":		DataStorage.GroupMetaDataStorage{},
 }
 
 var RESOURCE_FACTORY = map[string]interface{}{
 	"SandBoxIndexResource": 	Resource.SandBoxIndexResource{},
-	"FileMetaDataResource": 	Resource.FileMetaDataResource{},
+	"FileMetaDatumResource": 	Resource.FileMetaDatumResource{},
 	"FileVersionResource": 		Resource.FileVersionResource{},
 	"GroupMetaDataResource":	Resource.GroupMetaDataResource{},
 }
@@ -36,6 +36,7 @@ var RESOURCE_FACTORY = map[string]interface{}{
 var FUNCTION_FACTORY = map[string]interface{}{
 	"CommonPanicHandle": Handler.CommonPanicHandle{},
 	"GenerateLinkHandler": Handler.GenerateLinkHandler{},
+	"GetAccountDetailHandler": Handler.GetAccountDetailHandler{},
 }
 var MIDDLEWARE_FACTORY = map[string]interface{}{
 	"CheckTokenMiddleware": Middleware.CheckTokenMiddleware{},

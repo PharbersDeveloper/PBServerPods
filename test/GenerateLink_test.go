@@ -15,7 +15,7 @@ func TestGenerateLinkForHandler(t *testing.T) {
 	t.Parallel()
 	Convey("GenerateLink to OSS OR HDFS", t, func() {
 		data := map[string]interface{}{
-			"account-id": "5ce6d782aa60bdae2e8656e1",
+			"account-id": "5ce6d72aa60bdae2e8656e1",
 		}
 		gl := Handler.GenerateLinkHandler{}
 

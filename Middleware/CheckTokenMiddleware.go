@@ -71,13 +71,13 @@ func (ctm CheckTokenMiddleware) DoMiddleware(c api2go.APIContexter, w http.Respo
 	// Group下的权限为Admin和Owner才能修改数据，普通用户只能上传文件
 	//mdb := []BmDaemons.BmDaemon{ctm.db}
 	//groupMetaDataStorage := DataStorage.GroupMetaDataStorage{}.NewGroupMetaDataStorage(mdb)
-	//fileMetaDataStorage := DataStorage.FileMetaDataStorage{}.NewFileMetaDataStorage(mdb)
+	//fileMetaDataStorage := DataStorage.FileMetaDatumStorage{}.NewFileMetaDatumStorage(mdb)
 	//req := getApi2goRequest(r, w.Header())
 
 
-	if _, err := ctm.CheckTokenFormFunction(w, r); err != nil {
-		panic(err.Error())
-	}
+	//if _, err := ctm.CheckTokenFormFunction(w, r); err != nil {
+	//	panic(err.Error())
+	//}
 
 	//accountId, aok := r.URL.Query()["account-id"]
 	//groupId, gok := r.URL.Query()["group-id"]

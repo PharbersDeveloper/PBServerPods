@@ -11,21 +11,21 @@ import (
 	"net/http"
 )
 
-// FileMetaDataStorage 注入MongoDB
-type FileMetaDataStorage struct {
+// FileMetaDatumStorage 注入MongoDB
+type FileMetaDatumStorage struct {
 	db *BmMongodb.BmMongodb
 }
 
-// NewFileMetaDataStorage initialize parameter
-func (s FileMetaDataStorage) NewFileMetaDataStorage(args []BmDaemons.BmDaemon) *FileMetaDataStorage {
+// NewFileMetaDatumStorage initialize parameter
+func (s FileMetaDatumStorage) NewFileMetaDatumStorage(args []BmDaemons.BmDaemon) *FileMetaDatumStorage {
 	mdb := args[0].(*BmMongodb.BmMongodb)
-	return &FileMetaDataStorage{mdb}
+	return &FileMetaDatumStorage{mdb}
 }
 
 // GetAll of the model
-func (s FileMetaDataStorage) GetAll(r api2go.Request, skip int, take int) []*Model.FileMetaData {
-	in := Model.FileMetaData{}
-	var out []*Model.FileMetaData
+func (s FileMetaDatumStorage) GetAll(r api2go.Request, skip int, take int) []*Model.FileMetaDatum {
+	in := Model.FileMetaDatum{}
+	var out []*Model.FileMetaDatum
 	err := s.db.FindMulti(r, &in, &out, skip, take)
 	if err == nil {
 		for i, iter := range out {
@@ -39,19 +39,19 @@ func (s FileMetaDataStorage) GetAll(r api2go.Request, skip int, take int) []*Mod
 }
 
 // GetOne tasty model
-func (s FileMetaDataStorage) GetOne(id string) (Model.FileMetaData, error) {
-	in := Model.FileMetaData{ID: id}
-	out := Model.FileMetaData{ID: id}
+func (s FileMetaDatumStorage) GetOne(id string) (Model.FileMetaDatum, error) {
+	in := Model.FileMetaDatum{ID: id}
+	out := Model.FileMetaDatum{ID: id}
 	err := s.db.FindOne(&in, &out)
 	if err == nil {
 		return out, nil
 	}
-	errMessage := fmt.Sprintf("FileMetaData for id %s not found", id)
-	return Model.FileMetaData{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
+	errMessage := fmt.Sprintf("FileMetaDatum for id %s not found", id)
+	return Model.FileMetaDatum{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
 }
 
 // Insert a fresh one
-func (s *FileMetaDataStorage) Insert(c Model.FileMetaData) string {
+func (s *FileMetaDatumStorage) Insert(c Model.FileMetaDatum) string {
 	tmp, err := s.db.InsertBmObject(&c)
 	if err != nil {
 		fmt.Println(err)
@@ -61,28 +61,28 @@ func (s *FileMetaDataStorage) Insert(c Model.FileMetaData) string {
 }
 
 // Delete one :(
-func (s *FileMetaDataStorage) Delete(id string) error {
-	in := Model.FileMetaData{ID: id}
+func (s *FileMetaDatumStorage) Delete(id string) error {
+	in := Model.FileMetaDatum{ID: id}
 	err := s.db.Delete(&in)
 	if err != nil {
-		return fmt.Errorf("FileMetaData with id %s does not exist", id)
+		return fmt.Errorf("FileMetaDatum with id %s does not exist", id)
 	}
 
 	return nil
 }
 
 // Update updates an existing model
-func (s *FileMetaDataStorage) Update(c Model.FileMetaData) error {
+func (s *FileMetaDatumStorage) Update(c Model.FileMetaDatum) error {
 	err := s.db.Update(&c)
 	if err != nil {
-		return fmt.Errorf("FileMetaData with id does not exist")
+		return fmt.Errorf("FileMetaDatum with id does not exist")
 	}
 
 	return nil
 }
 
 // Count MongoDB Query amount
-func (s *FileMetaDataStorage) Count(req api2go.Request, c Model.FileMetaData) int {
+func (s *FileMetaDatumStorage) Count(req api2go.Request, c Model.FileMetaDatum) int {
 	r, _ := s.db.Count(req, &c)
 	return r
 }

@@ -52,5 +52,6 @@ func TestUploadOSS(t *testing.T) {
 				So(err, ShouldEqual, nil)
 			})
 		})
+
 	})
 }

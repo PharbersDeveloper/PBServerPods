@@ -12,36 +12,36 @@ import (
 	"strconv"
 )
 
-// FileMetaDataResource
-type FileMetaDataResource struct {
-	FileMetaDataStorage   	*DataStorage.FileMetaDataStorage
+// FileMetaDatumResource
+type FileMetaDatumResource struct {
+	FileMetaDatumStorage   	*DataStorage.FileMetaDatumStorage
 	SandBoxIndexStorage		*DataStorage.SandBoxIndexStorage
 	GroupMetaDataStorage	*DataStorage.GroupMetaDataStorage
 }
 
-// NewFileMetaDataResource Initialize Parameter And injection Storage Or Resource
-func (s FileMetaDataResource) NewFileMetaDataResource(args []BmDataStorage.BmStorage) *FileMetaDataResource {
-	var dcs *DataStorage.FileMetaDataStorage
+// NewFileMetaDatumResource Initialize Parameter And injection Storage Or Resource
+func (s FileMetaDatumResource) NewFileMetaDatumResource(args []BmDataStorage.BmStorage) *FileMetaDatumResource {
+	var dcs *DataStorage.FileMetaDatumStorage
 	var sbi *DataStorage.SandBoxIndexStorage
 	var gmds *DataStorage.GroupMetaDataStorage
 	for _, arg := range args {
 		tp := reflect.ValueOf(arg).Elem().Type()
-		if tp.Name() == "FileMetaDataStorage" {
-			dcs = arg.(*DataStorage.FileMetaDataStorage)
+		if tp.Name() == "FileMetaDatumStorage" {
+			dcs = arg.(*DataStorage.FileMetaDatumStorage)
 		} else if tp.Name() == "SandBoxIndexStorage" {
 			sbi = arg.(*DataStorage.SandBoxIndexStorage)
 		} else if tp.Name() == "GroupMetaDataStorage" {
 			gmds = arg.(*DataStorage.GroupMetaDataStorage)
 		}
 	}
-	return &FileMetaDataResource{
-		FileMetaDataStorage: dcs,
+	return &FileMetaDatumResource{
+		FileMetaDatumStorage: dcs,
 		SandBoxIndexStorage: sbi,
 		GroupMetaDataStorage: gmds,
 	}
 }
 
-func (s FileMetaDataResource) FindAll(r api2go.Request) (api2go.Responder, error) {
+func (s FileMetaDatumResource) FindAll(r api2go.Request) (api2go.Responder, error) {
 
 	sandBoxIndicesID, sok := r.QueryParams["sandBoxIndicesID"]
 
@@ -54,25 +54,25 @@ func (s FileMetaDataResource) FindAll(r api2go.Request) (api2go.Responder, error
 			return  &Response{}, nil
 		}
 
-		r.QueryParams["ids"] = modelRoot.FileMetaDataIDs
+		r.QueryParams["ids"] = modelRoot.FileMetaDatumIDs
 
-		result := s.FileMetaDataStorage.GetAll(r, -1, -1)
+		result := s.FileMetaDatumStorage.GetAll(r, -1, -1)
 
 		return &Response{Res: result}, nil
 	}
 
 	// TODO : 根据OAuth account id 查询GroupID与Role
 
-	r.QueryParams["group-id"] = []string{"5cb9952d82a4a74375fa41fd"}
+	//r.QueryParams["group-id"] = []string{"5cb9952d82a4a74375fa41fd"}
 
-	result := s.FileMetaDataStorage.GetAll(r, -1, -1)
+	result := s.FileMetaDatumStorage.GetAll(r, -1, -1)
 	return &Response{Res: result}, nil
 }
 
 // PaginatedFindAll can be used to load models in chunks
-func (s FileMetaDataResource) PaginatedFindAll(r api2go.Request) (uint, api2go.Responder, error) {
+func (s FileMetaDatumResource) PaginatedFindAll(r api2go.Request) (uint, api2go.Responder, error) {
 	var (
-		result                      []Model.FileMetaData
+		result                      []Model.FileMetaDatum
 		number, size, offset, limit string
 	)
 
@@ -105,7 +105,7 @@ func (s FileMetaDataResource) PaginatedFindAll(r api2go.Request) (uint, api2go.R
 		}
 
 		start := sizeI * (numberI - 1)
-		for _, iter := range s.FileMetaDataStorage.GetAll(r, int(start), int(sizeI)) {
+		for _, iter := range s.FileMetaDatumStorage.GetAll(r, int(start), int(sizeI)) {
 			result = append(result, *iter)
 		}
 
@@ -120,21 +120,21 @@ func (s FileMetaDataResource) PaginatedFindAll(r api2go.Request) (uint, api2go.R
 			return 0, &Response{}, err
 		}
 
-		for _, iter := range s.FileMetaDataStorage.GetAll(r, int(offsetI), int(limitI)) {
+		for _, iter := range s.FileMetaDatumStorage.GetAll(r, int(offsetI), int(limitI)) {
 			result = append(result, *iter)
 		}
 	}
 
-	in := Model.FileMetaData{}
-	count := s.FileMetaDataStorage.Count(r, in)
+	in := Model.FileMetaDatum{}
+	count := s.FileMetaDatumStorage.Count(r, in)
 
 	return uint(count), &Response{Res: result}, nil
 }
 
 // FindOne to satisfy `api2go.DataSource` interface
 // this method should return the model with the given ID, otherwise an error
-func (s FileMetaDataResource) FindOne(ID string, r api2go.Request) (api2go.Responder, error) {
-	modelRoot, err := s.FileMetaDataStorage.GetOne(ID)
+func (s FileMetaDatumResource) FindOne(ID string, r api2go.Request) (api2go.Responder, error) {
+	modelRoot, err := s.FileMetaDatumStorage.GetOne(ID)
 	if err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusNotFound)
 	}
@@ -143,30 +143,30 @@ func (s FileMetaDataResource) FindOne(ID string, r api2go.Request) (api2go.Respo
 }
 
 // Create method to satisfy `api2go.DataSource` interface
-func (s FileMetaDataResource) Create(obj interface{}, r api2go.Request) (api2go.Responder, error) {
-	model, ok := obj.(Model.FileMetaData)
+func (s FileMetaDatumResource) Create(obj interface{}, r api2go.Request) (api2go.Responder, error) {
+	model, ok := obj.(Model.FileMetaDatum)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New("Invalid_Instance_Given"), "Invalid Instance Given", http.StatusBadRequest)
 	}
 
-	id := s.FileMetaDataStorage.Insert(model)
+	id := s.FileMetaDatumStorage.Insert(model)
 	model.ID = id
 
 	return &Response{Res: model, Code: http.StatusCreated}, nil
 }
 
 // Delete to satisfy `api2go.DataSource` interface
-func (s FileMetaDataResource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
-	err := s.FileMetaDataStorage.Delete(id)
+func (s FileMetaDatumResource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
+	err := s.FileMetaDatumStorage.Delete(id)
 	return &Response{Code: http.StatusNoContent}, err
 }
 
 //Update stores all changes on the model
-func (s FileMetaDataResource) Update(obj interface{}, r api2go.Request) (api2go.Responder, error) {
-	model, ok := obj.(Model.FileMetaData)
+func (s FileMetaDatumResource) Update(obj interface{}, r api2go.Request) (api2go.Responder, error) {
+	model, ok := obj.(Model.FileMetaDatum)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New("Invalid_Instance_Given"), "Invalid Instance Given", http.StatusBadRequest)
 	}
-	err := s.FileMetaDataStorage.Update(model)
+	err := s.FileMetaDatumStorage.Update(model)
 	return &Response{Res: model, Code: http.StatusNoContent}, err
 }

@@ -15,24 +15,24 @@ import (
 // FileVersionResource
 type FileVersionResource struct {
 	FileVersionStorage   	*DataStorage.FileVersionStorage
-	FileMetaDataStorage		*DataStorage.FileMetaDataStorage
+	FileMetaDatumStorage		*DataStorage.FileMetaDatumStorage
 }
 
 // NewFileVersionResource Initialize Parameter And injection Storage Or Resource
 func (s FileVersionResource) NewFileVersionResource(args []BmDataStorage.BmStorage) *FileVersionResource {
 	var dcs *DataStorage.FileVersionStorage
-	var fmds *DataStorage.FileMetaDataStorage
+	var fmds *DataStorage.FileMetaDatumStorage
 	for _, arg := range args {
 		tp := reflect.ValueOf(arg).Elem().Type()
 		if tp.Name() == "FileVersionStorage" {
 			dcs = arg.(*DataStorage.FileVersionStorage)
-		} else if tp.Name() == "FileMetaDataStorage" {
-			fmds = arg.(*DataStorage.FileMetaDataStorage)
+		} else if tp.Name() == "FileMetaDatumStorage" {
+			fmds = arg.(*DataStorage.FileMetaDatumStorage)
 		}
 	}
 	return &FileVersionResource{
 		FileVersionStorage:    	dcs,
-		FileMetaDataStorage: 	fmds,
+		FileMetaDatumStorage: 	fmds,
 	}
 }
 
@@ -43,7 +43,7 @@ func (s FileVersionResource) FindAll(r api2go.Request) (api2go.Responder, error)
 	if sok {
 		modelRootID := fileMetaDatasID[0]
 
-		modelRoot, err := s.FileMetaDataStorage.GetOne(modelRootID)
+		modelRoot, err := s.FileMetaDatumStorage.GetOne(modelRootID)
 
 		if err != nil {
 			return  &Response{}, nil
