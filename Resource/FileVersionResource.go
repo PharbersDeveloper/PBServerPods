@@ -38,10 +38,10 @@ func (s FileVersionResource) NewFileVersionResource(args []BmDataStorage.BmStora
 
 func (s FileVersionResource) FindAll(r api2go.Request) (api2go.Responder, error) {
 
-	fileMetaDatasID, sok := r.QueryParams["fileMetaDatasID"]
+	fileMetaDataID, sok := r.QueryParams["fileMetaDataID"]
 
 	if sok {
-		modelRootID := fileMetaDatasID[0]
+		modelRootID := fileMetaDataID[0]
 
 		modelRoot, err := s.FileMetaDatumStorage.GetOne(modelRootID)
 
