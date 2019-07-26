@@ -18,7 +18,11 @@ import (
 
 type topData struct {
 	Attributes  map[string]interface{}	`json:"attributes"`
-	Relationships relationship `json:"relationships"`
+	Relationships relationship 			`json:"relationships"`
+}
+
+type attributes struct {
+	Name string `json:"name"`
 }
 
 type data struct {
@@ -142,6 +146,15 @@ func (h GetAccountDetailHandler) GetAccountDetail(w http.ResponseWriter, r *http
 	json.Unmarshal(response, &oar)
 
 	result["company-id"] = oar.Data.Relationships.Company.Data.ID
+
+	resource = fmt.Sprint(h.Args[0], "/", version, "/", "companies/", oar.Data.Relationships.Company.Data.ID)
+	mergeURL = strings.Join([]string{scheme, resource}, "")
+	// 转发
+	response = http2.Get(mergeURL, r.Header)
+	oar = oAuthResult{}
+	json.Unmarshal(response, &oar)
+
+	result["company-name"] = oar.Data.Attributes["name"]
 	result["status"] = "ok"
 
 	enc.Encode(result)
