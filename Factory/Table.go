@@ -21,7 +21,7 @@ var MODEL_FACTORY = map[string]interface{}{
 
 var STORAGE_FACTORY = map[string]interface{}{
 	"SandBoxIndexStorage": 		DataStorage.SandBoxIndexStorage{},
-	"FileMetaDatumStorage": 		DataStorage.FileMetaDatumStorage{},
+	"FileMetaDatumStorage": 	DataStorage.FileMetaDatumStorage{},
 	"FileVersionStorage":  		DataStorage.FileVersionStorage{},
 	"GroupMetaDataStorage":		DataStorage.GroupMetaDataStorage{},
 }
@@ -34,12 +34,13 @@ var RESOURCE_FACTORY = map[string]interface{}{
 }
 
 var FUNCTION_FACTORY = map[string]interface{}{
-	"CommonPanicHandle": Handler.CommonPanicHandle{},
-	"GenerateLinkHandler": Handler.GenerateLinkHandler{},
-	"GetAccountDetailHandler": Handler.GetAccountDetailHandler{},
+	"CommonPanicHandle": 		Handler.CommonPanicHandle{},
+	"GenerateLinkHandler": 		Handler.GenerateLinkHandler{},
+	"GetAccountDetailHandler": 	Handler.GetAccountDetailHandler{},
 }
 var MIDDLEWARE_FACTORY = map[string]interface{}{
-	"CheckTokenMiddleware": Middleware.CheckTokenMiddleware{},
+	"CheckTokenMiddleware": 		Middleware.CheckTokenMiddleware{},
+	"CheckPermissionMiddleware": 	Middleware.CheckPermissionMiddleware{},
 }
 
 var DAEMON_FACTORY = map[string]interface{}{

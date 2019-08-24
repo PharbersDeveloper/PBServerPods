@@ -11,7 +11,7 @@ type SandBoxIndex struct {
 	ID					string				`json:"-"`
 	Id_					bson.ObjectId		`json:"-" bson:"_id"`
 	AccountID			string				`json:"account-id" bson:"account-id"`
-	FileMetaDatumIDs	[]string			`json:"-" bson:"file-meta-data-ids"`
+	FileMetaDatumIDs	[]string			`json:"file-meta-data-ids" bson:"file-meta-data-ids"`
 	FileMetaDatums		[]*FileMetaDatum	`json:"-"`
 }
 
