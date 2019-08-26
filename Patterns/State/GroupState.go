@@ -15,6 +15,7 @@ type GroupState struct {
 }
 
 func (gs *GroupState) DoExecute() (interface{}, error) {
+	if len(gs.fileModel.Mod) == 0 { gs.ChangeState(false); return gs.context.state.DoExecute() }
 	mod := gs.fileModel.Mod[4:7]
 	gs.ChangeState(strings.Contains(mod, gs.context.action))
 	return gs.context.state.DoExecute()

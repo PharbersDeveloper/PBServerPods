@@ -39,8 +39,8 @@ var FUNCTION_FACTORY = map[string]interface{}{
 	"GetAccountDetailHandler": 	Handler.GetAccountDetailHandler{},
 }
 var MIDDLEWARE_FACTORY = map[string]interface{}{
-	"CheckTokenMiddleware": 		Middleware.CheckTokenMiddleware{},
-	"CheckPermissionMiddleware": 	Middleware.CheckPermissionMiddleware{},
+	"CheckTokenMiddleware": Middleware.CheckTokenMiddleware{},
+	"CheckPermissionMiddleware": Middleware.CheckPermissionMiddleware{},
 }
 
 var DAEMON_FACTORY = map[string]interface{}{

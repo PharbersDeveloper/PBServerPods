@@ -7,6 +7,7 @@ import (
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
+	"github.com/alfredyang1986/blackmirror/bmlog"
 	"github.com/manyminds/api2go"
 	"io/ioutil"
 	"net/http"
@@ -20,10 +21,6 @@ type CheckTokenMiddleware struct {
 	Args []string
 	db         *BmMongodb.BmMongodb
 	rd   *BmRedis.BmRedis
-}
-
-type roleResult struct {
-	Data map[string]interface{}	`json:"data"`
 }
 
 type result struct {
@@ -68,67 +65,10 @@ func (ctm CheckTokenMiddleware) NewCheckTokenMiddleware(args ...interface{}) Che
 }
 
 func (ctm CheckTokenMiddleware) DoMiddleware(c api2go.APIContexter, w http.ResponseWriter, r *http.Request) {
-	// Group下的权限为Admin和Owner才能修改数据，普通用户只能上传文件
-	//mdb := []BmDaemons.BmDaemon{ctm.db}
-	//groupMetaDataStorage := DataStorage.GroupMetaDataStorage{}.NewGroupMetaDataStorage(mdb)
-	//fileMetaDataStorage := DataStorage.FileMetaDatumStorage{}.NewFileMetaDatumStorage(mdb)
-	//req := getApi2goRequest(r, w.Header())
+	bmlog.StandardLogger().Info("Token Middleware")
 
-
-	//if _, err := ctm.CheckTokenFormFunction(w, r); err != nil {
-	//	panic(err.Error())
-	//}
-
-	//accountId, aok := r.URL.Query()["account-id"]
-	//groupId, gok := r.URL.Query()["group-id"]
-	//
-	//if r.Method == "PATCH" && aok && gok {
-	//	req.QueryParams["account-id"] = accountId
-	//	req.QueryParams["group-id"] = groupId
-	//	gmd := groupMetaDataStorage.GetAll(req, -1, -1)
-	//
-	//	// 拼接转发的URL
-	//	scheme := "http://"
-	//	if r.TLS != nil {
-	//		scheme = "https://"
-	//	}
-	//
-	//	var (
-	//		roleId string
-	//		attributes map[string]interface{}
-	//	)
-	//
-	//	if len(gmd) > 0 {
-	//		roleId = gmd[0].RoleID
-	//		version := strings.Split(r.URL.Path, "/")[1]
-	//		resource := fmt.Sprint(ctm.Args[0], "/", version, "/", "roles/", roleId)
-	//		mergeURL := strings.Join([]string{scheme, resource}, "")
-	//
-	//		// 转发
-	//		response := http2.Get(mergeURL, r.Header)
-	//		result := roleResult{}
-	//		json.Unmarshal(response, &result)
-	//		attributes = result.Data["attributes"].(map[string]interface{})
-	//	}
-	//
-	//	req.QueryParams = map[string][]string{}
-	//
-	//	req.QueryParams["owner-id"] = accountId
-	//
-	//	fmd := fileMetaDataStorage.GetAll(req, -1, -1)
-	//
-	//	level, lok := attributes["level"]
-	//	if (lok && level.(float64) != 1) || (len(fmd) > 0 && fmd[0].OwnerID != accountId[0]){
-	//		panic("权限不足")
-	//	}
-	//}
-}
-
-func getApi2goRequest(r *http.Request, header http.Header) api2go.Request{
-	return api2go.Request{
-		PlainRequest: r,
-		Header: header,
-		QueryParams: map[string][]string{},
+	if _, err := ctm.CheckTokenFormFunction(w, r); err != nil {
+		panic(err.Error())
 	}
 }
 

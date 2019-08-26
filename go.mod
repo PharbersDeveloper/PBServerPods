@@ -16,11 +16,14 @@ require (
 	github.com/manyminds/api2go v0.0.0-20190324173508-d4f7fae65b4b
 	github.com/mattn/go-xmpp v0.0.0-20190124093244-6093f50721ed // indirect
 	github.com/mitchellh/mapstructure v1.1.2
+	github.com/onsi/ginkgo v1.9.0 // indirect
+	github.com/onsi/gomega v1.6.0 // indirect
 	github.com/sirupsen/logrus v1.4.2 // indirect
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a
 	golang.org/x/sys v0.0.0-20190626221950-04f50cda93cb // indirect
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
 	golang.org/x/tools v0.0.0-20190328211700-ab21143f2384
+	gopkg.in/guregu/null.v2 v2.1.2 // indirect
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
 	gopkg.in/yaml.v2 v2.2.2 // indirect
 )

@@ -15,6 +15,7 @@ type OtherState struct {
 }
 
 func (os *OtherState) DoExecute() (interface{}, error) {
+	if len(os.fileModel.Mod) == 0 { os.ChangeState(false); return os.context.state.DoExecute() }
 	mod := os.fileModel.Mod[7:]
 	os.ChangeState(strings.Contains(mod, os.context.action))
 	return os.context.state.DoExecute()
