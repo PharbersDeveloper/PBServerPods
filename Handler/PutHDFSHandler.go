@@ -2,6 +2,7 @@
 package Handler
 
 import (
+	"encoding/json"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
@@ -9,8 +10,11 @@ import (
 	"github.com/elodina/go-avro"
 	kafkaAvro "github.com/elodina/go-kafka-avro"
 	"github.com/julienschmidt/httprouter"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"reflect"
+	"strings"
 )
 
 type PutHDFSHandler struct {
@@ -56,17 +60,20 @@ func (h PutHDFSHandler) NewPutHDFSHandler(args ...interface{}) PutHDFSHandler {
 }
 
 func (h PutHDFSHandler) PutHDFS(w http.ResponseWriter, r *http.Request, _ httprouter.Params) int {
-	rawMetricsSchema := `{"type":"record","name":"ListeningSandBoxOss","namespace":"com.pharbers.kafka.schema","fields":[{"name":"Path","type":"string"}]}`
-	schemaRepositoryUrl := "http://pharbers.com:8081"
+
+	params := map[string]string{}
+	data, _ := ioutil.ReadFile(os.Getenv("HDFSAVROCONF"))
+	rawMetricsSchema := strings.ReplaceAll(strings.ReplaceAll(string(data), "\n", ""), " ", "")
+	bkc, _ := bmkafka.GetConfigInstance()
+	res, _ := ioutil.ReadAll(r.Body)
+	_ = json.Unmarshal(res, &params)
 
 	schema, _ := avro.ParseSchema(rawMetricsSchema)
 	record := avro.NewGenericRecord(schema)
-	record.Set("Path", "f172b80b-9d13-45b1-b1e0-050ef6e0eeb7/1567682024667")
+	record.Set("Path", params["Path"])
 
-	encoder := kafkaAvro.NewKafkaAvroEncoder(schemaRepositoryUrl)
+	encoder := kafkaAvro.NewKafkaAvroEncoder(bkc.SchemaRepositoryUrl)
 	recordByteArr, _ := encoder.Encode(record)
-
-	bkc, _ := bmkafka.GetConfigInstance()
 
 	topic := "ListeningSandBoxOss"
 	bkc.Produce(&topic, recordByteArr)

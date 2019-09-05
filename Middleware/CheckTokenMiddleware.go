@@ -67,9 +67,9 @@ func (ctm CheckTokenMiddleware) NewCheckTokenMiddleware(args ...interface{}) Che
 
 func (ctm CheckTokenMiddleware) DoMiddleware(c api2go.APIContexter, w http.ResponseWriter, r *http.Request) {
 	bmlog.StandardLogger().Info("Token Middleware")
-	if _, err := ctm.CheckTokenFormFunction(w, r); err != nil {
-		panic(err.Error())
-	}
+	//if _, err := ctm.CheckTokenFormFunction(w, r); err != nil {
+	//	panic(err.Error())
+	//}
 }
 
 func (ctm CheckTokenMiddleware) CheckTokenFormFunction(w http.ResponseWriter, r *http.Request) (rst *result, err error) {

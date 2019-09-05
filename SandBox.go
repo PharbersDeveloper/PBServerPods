@@ -20,6 +20,7 @@ func main() {
 	_ = os.Setenv(logEnv, fmt.Sprint(logPath, "/SandBox/logs/Log.log"))
 
 	os.Setenv("BM_KAFKA_CONF_HOME", fmt.Sprint(os.Getenv("BM_KAFKA_CONF_HOME"), "SandBoxServiceDeploy/dev-config/resource/kafkaconfig.json"))
+	os.Setenv("HDFSAVROCONF", fmt.Sprint("/Users/qianpeng/GitHub/go/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/dev-config/resource/hdfs-avro.json"))
 
 	version := "v0"
 	prodEnv := "SANDBOX_HOME"
