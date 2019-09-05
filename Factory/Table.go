@@ -37,6 +37,7 @@ var FUNCTION_FACTORY = map[string]interface{}{
 	"CommonPanicHandle": 		Handler.CommonPanicHandle{},
 	"GenerateLinkHandler": 		Handler.GenerateLinkHandler{},
 	"GetAccountDetailHandler": 	Handler.GetAccountDetailHandler{},
+	"PutHDFSHandler": 	Handler.PutHDFSHandler{},
 }
 var MIDDLEWARE_FACTORY = map[string]interface{}{
 	"CheckTokenMiddleware": Middleware.CheckTokenMiddleware{},

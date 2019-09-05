@@ -4,22 +4,23 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"reflect"
+	"strings"
+
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
 	"github.com/alfredyang1986/blackmirror/bmlog"
 	"github.com/manyminds/api2go"
-	"io/ioutil"
-	"net/http"
-	"reflect"
-	"strings"
 )
 
 var CheckToken CheckTokenMiddleware
 
 type CheckTokenMiddleware struct {
 	Args []string
-	db         *BmMongodb.BmMongodb
+	db   *BmMongodb.BmMongodb
 	rd   *BmRedis.BmRedis
 }
 
@@ -66,7 +67,6 @@ func (ctm CheckTokenMiddleware) NewCheckTokenMiddleware(args ...interface{}) Che
 
 func (ctm CheckTokenMiddleware) DoMiddleware(c api2go.APIContexter, w http.ResponseWriter, r *http.Request) {
 	bmlog.StandardLogger().Info("Token Middleware")
-
 	if _, err := ctm.CheckTokenFormFunction(w, r); err != nil {
 		panic(err.Error())
 	}

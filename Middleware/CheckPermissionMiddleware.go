@@ -1,15 +1,14 @@
 package Middleware
 
 import (
-	"SandBox/Patterns/State"
-	"encoding/json"
+	"net/http"
+	"reflect"
+
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
 	"github.com/alfredyang1986/blackmirror/bmlog"
 	"github.com/manyminds/api2go"
-	"net/http"
-	"reflect"
 )
 
 type CheckPermissionMiddleware struct {
@@ -45,24 +44,24 @@ func (cpm CheckPermissionMiddleware) NewCheckPermissionMiddleware(args ...interf
 	}
 	return CheckPermissionMiddleware{
 		Args: ag,
-		db: m,
-		rd: r,
+		db:   m,
+		rd:   r,
 	}
 }
 
 func (cpm CheckPermissionMiddleware) DoMiddleware(c api2go.APIContexter, w http.ResponseWriter, r *http.Request) {
-	if len(r.Header.Get("Target")) > 0 {
-		bmlog.StandardLogger().Info(r.Header.Get("Action"))
-		bmlog.StandardLogger().Info(r.Header.Get("Who"))
-		bmlog.StandardLogger().Info(r.Header.Get("Target"))
-		who := map[string]string {}
-		context := State.AuthContext{}
-		err :=	json.Unmarshal([]byte(r.Header.Get("Who")), &who)
-		if err != nil { panic(err.Error()) }
-		context.NewAuthContext(r.Header.Get("Target"), r.Header.Get("Action"), who,  cpm.db, cpm.rd)
-		_, err = context.DoExecute()
-		if err != nil { panic(err.Error()) }
-	}
-
+	//	if len(r.Header.Get("Target")) > 0 {
+	//		bmlog.StandardLogger().Info(r.Header.Get("Action"))
+	//		bmlog.StandardLogger().Info(r.Header.Get("Who"))
+	//		bmlog.StandardLogger().Info(r.Header.Get("Target"))
+	//		who := map[string]string {}
+	//		context := State.AuthContext{}
+	//		err :=	json.Unmarshal([]byte(r.Header.Get("Who")), &who)
+	//		if err != nil { panic(err.Error()) }
+	//		context.NewAuthContext(r.Header.Get("Target"), r.Header.Get("Action"), who,  cpm.db, cpm.rd)
+	//		_, err = context.DoExecute()
+	//		if err != nil { panic(err.Error()) }
+	//	}
+	//
 	bmlog.StandardLogger().Info("Permission Middleware")
 }

@@ -16,6 +16,7 @@ type FileMetaDatum struct {
 	Created 		int64			`json:"created" bson:"created"`
 	Kind 			string			`json:"kind" bson:"kind"`
 	OwnerID			string			`json:"owner-id" bson:"owner-id"`
+	OwnerName		string			`json:"owner-name" bson:"owner-name"`
 	GroupID			string			`json:"group-id" bson:"group-id"`
 	Mod 			string			`json:"mod" bson:"mod"`
 	FileVersionIDs	[]string		`json:"-" bson:"file-version-ids"`

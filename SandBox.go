@@ -19,6 +19,8 @@ func main() {
 	logPath := os.Getenv(logEnv)
 	_ = os.Setenv(logEnv, fmt.Sprint(logPath, "/SandBox/logs/Log.log"))
 
+	os.Setenv("BM_KAFKA_CONF_HOME", fmt.Sprint(os.Getenv("BM_KAFKA_CONF_HOME"), "SandBoxServiceDeploy/dev-config/resource/kafkaconfig.json"))
+
 	version := "v0"
 	prodEnv := "SANDBOX_HOME"
 	bmlog.StandardLogger().Info("SandBoxPods begins, version = ", version)
