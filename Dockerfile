@@ -8,8 +8,10 @@ RUN apk add --no-cache git gcc musl-dev mercurial bash gcc g++ make pkgconfig op
 
 # 设置工程配置文件的环境变量
 ENV PKG_CONFIG_PATH /usr/lib/pkgconfig
-ENV UCB_HOME $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config
+ENV SANDBOX_HOME $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config
 ENV BM_KAFKA_CONF_HOME $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource/kafkaconfig.json
+ENV HDFSAVROCONF $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource/hdfs-avro.json
+ENV GOPROXY=https://goproxy.io
 ENV GO111MODULE on
 
 ENV LOGGER_USER "Alex"
