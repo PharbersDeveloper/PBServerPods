@@ -32,6 +32,12 @@ func (s SandBoxIndexResource) NewSandBoxIndexResource(args []BmDataStorage.BmSto
 }
 
 func (s SandBoxIndexResource) FindAll(r api2go.Request) (api2go.Responder, error) {
+	accountId, ok := r.QueryParams["accountId"]
+	if ok {
+		modelRootID := accountId[0]
+		r.QueryParams["account-id"] = []string{modelRootID}
+	}
+
 	result := s.SandBoxIndexStorage.GetAll(r, -1, -1)
 	return &Response{Res: result}, nil
 }
