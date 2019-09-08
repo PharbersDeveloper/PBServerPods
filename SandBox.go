@@ -22,6 +22,8 @@ func main() {
 	// 本地调试打开
 	//os.Setenv("BM_KAFKA_CONF_HOME", fmt.Sprint(os.Getenv("BM_KAFKA_CONF_HOME"), "SandBoxServiceDeploy/dev-config/resource/kafkaconfig.json"))
 	//os.Setenv("HDFSAVROCONF", fmt.Sprint("/Users/qianpeng/GitHub/go/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/dev-config/resource/hdfs-avro.json"))
+	os.Setenv("EMAIL_TEMPLATE", fmt.Sprint("/Users/qianpeng/GitHub/go/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/dev-config/resource/email-template.txt"))
+
 
 	version := "v0"
 	prodEnv := "SANDBOX_HOME"

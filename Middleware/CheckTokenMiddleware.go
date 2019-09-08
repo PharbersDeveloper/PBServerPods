@@ -1,10 +1,10 @@
 package Middleware
 
 import (
+	http2 "SandBox/Util/http"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"reflect"
 	"strings"
@@ -84,24 +84,25 @@ func (ctm CheckTokenMiddleware) CheckTokenFormFunction(w http.ResponseWriter, r 
 	resource := fmt.Sprint(ctm.Args[0], "/"+version+"/", "TokenValidation")
 	mergeURL := strings.Join([]string{scheme, resource}, "")
 
+	response :=http2.Post(mergeURL,r.Header, nil)
 	// 转发
-	client := &http.Client{}
-	req, _ := http.NewRequest("POST", mergeURL, nil)
-	for k, v := range r.Header {
-		req.Header.Add(k, v[0])
-	}
-	response, err := client.Do(req)
-	if err != nil {
-		return
-	}
+	//client := &http.Client{}
+	//req, _ := http.NewRequest("POST", mergeURL, nil)
+	//for k, v := range r.Header {
+	//	req.Header.Add(k, v[0])
+	//}
+	//response, err := client.Do(req)
+	//if err != nil {
+	//	return
+	//}
 
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return
-	}
+	//body, err := ioutil.ReadAll(response.Body)
+	//if err != nil {
+	//	return
+	//}
 
 	temp := result{}
-	err = json.Unmarshal(body, &temp)
+	err = json.Unmarshal(response, &temp)
 	if err != nil {
 		return
 	}

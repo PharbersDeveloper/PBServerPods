@@ -2,18 +2,18 @@
 package Handler
 
 import (
+	http2 "SandBox/Util/http"
 	"encoding/json"
+	"fmt"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
-	"github.com/alfredyang1986/blackmirror/bmkafka"
-	"github.com/elodina/go-avro"
-	kafkaAvro "github.com/elodina/go-kafka-avro"
 	"github.com/julienschmidt/httprouter"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"reflect"
+	"regexp"
 	"strings"
 )
 
@@ -60,23 +60,41 @@ func (h PutHDFSHandler) NewPutHDFSHandler(args ...interface{}) PutHDFSHandler {
 }
 
 func (h PutHDFSHandler) PutHDFS(w http.ResponseWriter, r *http.Request, _ httprouter.Params) int {
-
 	params := map[string]string{}
-	data, _ := ioutil.ReadFile(os.Getenv("HDFSAVROCONF"))
-	rawMetricsSchema := strings.ReplaceAll(strings.ReplaceAll(string(data), "\n", ""), " ", "")
-	bkc, _ := bmkafka.GetConfigInstance()
+	//data, _ := ioutil.ReadFile(os.Getenv("HDFSAVROCONF"))
+	//rawMetricsSchema := strings.ReplaceAll(strings.ReplaceAll(string(data), "\n", ""), " ", "")
+	//bkc, _ := bmkafka.GetConfigInstance()
 	res, _ := ioutil.ReadAll(r.Body)
 	_ = json.Unmarshal(res, &params)
+	//
+	//schema, _ := avro.ParseSchema(rawMetricsSchema)
+	//record := avro.NewGenericRecord(schema)
+	//record.Set("Path", params["Path"])
+	//
+	//encoder := kafkaAvro.NewKafkaAvroEncoder(bkc.SchemaRepositoryUrl)
+	//recordByteArr, _ := encoder.Encode(record)
+	//
+	//topic := "ListeningSandBoxOss"
+	//bkc.Produce(&topic, recordByteArr)
 
-	schema, _ := avro.ParseSchema(rawMetricsSchema)
-	record := avro.NewGenericRecord(schema)
-	record.Set("Path", params["Path"])
+	url := h.Args[0]
+	emails := strings.Split(h.Args[1], "#")
+	b, _ := ioutil.ReadFile(os.Getenv("EMAIL_TEMPLATE"))
+	reg := regexp.MustCompile("\t|\r|\n")
+	content := reg.ReplaceAllString(strings.ReplaceAll(string(b), "**HDFSPATH**", params["Path"]), "")
 
-	encoder := kafkaAvro.NewKafkaAvroEncoder(bkc.SchemaRepositoryUrl)
-	recordByteArr, _ := encoder.Encode(record)
-
-	topic := "ListeningSandBoxOss"
-	bkc.Produce(&topic, recordByteArr)
+	for _, e := range emails {
+		fmt.Println(url)
+		fmt.Println(e)
+		fmt.Println(content)
+		body := strings.NewReader(`{
+			"email": "`+ e +`",
+			"subject": "SandBox文件上传记录",
+			"content": "`+ content +`",
+			"content-type": "text/html; charset=UTF-8"
+		}`)
+		http2.Post(url, r.Header, body)
+	}
 
 	return 0
 }
