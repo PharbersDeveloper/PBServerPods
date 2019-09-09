@@ -20,7 +20,7 @@ ENV LOGGER_DEBUG "true"
 ENV LOG_PATH $GOPATH/logs
 
 #LABEL
-LABEL SandBoxPods.version="0.0.1" maintainer="Alex"
+LABEL SandBoxPods.version="0.1.0" maintainer="Alex"
 
 
 # 下载kafka
