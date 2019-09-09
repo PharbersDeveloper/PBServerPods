@@ -8,6 +8,9 @@ import (
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
+	"github.com/alfredyang1986/blackmirror/bmkafka"
+	"github.com/elodina/go-avro"
+	kafkaAvro "github.com/elodina/go-kafka-avro"
 	"github.com/julienschmidt/httprouter"
 	"io/ioutil"
 	"net/http"
@@ -61,27 +64,31 @@ func (h PutHDFSHandler) NewPutHDFSHandler(args ...interface{}) PutHDFSHandler {
 
 func (h PutHDFSHandler) PutHDFS(w http.ResponseWriter, r *http.Request, _ httprouter.Params) int {
 	params := map[string]string{}
-	//data, _ := ioutil.ReadFile(os.Getenv("HDFSAVROCONF"))
-	//rawMetricsSchema := strings.ReplaceAll(strings.ReplaceAll(string(data), "\n", ""), " ", "")
-	//bkc, _ := bmkafka.GetConfigInstance()
+	data, _ := ioutil.ReadFile(os.Getenv("HDFSAVROCONF"))
+	rawMetricsSchema := strings.ReplaceAll(strings.ReplaceAll(string(data), "\n", ""), " ", "")
+	bkc, _ := bmkafka.GetConfigInstance()
 	res, _ := ioutil.ReadAll(r.Body)
 	_ = json.Unmarshal(res, &params)
-	//
-	//schema, _ := avro.ParseSchema(rawMetricsSchema)
-	//record := avro.NewGenericRecord(schema)
-	//record.Set("Path", params["Path"])
-	//
-	//encoder := kafkaAvro.NewKafkaAvroEncoder(bkc.SchemaRepositoryUrl)
-	//recordByteArr, _ := encoder.Encode(record)
-	//
-	//topic := "ListeningSandBoxOss"
-	//bkc.Produce(&topic, recordByteArr)
+	schema, _ := avro.ParseSchema(rawMetricsSchema)
+	record := avro.NewGenericRecord(schema)
+	record.Set("Path", params["path"])
+
+	encoder := kafkaAvro.NewKafkaAvroEncoder(bkc.SchemaRepositoryUrl)
+	recordByteArr, _ := encoder.Encode(record)
+
+	topic := "ListeningSandBoxOss"
+	bkc.Produce(&topic, recordByteArr)
 
 	url := h.Args[0]
 	emails := strings.Split(h.Args[1], "#")
 	b, _ := ioutil.ReadFile(os.Getenv("EMAIL_TEMPLATE"))
 	reg := regexp.MustCompile("\t|\r|\n")
-	content := reg.ReplaceAllString(strings.ReplaceAll(string(b), "**HDFSPATH**", params["Path"]), "")
+	userName := strings.ReplaceAll(string(b), "**UserName**", params["userName"])
+    fileName := strings.ReplaceAll(userName, "**FileName**", params["uploadFileName"])
+	fileType := strings.ReplaceAll(fileName, "**FileType**", params["uploadFileType"])
+	uploadTime := strings.ReplaceAll(fileType, "**UploadTime**", params["uploadTime"])
+	html := strings.ReplaceAll(uploadTime, "**HDFSPATH**", params["path"])
+	content := reg.ReplaceAllString(html, "")
 
 	for _, e := range emails {
 		fmt.Println(url)

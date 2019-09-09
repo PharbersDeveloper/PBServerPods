@@ -11,6 +11,7 @@ ENV PKG_CONFIG_PATH /usr/lib/pkgconfig
 ENV SANDBOX_HOME $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config
 ENV BM_KAFKA_CONF_HOME $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource/kafkaconfig.json
 ENV HDFSAVROCONF $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource/hdfs-avro.json
+ENV EMAIL_TEMPLATE $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource/email-template.txt
 ENV GOPROXY=https://goproxy.io
 ENV GO111MODULE on
 
