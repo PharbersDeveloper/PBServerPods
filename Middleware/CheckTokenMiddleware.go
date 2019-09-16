@@ -8,11 +8,10 @@ import (
 	"net/http"
 	"reflect"
 	"strings"
-
+	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
-	"github.com/alfredyang1986/blackmirror/bmlog"
 	"github.com/manyminds/api2go"
 )
 
@@ -66,7 +65,7 @@ func (ctm CheckTokenMiddleware) NewCheckTokenMiddleware(args ...interface{}) Che
 }
 
 func (ctm CheckTokenMiddleware) DoMiddleware(c api2go.APIContexter, w http.ResponseWriter, r *http.Request) {
-	bmlog.StandardLogger().Info("Token Middleware")
+	log.NewLogicLoggerBuilder().Build().Info("Token Middleware")
 	if _, err := ctm.CheckTokenFormFunction(w, r); err != nil {
 		panic(err.Error())
 	}
@@ -85,21 +84,6 @@ func (ctm CheckTokenMiddleware) CheckTokenFormFunction(w http.ResponseWriter, r 
 	mergeURL := strings.Join([]string{scheme, resource}, "")
 
 	response :=http2.Post(mergeURL,r.Header, nil)
-	// 转发
-	//client := &http.Client{}
-	//req, _ := http.NewRequest("POST", mergeURL, nil)
-	//for k, v := range r.Header {
-	//	req.Header.Add(k, v[0])
-	//}
-	//response, err := client.Do(req)
-	//if err != nil {
-	//	return
-	//}
-
-	//body, err := ioutil.ReadAll(response.Body)
-	//if err != nil {
-	//	return
-	//}
 
 	temp := result{}
 	err = json.Unmarshal(response, &temp)

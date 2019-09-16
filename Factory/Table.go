@@ -16,21 +16,18 @@ var MODEL_FACTORY = map[string]interface{}{
 	"SandBoxIndex": 	Model.SandBoxIndex{},
 	"FileMetaDatum": 	Model.FileMetaDatum{},
 	"FileVersion": 		Model.FileVersion{},
-	"GroupMetaData": 	Model.GroupMetaData{},
 }
 
 var STORAGE_FACTORY = map[string]interface{}{
 	"SandBoxIndexStorage": 		DataStorage.SandBoxIndexStorage{},
 	"FileMetaDatumStorage": 	DataStorage.FileMetaDatumStorage{},
 	"FileVersionStorage":  		DataStorage.FileVersionStorage{},
-	"GroupMetaDataStorage":		DataStorage.GroupMetaDataStorage{},
 }
 
 var RESOURCE_FACTORY = map[string]interface{}{
 	"SandBoxIndexResource": 	Resource.SandBoxIndexResource{},
 	"FileMetaDatumResource": 	Resource.FileMetaDatumResource{},
 	"FileVersionResource": 		Resource.FileVersionResource{},
-	"GroupMetaDataResource":	Resource.GroupMetaDataResource{},
 }
 
 var FUNCTION_FACTORY = map[string]interface{}{

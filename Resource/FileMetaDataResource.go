@@ -16,28 +16,23 @@ import (
 type FileMetaDatumResource struct {
 	FileMetaDatumStorage   	*DataStorage.FileMetaDatumStorage
 	SandBoxIndexStorage		*DataStorage.SandBoxIndexStorage
-	GroupMetaDataStorage	*DataStorage.GroupMetaDataStorage
 }
 
 // NewFileMetaDatumResource Initialize Parameter And injection Storage Or Resource
 func (s FileMetaDatumResource) NewFileMetaDatumResource(args []BmDataStorage.BmStorage) *FileMetaDatumResource {
 	var dcs *DataStorage.FileMetaDatumStorage
 	var sbi *DataStorage.SandBoxIndexStorage
-	var gmds *DataStorage.GroupMetaDataStorage
 	for _, arg := range args {
 		tp := reflect.ValueOf(arg).Elem().Type()
 		if tp.Name() == "FileMetaDatumStorage" {
 			dcs = arg.(*DataStorage.FileMetaDatumStorage)
 		} else if tp.Name() == "SandBoxIndexStorage" {
 			sbi = arg.(*DataStorage.SandBoxIndexStorage)
-		} else if tp.Name() == "GroupMetaDataStorage" {
-			gmds = arg.(*DataStorage.GroupMetaDataStorage)
 		}
 	}
 	return &FileMetaDatumResource{
 		FileMetaDatumStorage: dcs,
 		SandBoxIndexStorage: sbi,
-		GroupMetaDataStorage: gmds,
 	}
 }
 

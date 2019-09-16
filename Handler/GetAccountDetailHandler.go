@@ -5,10 +5,10 @@ import (
 	http2 "SandBox/Util/http"
 	"encoding/json"
 	"fmt"
+	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
-	"github.com/alfredyang1986/blackmirror/bmlog"
 	"github.com/julienschmidt/httprouter"
 	"io/ioutil"
 	"net/http"
@@ -94,21 +94,21 @@ func (h GetAccountDetailHandler) GetAccountDetail(w http.ResponseWriter, r *http
 	enc := json.NewEncoder(w)
 	err := json.Unmarshal(res, &params)
 	if err != nil {
-		bmlog.StandardLogger().Error(err)
+		log.NewLogicLoggerBuilder().Build().Error(err)
 		result["status"] = "error"
 		result["msg"] = "解析失败"
 		err = enc.Encode(result)
-		bmlog.StandardLogger().Error(err)
+		log.NewLogicLoggerBuilder().Build().Error(err)
 		return 1
 	}
 	accountId, aok := params["accountId"]
 
 	if !aok {
-		bmlog.StandardLogger().Warning("Account 参数缺失")
+		log.NewLogicLoggerBuilder().Build().Error("Account 参数缺失")
 		result["status"] = "error"
 		result["msg"] = "Account 参数缺失"
 		err = enc.Encode(result)
-		bmlog.StandardLogger().Error(err)
+		log.NewLogicLoggerBuilder().Build().Error(err)
 		return 1
 	}
 

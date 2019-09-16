@@ -1,48 +1,70 @@
-#源镜像
-FROM golang:1.12.4-alpine
+# builder 源镜像
+FROM golang:1.12.4-alpine as builder
 
-#作者
+# 作者
 MAINTAINER Pharbers "pqian@pharbers.com"
 
-RUN apk add --no-cache git gcc musl-dev mercurial bash gcc g++ make pkgconfig openssl-dev
+# 安装系统级依赖
+RUN echo http://mirrors.aliyun.com/alpine/edge/main > /etc/apk/repositories \
+&& echo http://mirrors.aliyun.com/alpine/edge/community >> /etc/apk/repositories \
+&& apk update \
+&& apk add --no-cache bash git gcc g++ openssl-dev librdkafka-dev pkgconf
 
-# 设置工程配置文件的环境变量
-ENV PKG_CONFIG_PATH /usr/lib/pkgconfig
-ENV SANDBOX_HOME $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config
-ENV BM_KAFKA_CONF_HOME $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource/kafkaconfig.json
-ENV HDFSAVROCONF $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource/hdfs-avro.json
-ENV EMAIL_TEMPLATE $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource/email-template.txt
+# 环境变量
 ENV GOPROXY https://goproxy.io
 ENV GO111MODULE on
 
-ENV LOGGER_USER "Alex"
-ENV LOGGER_DEBUG "true"
-ENV LOG_PATH $GOPATH/logs
+# 下载项目镜像
+RUN git clone https://github.com/PharbersDeveloper/SandBoxPods.git $GOPATH/src/github.com/PharbersDeveloper/SandBoxPods
 
-#LABEL
-LABEL SandBoxPods.version="0.1.1" maintainer="Alex"
+# 工作目录
+WORKDIR $GOPATH/src/github.com/PharbersDeveloper/SandBoxPods
+#COPY . .
+
+# go build 编译项目
+RUN go build
 
 
-# 下载kafka
-RUN git clone https://github.com/edenhill/librdkafka.git $GOPATH/librdkafka
+# prod 源镜像
+FROM alpine:latest
 
-WORKDIR $GOPATH/librdkafka
-RUN ./configure --prefix /usr  && \
-make && \
-make install
+# 作者
+MAINTAINER Pharbers "pqian@pharbers.com"
 
-# 下载依赖
-RUN git clone https://github.com/PharbersDeveloper/SandBoxServiceDeploy.git  $GOPATH/src/github.com/PharbersDeveloper/SandBoxServiceDeploy && \
-    git clone https://github.com/PharbersDeveloper/SandBoxPods.git $GOPATH/src/github.com/PharbersDeveloper/SandBoxPods
+# 安装 主要 依赖
+RUN echo http://mirrors.aliyun.com/alpine/edge/main > /etc/apk/repositories \
+&& echo http://mirrors.aliyun.com/alpine/edge/community >> /etc/apk/repositories \
+&& apk update \
+&& apk add --no-cache bash git gcc g++ openssl-dev librdkafka-dev pkgconf
 
-# 构建可执行文件
-RUN cd $GOPATH/src/github.com/PharbersDeveloper/SandBoxPods && \
-    go build && go install
+# 环境变量
+#ENV PKG_CONFIG_PATH /usr/lib/pkgconfig
+ENV SANDBOX_HOME /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config
+ENV BM_KAFKA_CONF_HOME /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/kafkaconfig.json
+ENV HDFSAVROCONF /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/hdfs-avro.json
+ENV EMAIL_TEMPLATE /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/email-template.txt
+ENV PROJECT_NAME SandBox
+ENV BP_LOG_TIME_FORMAT "2006-01-02 15:04:05"
+ENV BP_LOG_OUTPUT /go/log/sandbox.log
+ENV BP_LOG_LEVEL info
+
+WORKDIR /go/log
+
+WORKDIR /go/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource
+
+# 提取资源文件
+COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/kafkaconfig.json ./
+COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/redisconfig.json ./
+COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/routerconfig.json ./
+COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/service-def.yaml ./
+COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/hdfs-avro.json ./
+COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/email-template.txt ./
+
+WORKDIR /go/bin
+
+# 提取执行文件
+COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/SandBox ./
 
 # 暴露端口
 EXPOSE 36415
-
-# 设置工作目录
-WORKDIR $GOPATH/bin
-
-ENTRYPOINT ["SandBox"]
+ENTRYPOINT ["./SandBox"]

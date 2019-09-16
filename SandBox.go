@@ -3,31 +3,26 @@ package main
 
 import (
 	"SandBox/Factory"
+	"SandBox/env"
 	"fmt"
+	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"github.com/alfredyang1986/BmServiceDef/BmApiResolver"
 	"github.com/alfredyang1986/BmServiceDef/BmConfig"
 	"github.com/alfredyang1986/BmServiceDef/BmPodsDefine"
-	"github.com/alfredyang1986/blackmirror/bmlog"
 	"github.com/julienschmidt/httprouter"
 	"github.com/manyminds/api2go"
+	"github.com/rs/cors"
 	"net/http"
 	"os"
 )
 
 func main() {
-	logEnv := "LOG_PATH"
-	logPath := os.Getenv(logEnv)
-	_ = os.Setenv(logEnv, fmt.Sprint(logPath, "/SandBox/logs/Log.log"))
-	
 	// 本地调试打开
-	//os.Setenv("BM_KAFKA_CONF_HOME", fmt.Sprint(os.Getenv("BM_KAFKA_CONF_HOME"), "SandBoxServiceDeploy/dev-config/resource/kafkaconfig.json"))
-	//os.Setenv("HDFSAVROCONF", fmt.Sprint("/Users/qianpeng/GitHub/go/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/dev-config/resource/hdfs-avro.json"))
-	//os.Setenv("EMAIL_TEMPLATE", fmt.Sprint("/Users/qianpeng/GitHub/go/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/dev-config/resource/email-template.txt"))
-
+	env.SetEnv()
 
 	version := "v0"
 	prodEnv := "SANDBOX_HOME"
-	bmlog.StandardLogger().Info("SandBoxPods begins, version = ", version)
+	log.NewLogicLoggerBuilder().Build().Info("SandBoxPods begins, version = ", version)
 
 	fac := Factory.Table{}
 	pod := BmPodsDefine.Pod{Name: "new SandBox", Factory: fac}
@@ -38,15 +33,20 @@ func main() {
 	bmRouter.GenerateConfig(prodEnv)
 
 	addr := fmt.Sprint(bmRouter.Host, ":", bmRouter.Port)
-	bmlog.StandardLogger().Info("Listening on", addr)
+	log.NewLogicLoggerBuilder().Build().Info("Listening on", addr)
 
 	api := api2go.NewAPIWithResolver(version, &BmApiResolver.RequestURL{Addr: addr})
 	pod.RegisterAllResource(api)
 	pod.RegisterAllFunctions(version, api)
 	pod.RegisterAllMiddleware(api)
 
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: []string{"GET", "POST"},
+	})
+
 	handler := api.Handler().(*httprouter.Router)
 	pod.RegisterPanicHandler(handler)
-	err := http.ListenAndServe(":" + bmRouter.Port, handler)
-	bmlog.StandardLogger().Error(err)
+	err := http.ListenAndServe(":" + bmRouter.Port, c.Handler(handler))
+	log.NewLogicLoggerBuilder().Build().Error(err)
 }
