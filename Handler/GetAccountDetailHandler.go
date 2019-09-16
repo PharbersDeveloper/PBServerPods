@@ -126,9 +126,6 @@ func (h GetAccountDetailHandler) GetAccountDetail(w http.ResponseWriter, r *http
 	response := http2.Get(mergeURL, r.Header)
 	oar := oAuthResult{}
 	json.Unmarshal(response, &oar)
-	result["account-name"] = oar.Data.Attributes["username"]
-	fmt.Println(oar.Data.Relationships.Employee.Data.ID)
-
 
 	resource = fmt.Sprint(h.Args[0], "/", version, "/", "employees/", oar.Data.Relationships.Employee.Data.ID)
 	mergeURL = strings.Join([]string{scheme, resource}, "")
@@ -137,7 +134,7 @@ func (h GetAccountDetailHandler) GetAccountDetail(w http.ResponseWriter, r *http
 	response = http2.Get(mergeURL, r.Header)
 	oar = oAuthResult{}
 	json.Unmarshal(response, &oar)
-
+	result["account-name"] = oar.Data.Attributes["name"]
 	result["group-id"] = oar.Data.Relationships.Group.Data.ID
 
 	resource = fmt.Sprint(h.Args[0], "/", version, "/", "groups/", oar.Data.Relationships.Group.Data.ID)

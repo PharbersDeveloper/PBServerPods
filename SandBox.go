@@ -33,7 +33,7 @@ func main() {
 	bmRouter.GenerateConfig(prodEnv)
 
 	addr := fmt.Sprint(bmRouter.Host, ":", bmRouter.Port)
-	log.NewLogicLoggerBuilder().Build().Info("Listening on", addr)
+	log.NewLogicLoggerBuilder().Build().Info("Listening on ", addr)
 
 	api := api2go.NewAPIWithResolver(version, &BmApiResolver.RequestURL{Addr: addr})
 	pod.RegisterAllResource(api)

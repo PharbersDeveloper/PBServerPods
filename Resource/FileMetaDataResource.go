@@ -56,12 +56,18 @@ func (s FileMetaDatumResource) FindAll(r api2go.Request) (api2go.Responder, erro
 		return &Response{Res: result}, nil
 	}
 
-	// TODO : 根据OAuth account id 查询GroupID与Role
+	if len(r.QueryParams["group-id"]) > 0 {
+		result := s.FileMetaDatumStorage.GetAll(r, -1, -1)
+		return &Response{Res: result}, nil
+	}
 
-	//r.QueryParams["group-id"] = []string{"5cb9952d82a4a74375fa41fd"}
+	// TODO: 目前只对Group进行查询
+	//companyID, cok := r.QueryParams["companyID"]
+	//if cok {
+	//	fmt.Println(companyID)
+	//}
 
-	result := s.FileMetaDatumStorage.GetAll(r, -1, -1)
-	return &Response{Res: result}, nil
+	return &Response{}, nil
 }
 
 // PaginatedFindAll can be used to load models in chunks
