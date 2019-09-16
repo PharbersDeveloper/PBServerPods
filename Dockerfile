@@ -15,11 +15,11 @@ ENV GOPROXY https://goproxy.io
 ENV GO111MODULE on
 
 # 下载项目镜像
-RUN git clone https://github.com/PharbersDeveloper/SandBoxPods.git $GOPATH/src/github.com/PharbersDeveloper/SandBoxPods
+#RUN git clone https://github.com/PharbersDeveloper/SandBoxPods.git $GOPATH/src/github.com/PharbersDeveloper/SandBoxPods
 
 # 工作目录
 WORKDIR $GOPATH/src/github.com/PharbersDeveloper/SandBoxPods
-#COPY . .
+COPY . .
 
 # go build 编译项目
 RUN go build
@@ -44,7 +44,7 @@ ENV BM_KAFKA_CONF_HOME /go/src/github.com/PharbersDeveloper/SandBoxPods/resource
 ENV HDFSAVROCONF /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/hdfs-avro.json
 ENV EMAIL_TEMPLATE /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/email-template.txt
 ENV EMAILADDRESS /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/emails.json
-ENV PROJECT_NAME SandBox
+ENV PROJECT_NAME SandBoxPods
 ENV BP_LOG_TIME_FORMAT "2006-01-02 15:04:05"
 ENV BP_LOG_OUTPUT /go/log/sandbox.log
 ENV BP_LOG_LEVEL info

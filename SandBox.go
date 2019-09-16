@@ -3,7 +3,6 @@ package main
 
 import (
 	"SandBox/Factory"
-	"SandBox/env"
 	"fmt"
 	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"github.com/alfredyang1986/BmServiceDef/BmApiResolver"
@@ -18,7 +17,7 @@ import (
 
 func main() {
 	// 本地调试打开
-	env.SetEnv()
+	//env.SetEnv()
 
 	version := "v0"
 	prodEnv := "SANDBOX_HOME"
