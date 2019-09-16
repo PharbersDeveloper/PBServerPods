@@ -28,9 +28,11 @@ func SetEnv() {
 	_ = os.Setenv(LogOutput, "console")
 	//_ = os.Setenv(env.LogOutput, "/Users/qianpeng/bplogs/mqtt-message-storage.log")
 	_ = os.Setenv(LogLevel, "info")
-	_ = os.Setenv("BM_KAFKA_CONF_HOME", fmt.Sprint(os.Getenv("GOPATH"), "SandBoxPods/resources/dev-config/kafkaconfig.json"))
-	_ = os.Setenv("HDFSAVROCONF", fmt.Sprint(os.Getenv("GOPATH"), "SandBoxPods/resources/dev-config/hdfs-avro.json"))
-	_ = os.Setenv("EMAIL_TEMPLATE", fmt.Sprint(os.Getenv("GOPATH"), "SandBoxPods/resources/dev-config/email-template.txt"))
+	_ = os.Setenv("BM_KAFKA_CONF_HOME", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/kafkaconfig.json"))
+	_ = os.Setenv("HDFSAVROCONF", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/hdfs-avro.json"))
+	_ = os.Setenv("EMAIL_TEMPLATE", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/email-template.txt"))
+	_ = os.Setenv("EMAILADDRESS", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/emails.json"))
+
 
 	//kafka
 	//_ = os.Setenv(KafkaConfigPath, "../resources/kafka_config.json")

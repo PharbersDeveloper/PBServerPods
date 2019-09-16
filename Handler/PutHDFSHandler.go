@@ -4,7 +4,7 @@ package Handler
 import (
 	http2 "SandBox/Util/http"
 	"encoding/json"
-	"fmt"
+	"github.com/alfredyang1986/BmServiceDef/BmConfig"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
@@ -80,7 +80,6 @@ func (h PutHDFSHandler) PutHDFS(w http.ResponseWriter, r *http.Request, _ httpro
 	bkc.Produce(&topic, recordByteArr)
 
 	url := h.Args[0]
-	emails := strings.Split(h.Args[1], "#")
 	b, _ := ioutil.ReadFile(os.Getenv("EMAIL_TEMPLATE"))
 	reg := regexp.MustCompile("\t|\r|\n")
 	userName := strings.ReplaceAll(string(b), "**UserName**", params["userName"])
@@ -90,12 +89,9 @@ func (h PutHDFSHandler) PutHDFS(w http.ResponseWriter, r *http.Request, _ httpro
 	html := strings.ReplaceAll(uploadTime, "**HDFSPATH**", params["path"])
 	content := reg.ReplaceAllString(html, "")
 
-	for _, e := range emails {
-		fmt.Println(url)
-		fmt.Println(e)
-		fmt.Println(content)
+	for _, e := range BmConfig.BmGetConfigMap(os.Getenv(h.Args[1]))["address"].([]interface{}) {
 		body := strings.NewReader(`{
-			"email": "`+ e +`",
+			"email": "`+ e.(string) +`",
 			"subject": "SandBox文件上传记录",
 			"content": "`+ content +`",
 			"content-type": "text/html; charset=UTF-8"

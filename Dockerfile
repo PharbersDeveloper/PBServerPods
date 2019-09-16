@@ -43,6 +43,7 @@ ENV SANDBOX_HOME /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/depl
 ENV BM_KAFKA_CONF_HOME /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/kafkaconfig.json
 ENV HDFSAVROCONF /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/hdfs-avro.json
 ENV EMAIL_TEMPLATE /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/email-template.txt
+ENV EMAILADDRESS /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/emails.json
 ENV PROJECT_NAME SandBox
 ENV BP_LOG_TIME_FORMAT "2006-01-02 15:04:05"
 ENV BP_LOG_OUTPUT /go/log/sandbox.log
@@ -50,15 +51,15 @@ ENV BP_LOG_LEVEL info
 
 WORKDIR /go/log
 
-WORKDIR /go/src/github.com/PharbersDeveloper/SandBoxServiceDeploy/deploy-config/resource
+WORKDIR /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource
 
 # 提取资源文件
 COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/kafkaconfig.json ./
-COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/redisconfig.json ./
 COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/routerconfig.json ./
 COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/service-def.yaml ./
 COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/hdfs-avro.json ./
 COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/email-template.txt ./
+COPY --from=0 /go/src/github.com/PharbersDeveloper/SandBoxPods/resources/deploy-config/resource/emails.json ./
 
 WORKDIR /go/bin
 
