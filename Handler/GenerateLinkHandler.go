@@ -74,16 +74,6 @@ func (h GenerateLinkHandler) GenerateLink(w http.ResponseWriter, r *http.Request
 		bmlog.StandardLogger().Error(err)
 		return 1
 	}
-	//accountId, aok := params["account-id"]
-
-	//if !aok {
-	//	bmlog.StandardLogger().Warning("Account 参数缺失")
-	//	result["status"] = "error"
-	//	result["msg"] = "Account 参数缺失"
-	//	err = enc.Encode(result)
-	//	bmlog.StandardLogger().Error(err)
-	//	return 1
-	//}
 
 	uid, _ := uuid.NewRandom()
 
@@ -92,7 +82,7 @@ func (h GenerateLinkHandler) GenerateLink(w http.ResponseWriter, r *http.Request
 	result["status"] = "ok"
 	result["link"] = link
 	result["bucket"] = h.Args[0]
-	enc.Encode(result)
+	_ = enc.Encode(result)
 	return 0
 }
 

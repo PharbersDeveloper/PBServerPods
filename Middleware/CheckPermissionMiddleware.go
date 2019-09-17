@@ -1,13 +1,12 @@
 package Middleware
 
 import (
-	"net/http"
-	"reflect"
-	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
 	"github.com/manyminds/api2go"
+	"net/http"
+	"reflect"
 )
 
 type CheckPermissionMiddleware struct {
@@ -61,5 +60,5 @@ func (cpm CheckPermissionMiddleware) DoMiddleware(c api2go.APIContexter, w http.
 	//	_, err = context.DoExecute()
 	//	if err != nil { panic(err.Error()) }
 	//}
-	log.NewLogicLoggerBuilder().Build().Info("Permission Middleware")
+	//log.NewLogicLoggerBuilder().Build().Info("Permission Middleware")
 }

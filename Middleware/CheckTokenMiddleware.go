@@ -5,14 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"net/http"
-	"reflect"
-	"strings"
 	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmRedis"
 	"github.com/manyminds/api2go"
+	"net/http"
+	"reflect"
+	"strings"
 )
 
 var CheckToken CheckTokenMiddleware
@@ -65,8 +65,8 @@ func (ctm CheckTokenMiddleware) NewCheckTokenMiddleware(args ...interface{}) Che
 }
 
 func (ctm CheckTokenMiddleware) DoMiddleware(c api2go.APIContexter, w http.ResponseWriter, r *http.Request) {
-	log.NewLogicLoggerBuilder().Build().Info("Token Middleware")
 	if _, err := ctm.CheckTokenFormFunction(w, r); err != nil {
+		log.NewLogicLoggerBuilder().Build().Info("Token 验证错误")
 		panic(err.Error())
 	}
 }
