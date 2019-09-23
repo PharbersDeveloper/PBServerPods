@@ -3,7 +3,7 @@ module SandBox
 go 1.12
 
 require (
-	github.com/PharbersDeveloper/bp-go-lib v0.1.0
+	github.com/PharbersDeveloper/bp-go-lib v0.2.1
 	github.com/alfredyang1986/BmServiceDef v0.0.1
 	github.com/alfredyang1986/blackmirror v0.0.12
 	github.com/aliyun/aliyun-oss-go-sdk v2.0.0+incompatible // indirect
