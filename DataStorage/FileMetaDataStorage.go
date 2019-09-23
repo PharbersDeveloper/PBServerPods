@@ -5,6 +5,7 @@ import (
 	"SandBox/Model"
 	"errors"
 	"fmt"
+	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/manyminds/api2go"
@@ -24,6 +25,7 @@ func (s FileMetaDatumStorage) NewFileMetaDatumStorage(args []BmDaemons.BmDaemon)
 
 // GetAll of the model
 func (s FileMetaDatumStorage) GetAll(r api2go.Request, skip int, take int) []*Model.FileMetaDatum {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileMetaDatum GetAll Parameters ", r.QueryParams)
 	in := Model.FileMetaDatum{}
 	var out []*Model.FileMetaDatum
 	err := s.db.FindMulti(r, &in, &out, skip, take)
@@ -40,6 +42,7 @@ func (s FileMetaDatumStorage) GetAll(r api2go.Request, skip int, take int) []*Mo
 
 // GetOne tasty model
 func (s FileMetaDatumStorage) GetOne(id string) (Model.FileMetaDatum, error) {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileMetaDatum GetOne Parameters Id ", id)
 	in := Model.FileMetaDatum{ID: id}
 	out := Model.FileMetaDatum{ID: id}
 	err := s.db.FindOne(&in, &out)
@@ -52,6 +55,7 @@ func (s FileMetaDatumStorage) GetOne(id string) (Model.FileMetaDatum, error) {
 
 // Insert a fresh one
 func (s *FileMetaDatumStorage) Insert(c Model.FileMetaDatum) string {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileMetaDatum Insert Model ", c)
 	tmp, err := s.db.InsertBmObject(&c)
 	if err != nil {
 		fmt.Println(err)
@@ -62,6 +66,7 @@ func (s *FileMetaDatumStorage) Insert(c Model.FileMetaDatum) string {
 
 // Delete one :(
 func (s *FileMetaDatumStorage) Delete(id string) error {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileMetaDatum Delete Parameters Id ", id)
 	in := Model.FileMetaDatum{ID: id}
 	err := s.db.Delete(&in)
 	if err != nil {
@@ -73,6 +78,7 @@ func (s *FileMetaDatumStorage) Delete(id string) error {
 
 // Update updates an existing model
 func (s *FileMetaDatumStorage) Update(c Model.FileMetaDatum) error {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileMetaDatum Update Model ", c)
 	err := s.db.Update(&c)
 	if err != nil {
 		return fmt.Errorf("FileMetaDatum with id does not exist")

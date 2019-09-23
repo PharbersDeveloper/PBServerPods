@@ -5,6 +5,7 @@ import (
 	"SandBox/Model"
 	"errors"
 	"fmt"
+	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons"
 	"github.com/alfredyang1986/BmServiceDef/BmDaemons/BmMongodb"
 	"github.com/manyminds/api2go"
@@ -24,6 +25,7 @@ func (s FileVersionStorage) NewFileVersionStorage(args []BmDaemons.BmDaemon) *Fi
 
 // GetAll of the model
 func (s FileVersionStorage) GetAll(r api2go.Request, skip int, take int) []*Model.FileVersion {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileVersion GetAll Parameters ", r.QueryParams)
 	in := Model.FileVersion{}
 	var out []*Model.FileVersion
 	err := s.db.FindMulti(r, &in, &out, skip, take)
@@ -40,6 +42,7 @@ func (s FileVersionStorage) GetAll(r api2go.Request, skip int, take int) []*Mode
 
 // GetOne tasty model
 func (s FileVersionStorage) GetOne(id string) (Model.FileVersion, error) {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileVersion GetOne Parameters Id ", id)
 	in := Model.FileVersion{ID: id}
 	out := Model.FileVersion{ID: id}
 	err := s.db.FindOne(&in, &out)
@@ -52,6 +55,7 @@ func (s FileVersionStorage) GetOne(id string) (Model.FileVersion, error) {
 
 // Insert a fresh one
 func (s *FileVersionStorage) Insert(c Model.FileVersion) string {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileVersion Insert Model ", c)
 	tmp, err := s.db.InsertBmObject(&c)
 	if err != nil {
 		fmt.Println(err)
@@ -62,6 +66,7 @@ func (s *FileVersionStorage) Insert(c Model.FileVersion) string {
 
 // Delete one :(
 func (s *FileVersionStorage) Delete(id string) error {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileVersion Delete Parameters Id ", id)
 	in := Model.FileVersion{ID: id}
 	err := s.db.Delete(&in)
 	if err != nil {
@@ -73,6 +78,7 @@ func (s *FileVersionStorage) Delete(id string) error {
 
 // Update updates an existing model
 func (s *FileVersionStorage) Update(c Model.FileVersion) error {
+	log.NewLogicLoggerBuilder().Build().Info("Call FileVersion Update Model ", c)
 	err := s.db.Update(&c)
 	if err != nil {
 		return fmt.Errorf(" FileVersion with id does not exist")
