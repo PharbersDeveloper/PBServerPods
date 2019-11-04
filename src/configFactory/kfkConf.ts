@@ -10,13 +10,4 @@ export class KfkConf {
 
     @JsonProperty("kafkaTopic", String)
     public kafkaTopic: string = undefined
-
-    // @JsonProperty("kafkaSecretsDir", String)
-    // public kafkaSecretsDir: string = undefined
-
-    // @JsonProperty("kafkaPassword", String)
-    // public kafkaPassword: string = undefined
-
-    // @JsonProperty("schemaRegisterHost", String)
-    // public schemaRegisterHost: string = undefined
 }

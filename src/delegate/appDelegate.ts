@@ -57,7 +57,7 @@ export default class AppDelegate {
             extended: true
         } ) )
 
-        if (!this.Conf.auth.debugging) {
+        if (!this.Conf.oauth.debugging) {
             // a middleware function with no mount path. This code is executed for every request to the router
             this.router.use((req, res, next) => {
                 const auth = req.get("Authorization")
@@ -67,9 +67,9 @@ export default class AppDelegate {
                     return
                 }
 
-                const host = this.conf.auth.oauthHost
-                const port = this.conf.auth.oauthPort
-                const namespace = this.conf.auth.oauthApiNamespace
+                const host = this.conf.oauth.oauthHost
+                const port = this.conf.oauth.oauthPort
+                const namespace = this.conf.oauth.oauthApiNamespace
 
                 axios.post(`http://${host}${port}/${namespace}/TokenValidation`, null, {
                     headers: {
@@ -96,7 +96,7 @@ export default class AppDelegate {
 
     protected loadConfiguration() {
         try {
-            const path = process.env.PH_TS_SERVER_HOME + "/conf"
+            const path = process.env.PH_TS_SANDBOX_HOME + "/conf"
             const jsonConvert: JsonConvert = new JsonConvert()
             const doc = yaml.safeLoad(fs.readFileSync(path + "/server.yml", "utf8"))
             // jsonConvert.operationMode = OperationMode.LOGGING // print some debug data
@@ -110,8 +110,8 @@ export default class AppDelegate {
     }
 
     protected generateModels(): any {
-        const prefix = "/dist/src/models/"
-        const path = process.env.PH_TS_SERVER_HOME + prefix
+        const prefix = "/dist/models/"
+        const path = process.env.PH_TS_SANDBOX_HOME + prefix
         const suffix = ".js"
         const result: {[index: string]: any} = {}
         this.conf.models.forEach((ele) => {

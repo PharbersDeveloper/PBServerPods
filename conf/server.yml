@@ -4,16 +4,16 @@ models:
   - file: FileVersion
     reg: file-versions
   - file: FileMetaDatum
-    reg: file-meta-datum
+    reg: file-meta-datums
 mongo:
   algorithm: mongodb
-  host: localhost
-  port: 27017
+  host: pharbers.com
+  port: 5555
   username: alfredyang
   pwd: "12345"
   coll: "pharbers-sandbox"
   auth: false
-auth:
+oauth:
   debugging: true
   oauthHost: oauth.pharbers.com
   oauthPort: ""

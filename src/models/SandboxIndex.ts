@@ -12,7 +12,7 @@ class SandboxIndex extends Typegoose implements IModelBase<SandboxIndex> {
     public AccountID: string
 
     @arrayProp( { itemsRef: FileMetaDatum, required: true } )
-    public fileVersions: Array<Ref<FileMetaDatum>>
+    public fileVersions: Ref<FileMetaDatum>[]
 
     public getModel() {
         return this.getModelForClass(SandboxIndex)

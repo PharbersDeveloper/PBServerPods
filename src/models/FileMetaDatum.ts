@@ -42,7 +42,7 @@ class FileMetaDatum extends Typegoose implements IModelBase<FileMetaDatum> {
     public tag: string
 
     @arrayProp( { itemsRef: FileVersion, required: true } )
-    public fileVersions: Array<Ref<FileVersion>>
+    public fileVersions: Ref<FileVersion>[]
 
     public getModel() {
         return this.getModelForClass(FileMetaDatum)

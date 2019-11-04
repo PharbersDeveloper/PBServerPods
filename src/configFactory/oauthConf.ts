@@ -1,8 +1,8 @@
 "use strict"
 import {JsonObject, JsonProperty} from "json2typescript"
 
-@JsonObject("AuthConf")
-export class AuthConf {
+@JsonObject("OAuthConf")
+export class OAuthConf {
 
     @JsonProperty("debugging", Boolean)
     public debugging: boolean = false
