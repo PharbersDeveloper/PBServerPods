@@ -1,0 +1,28 @@
+models:
+  - file: SandboxIndex
+    reg: sandbox-indexes
+  - file: FileVersion
+    reg: file-versions
+  - file: FileMetaDatum
+    reg: file-meta-datum
+mongo:
+  algorithm: mongodb
+  host: localhost
+  port: 27017
+  username: alfredyang
+  pwd: "12345"
+  coll: "pharbers-sandbox"
+  auth: false
+auth:
+  debugging: true
+  oauthHost: oauth.pharbers.com
+  oauthPort: ""
+  oauthApiNamespace: "v0"
+oss:
+  region: oss-cn-beijing
+  accessKeyId: LTAIEoXgk4DOHDGi
+  accessKeySecret: x75sK6191dPGiu9wBMtKE6YcBBh8EI
+  bucket: pharbers-sandbox
+kfk:
+  kafkaBrokerList: "http://pharbers.com:8082"
+  kafkaTopic: "alfredtest"
