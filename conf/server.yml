@@ -1,6 +1,6 @@
 models:
   - file: SandboxIndex
-    reg: sandbox-indexes
+    reg: sandbox-indices
   - file: FileVersion
     reg: file-versions
   - file: FileMetaDatum
