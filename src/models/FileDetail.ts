@@ -3,7 +3,7 @@ import {arrayProp, prop, Ref, Typegoose} from "typegoose"
 import FileVersion from "./FileVersion"
 import IModelBase from "./modelBase"
 
-class FileMetaDatum extends Typegoose implements IModelBase<FileMetaDatum> {
+class FileDetail extends Typegoose implements IModelBase<FileDetail> {
 
     @prop({ default: "", required: true })
     public name: string
@@ -15,7 +15,7 @@ class FileMetaDatum extends Typegoose implements IModelBase<FileMetaDatum> {
     public created: number
 
     @prop({ default: "", required: true })
-    public Kind: string
+    public kind: string
 
     @prop({ default: "", required: true })
     public ownerID: string
@@ -29,24 +29,12 @@ class FileMetaDatum extends Typegoose implements IModelBase<FileMetaDatum> {
     @prop({ default: "", required: true })
     public mod: string
 
-    @prop({ default: 0.0, required: true })
-    public size: number
-
-    @prop({ default: "", required: true })
-    public where: string
-
-    @prop({ default: "", required: true })
-    public kind: string
-
-    @prop({ default: "", required: true })
-    public tag: string
-
     @arrayProp( { itemsRef: FileVersion, required: true } )
-    public fileVersions: Ref<FileVersion>[]
+    public versions: Ref<FileVersion>[]
 
     public getModel() {
-        return this.getModelForClass(FileMetaDatum)
+        return this.getModelForClass(FileDetail)
     }
 }
 
-export default FileMetaDatum
+export default FileDetail

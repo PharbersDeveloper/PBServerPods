@@ -6,14 +6,14 @@
             "pattern": "-yyyy-MM-dd",
             "category": "http",
             "layout": { 
-                "type": "pattern", "pattern": "{\"Time\": \"%d{yyyy-MM-dd hh:mm:ss}\",\"Hostname\": \"%h\",\"ProjectName\": \"ntm-curd\",\"File\": \"%f:%l\",\"Func\": \"\",\"JobId\": \"\",\"TraceId\": \"\",\"UserId\": \"\",\"Message\": \"%m\",\"Level\": \"%p\"}" 
+                "type": "pattern", "pattern": "{\"Time\": \"%d{yyyy-MM-dd hh:mm:ss}\",\"Hostname\": \"%h\",\"ProjectName\": \"ph-sandbox\",\"File\": \"%f:%l\",\"Func\": \"\",\"JobId\": \"\",\"TraceId\": \"\",\"UserId\": \"\",\"Message\": \"%m\",\"Level\": \"%p\"}"
             }
         },
         "out": {
             "type": "stdout",
             "level": "TRACE",
             "layout": { 
-                "type": "pattern", "pattern": "{\"Time\": \"%d{yyyy-MM-dd hh:mm:ss}\",\"Hostname\": \"%h\",\"ProjectName\": \"ntm-curd\",\"File\": \"%f:%l\",\"Func\": \"\",\"JobId\": \"\",\"TraceId\": \"\",\"UserId\": \"\",\"Message\": \"%m\",\"Level\": \"%p\"}" 
+                "type": "pattern", "pattern": "{\"Time\": \"%d{yyyy-MM-dd hh:mm:ss}\",\"Hostname\": \"%h\",\"ProjectName\": \"ph-sandbox\",\"File\": \"%f:%l\",\"Func\": \"\",\"JobId\": \"\",\"TraceId\": \"\",\"UserId\": \"\",\"Message\": \"%m\",\"Level\": \"%p\"}"
             }
         },
         "app": {

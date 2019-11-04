@@ -3,15 +3,15 @@ models:
     reg: sandbox-indices
   - file: FileVersion
     reg: file-versions
-  - file: FileMetaDatum
-    reg: file-meta-datums
+  - file: FileDetail
+    reg: file-details
 mongo:
   algorithm: mongodb
   host: pharbers.com
   port: 5555
   username: alfredyang
   pwd: "12345"
-  coll: "pharbers-sandbox"
+  coll: "pharbers-sandbox-2"
   auth: false
 oauth:
   debugging: true
