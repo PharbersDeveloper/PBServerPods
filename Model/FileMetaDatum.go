@@ -21,6 +21,14 @@ type FileMetaDatum struct {
 	Mod 			string			`json:"mod" bson:"mod"`
 	FileVersionIDs	[]string		`json:"-" bson:"file-version-ids"`
 	FileVersions	[]*FileVersion	`json:"-"`
+	JobID			[]string		`json:"job-id" bson:"job-id"`
+	TraceID			string 			`json:"trace-id" bson:"trace-id"`
+	Length			int				`json:"length" bson:"length"`
+
+	// TODO：结构不对，应该抽出来一张表，为了能及时演示
+	SampleData		[]string 		`json:"-" bson:"sample-data"`
+	Schema 			string 			`json:"-" bson:"schema"`
+
 }
 
 // GetID to satisfy jsonapi.MarshalIdentifier interface

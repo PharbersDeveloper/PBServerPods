@@ -32,9 +32,11 @@ var RESOURCE_FACTORY = map[string]interface{}{
 
 var FUNCTION_FACTORY = map[string]interface{}{
 	"CommonPanicHandle": 		Handler.CommonPanicHandle{},
-	"GenerateLinkHandler": 		Handler.GenerateLinkHandler{},
 	"GetAccountDetailHandler": 	Handler.GetAccountDetailHandler{},
 	"PutHDFSHandler": 	Handler.PutHDFSHandler{},
+	"StreamOss2HDFSHandler": 	Handler.PutHDFSHandler{},
+	"UpdateJobIDWithTraceIDHandler": 	Handler.PutHDFSHandler{},
+	"Stream2HDFSFinishHandler": 	Handler.PutHDFSHandler{},
 }
 var MIDDLEWARE_FACTORY = map[string]interface{}{
 	"CheckTokenMiddleware": Middleware.CheckTokenMiddleware{},

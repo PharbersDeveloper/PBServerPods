@@ -11,4 +11,6 @@ func TestStatePatterns(t *testing.T) {
 		//ctx.DoExecute("rwx------")
 		//ctx.Identify()
 	})
+
+
 }

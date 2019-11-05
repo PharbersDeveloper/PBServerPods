@@ -18,7 +18,10 @@ import (
 
 func main() {
 	// 本地调试打开
-	env.SetEnv()
+	env.SetLocalEnv()
+
+	// 设置启动参数
+	env.SetStartingParameter()
 
 	version := "v0"
 	prodEnv := "SANDBOX_HOME"
