@@ -87,9 +87,31 @@ class UploadFileTransmit {
                 asset.owner = fd.ownerID
                 asset.accessibility = "w"
                 asset.version = 0
+
+                /**
+                 * 4. 为数据添加tags
+                 */
+                if (fd.name.indexOf("_") > 0) {
+                    phLogger.info("cpa gyc data")
+                    this.cpa_gyc_name_2_tags(fd.name, asset)
+                } else {
+                    phLogger.info("chc data")
+                    this.chc_name_2_tags(fd.name, asset)
+                }
+
                 await am.create(asset)
             } ))
         } ))
         // phLogger.info(await tmp[0])
+    }
+
+    private cpa_gyc_name_2_tags(name: string, asset: Asset) {
+        phLogger.info(name)
+
+    }
+
+    private chc_name_2_tags(name: string, asset: Asset) {
+        phLogger.info(name)
+
     }
 }
