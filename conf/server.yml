@@ -5,8 +5,8 @@ models:
     reg: file-versions
   - file: FileDetail
     reg: file-details
-  - file: Assent
-    reg: assents
+  - file: Asset
+    reg: assets
   - file: DataSet
     reg: data-sets
   - file: DbSource

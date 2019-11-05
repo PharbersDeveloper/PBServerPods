@@ -9,7 +9,7 @@ import FileDetail from "../../src/models/FileDetail"
 import FileVersion from "../../src/models/FileVersion"
 import SandboxIndex from "../../src/models/SandboxIndex"
 
-import Assent from "../../src/models/Assent"
+import Asset from "../../src/models/Asset"
 import File from "../../src/models/File"
 import DataSet from "../../src/models/DataSet"
 
@@ -38,6 +38,7 @@ class UploadFileTransmit {
 
         const fm = new File().getModel()
         const dsm = new DataSet().getModel()
+        const am = new Asset().getModel()
 
         const contents = await sim.find({})
         await Promise.all(contents.map( async (content) => {
@@ -61,17 +62,32 @@ class UploadFileTransmit {
                 f.fileName = fd.name
                 f.extension = fd.extension
                 f.uploaded = fd.created
-                await fm.create(f)
+                const fc = await fm.create(f)
 
                 /**
                  * 2. 将JobID 创建出来的DataSet MetaData化
                  */
                 const jIds = fd.jobIds
-                await Promise.all(jIds.map( async (jid) => {
+                const dfs = await Promise.all(jIds.map( async (jid) => {
                     const ds = new DataSet()
                     ds.jobId = jid
-                    await dsm.create(ds)
+                    return await dsm.create(ds)
                 } ) )
+
+                /**
+                 * 3. 将用户上传的内容，抽象成平台所需要的Assents
+                 */
+                const asset = new Asset()
+                asset.name= fd.name
+                asset.description= fd.name
+                asset.traceId = fd.traceID
+                asset.dataType = "file"
+                asset.file = fc
+                asset.dfs = dfs
+                asset.owner = fd.ownerID
+                asset.accessibility = "w"
+                asset.version = 0
+                await am.create(asset)
             } ))
         } ))
         // phLogger.info(await tmp[0])

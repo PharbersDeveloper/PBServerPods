@@ -5,13 +5,16 @@ import DbSource from "./DbSource"
 import IModelBase from "./modelBase"
 import File from "./File"
 
-class Assent extends Typegoose implements IModelBase<Assent> {
+class Asset extends Typegoose implements IModelBase<Asset> {
 
     @prop({ default: "", required: true })
     public traceId: string
 
     @prop({default: "", required: true})
-    public assent: string
+    public name: string
+
+    @prop({default: "", required: true})
+    public description: string
 
     @prop({default: "", required: true})
     public owner: string
@@ -53,8 +56,8 @@ class Assent extends Typegoose implements IModelBase<Assent> {
     public Labels: string[]
 
     public getModel() {
-        return this.getModelForClass(Assent)
+        return this.getModelForClass(Asset)
     }
 }
 
-export default Assent
+export default Asset

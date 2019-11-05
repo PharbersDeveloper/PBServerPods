@@ -26,6 +26,9 @@ class FileDetail extends Typegoose implements IModelBase<FileDetail> {
     @prop({ default: "", required: true })
     public groupID: string
 
+    @prop({ default: "", required: false })
+    public traceID?: string
+
     @prop({ default: "", required: true })
     public mod: string
 
