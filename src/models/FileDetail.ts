@@ -32,6 +32,9 @@ class FileDetail extends Typegoose implements IModelBase<FileDetail> {
     @arrayProp( { itemsRef: FileVersion, required: true } )
     public versions: Ref<FileVersion>[]
 
+    @arrayProp( { items: String, required: true } )
+    public jobIds: string[]
+
     public getModel() {
         return this.getModelForClass(FileDetail)
     }

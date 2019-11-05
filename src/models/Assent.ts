@@ -13,6 +13,12 @@ class Assent extends Typegoose implements IModelBase<Assent> {
     @prop({default: "", required: true})
     public assent: string
 
+    @prop({default: "", required: true})
+    public owner: string
+
+    @prop({default: "", required: true})
+    public accessibility: string
+
     @prop({default: 0, required: true})
     public version: number
 
