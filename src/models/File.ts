@@ -13,6 +13,9 @@ class File extends Typegoose implements IModelBase<File> {
     @prop({ default: "", required: true })
     public uploaded: number
 
+    @prop({ default: Number, required: true })
+    public size: number
+
     @prop({ default: "", required: true })
     public url: string
 

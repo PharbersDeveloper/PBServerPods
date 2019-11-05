@@ -4,23 +4,23 @@ import IModelBase from "./modelBase"
 
 class DataSet extends Typegoose implements IModelBase<DataSet> {
 
-    @arrayProp({ items: String, default: [], required: true })
-    public schema: string[]
+    @arrayProp({ items: String, default: [], required: false } )
+    public colNames?: string[]
 
-    @prop({ default: [], required: true })
-    public length: number
+    @prop({ default: 0, required: false} )
+    public length?: number
 
-    @prop({ default: "", required: true })
-    public url: string
+    @prop({ default: "", required: false } )
+    public url?: string
 
-    @prop({ default: "", required: true })
-    public description: string
+    @prop({ default: "", required: false } )
+    public description?: string
 
-    @prop({ ref: DataSet, required: false})
+    @prop({ ref: DataSet, required: false } )
     public parent?: Ref<DataSet>
 
-    @prop({ default: "", required: false})
-    public jobId?: string
+    @prop({ default: "", required: true } )
+    public jobId: string
 
     public getModel() {
         return this.getModelForClass(DataSet)

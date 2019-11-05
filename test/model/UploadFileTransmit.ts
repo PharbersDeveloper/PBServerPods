@@ -35,7 +35,9 @@ class UploadFileTransmit {
         const sim = new SandboxIndex().getModel()
         const fdm = new FileDetail().getModel()
         const fvm = new FileVersion().getModel()
+
         const fm = new File().getModel()
+        const dsm = new DataSet().getModel()
 
         const contents = await sim.find({})
         await Promise.all(contents.map( async (content) => {
@@ -45,20 +47,31 @@ class UploadFileTransmit {
                 const fd = await fdm.findOne({
                     _id: id
                 } )
-                const fvid = fd.versions[0]
+                const fvId = fd.versions[0]
                 const fv = await fvm.findOne({
-                    _id: fvid
+                    _id: fvId
                 } )
 
                 /**
-                 * 1. 将FileDetail转成File
+                 * 1. 将FileDetail, FileVersion转成File
                  */
                 const f = new File()
                 f.url = fv.where
+                f.size = fv.size
                 f.fileName = fd.name
                 f.extension = fd.extension
                 f.uploaded = fd.created
                 await fm.create(f)
+
+                /**
+                 * 2. 将JobID 创建出来的DataSet MetaData化
+                 */
+                const jIds = fd.jobIds
+                await Promise.all(jIds.map( async (jid) => {
+                    const ds = new DataSet()
+                    ds.jobId = jid
+                    await dsm.create(ds)
+                } ) )
             } ))
         } ))
         // phLogger.info(await tmp[0])

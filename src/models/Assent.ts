@@ -22,34 +22,34 @@ class Assent extends Typegoose implements IModelBase<Assent> {
     @prop({default: 0, required: true})
     public version: number
 
-    @prop({ default: "file", required: true })
+    @prop({ default: "file", required: true } )
     public dataType: string // candidate: database, file, stream, application
 
-    @prop({ ref: File, required: false} )
+    @prop({ ref: File, required: false } )
     public file?: Ref<File>
 
-    @prop({ ref: DbSource, required: false} )
+    @prop({ ref: DbSource, required: false } )
     public dbs?: Ref<DbSource>
 
-    @arrayProp({ itemsRef: DataSet, required: false} )
-    public dfs?: Ref<DataSet>[]
+    @arrayProp({ itemsRef: DataSet, required: true } )
+    public dfs: Ref<DataSet>[]
 
-    @arrayProp({ items: String, default: [], required: true} )
+    @arrayProp({ items: String, default: [], required: true } )
     public providers: string[]
 
-    @arrayProp({ items: String, default: [], required: true} )
+    @arrayProp({ items: String, default: [], required: true } )
     public markets: string[]
 
-    @arrayProp({ items: String, default: [], required: true} )
+    @arrayProp({ items: String, default: [], required: true } )
     public molecules: string[]
 
-    @arrayProp({ items: Number, default: [], required: true} )
+    @arrayProp({ items: Number, default: [], required: true } )
     public dataCover: string[]
 
-    @arrayProp({ items: String, default: [], required: true} )
+    @arrayProp({ items: String, default: [], required: true } )
     public geoCover: string[]
 
-    @arrayProp({ items: String, default: [], required: true} )
+    @arrayProp({ items: String, default: [], required: true } )
     public Labels: string[]
 
     public getModel() {
