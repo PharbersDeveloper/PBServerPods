@@ -34,6 +34,7 @@ class UploadFileTransmit {
     public async fileTransmitImpl() {
         const sim = new SandboxIndex().getModel()
         const fdm = new FileDetail().getModel()
+        const fvm = new FileVersion().getModel()
         const fm = new File().getModel()
 
         const contents = await sim.find({})
@@ -44,11 +45,16 @@ class UploadFileTransmit {
                 const fd = await fdm.findOne({
                     _id: id
                 } )
+                const fvid = fd.versions[0]
+                const fv = await fvm.findOne({
+                    _id: fvid
+                } )
+
                 /**
                  * 1. 将FileDetail转成File
                  */
                 const f = new File()
-                f.url = fd.name
+                f.url = fv.where
                 f.fileName = fd.name
                 f.extension = fd.extension
                 f.uploaded = fd.created
