@@ -110,7 +110,7 @@ export default class AppDelegate {
     }
 
     protected generateModels(): any {
-        const prefix = "/dist/models/"
+        const prefix = "/server/dist/src/models/"
         const path = process.env.PH_TS_SANDBOX_HOME + prefix
         const suffix = ".js"
         const result: {[index: string]: any} = {}

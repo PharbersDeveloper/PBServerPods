@@ -19,4 +19,3 @@ func main() {
 	log.Println("Listening...", port)
 	http.ListenAndServe(fmt.Sprint(":", port), mux)
 }
-
