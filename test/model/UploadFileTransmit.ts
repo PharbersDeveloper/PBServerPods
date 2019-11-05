@@ -106,8 +106,21 @@ class UploadFileTransmit {
     }
 
     private cpa_gyc_name_2_tags(name: string, asset: Asset) {
-        phLogger.info(name)
-
+        const tags = name.split("_")
+        if (tags.length < 4) {
+            if (name.indexOf("Lilly") !== -1) {
+                asset.providers = [tags[0]]
+                asset.dataCover = [tags[1], tags[2]]
+            } else if (name.indexOf("cpa") !== -1 || name.indexOf("gyc") !== -1) {
+                asset.providers = [tags[0]]
+            } else {
+                phLogger.info(name)
+                this.chc_name_2_tags(name, asset)
+            }
+        } else {
+            asset.providers = [tags[0], tags[3]]
+            asset.dataCover = [tags[1], tags[2]]
+        }
     }
 
     private chc_name_2_tags(name: string, asset: Asset) {
