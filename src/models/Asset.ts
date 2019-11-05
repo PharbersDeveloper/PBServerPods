@@ -46,7 +46,7 @@ class Asset extends Typegoose implements IModelBase<Asset> {
     @arrayProp({ items: String, default: [], required: true } )
     public molecules: string[]
 
-    @arrayProp({ items: Number, default: [], required: true } )
+    @arrayProp({ items: String, default: [], required: true } )
     public dataCover: string[]
 
     @arrayProp({ items: String, default: [], required: true } )

@@ -125,6 +125,42 @@ class UploadFileTransmit {
 
     private chc_name_2_tags(name: string, asset: Asset) {
         phLogger.info(name)
+        const geo = []
+        if (name.indexOf("北京") !== -1) {
+            geo.push("北京")
+        }
 
+        if (name.indexOf("上海") !== -1) {
+            geo.push("上海")
+        }
+
+        if (name.indexOf("安徽") !== -1) {
+            geo.push("安徽")
+        }
+
+        if (name.indexOf("山东") !== -1) {
+            geo.push("山东")
+        }
+
+        if (name.indexOf("广州") !== -1) {
+            geo.push("广州")
+        }
+
+        if (name.indexOf("福建") !== -1) {
+            geo.push("福建")
+        }
+
+        if (name.indexOf("江苏") !== -1) {
+            geo.push("江苏")
+        }
+        asset.geoCover = geo
+
+        if (name.indexOf("【") !== -1) {
+            const start = name.indexOf("【")
+            const end = name.indexOf("】")
+            const length = end - start - 1
+            const provider = name.substr(start + 1, length)
+            asset.providers = [provider]
+        }
     }
 }
