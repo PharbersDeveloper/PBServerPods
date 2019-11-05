@@ -5,13 +5,21 @@ models:
     reg: file-versions
   - file: FileDetail
     reg: file-details
+  - file: Assent
+    reg: assents
+  - file: DataSet
+    reg: data-sets
+  - file: DbSource
+    reg: db-sources
+  - file: File
+    reg: files
 mongo:
   algorithm: mongodb
   host: pharbers.com
   port: 5555
   username: alfredyang
   pwd: "12345"
-  coll: "pharbers-sandbox-2"
+  coll: "pharbers-sandbox-3"
   auth: false
 oauth:
   debugging: true
