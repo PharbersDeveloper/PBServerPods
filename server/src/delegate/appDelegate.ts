@@ -12,6 +12,7 @@ import { ServerConf } from "../configFactory/serverConf"
 import KafkaDelegate from "../kafka/KafkaDelegate"
 import PhLogger from "../logger/phLogger"
 import { urlEncodeFilterParser } from "./urlEncodeFilterParser"
+import phLogger from "../logger/phLogger"
 
 /**
  * The summary section should be brief. On a documentation web site,
@@ -39,6 +40,7 @@ export default class AppDelegate {
         this.configMiddleware()
         this.connect2MongoDB()
         this.generateRoutes(this.getModelRegistry())
+        this.generateModules()
         this.listen2Port(8080)
     }
 
@@ -197,6 +199,26 @@ export default class AppDelegate {
         this.app.post(relation, Front.apiRequest)
         this.app.patch(relation, Front.apiRequest)
         this.app.delete(relation, Front.apiRequest)
+    }
+
+    protected generateModules() {
+        phLogger.info(this.conf.modules)
+
+        this.conf.modules.forEach( (module) => {
+
+            const host = module.host
+            const port = module.port
+
+            if (module.protocol === "http") {
+                const sql = module.routers.forEach( (router) => {
+                    this.router.post("/" + router, async (req, res) => {
+                        res.json( await axios.get(`http://${host}:${port}/${router}`, null))
+                    } )
+                } )
+            } else {
+                phLogger.fatal("not implemented!!")
+            }
+        } )
     }
 
     protected listen2Port(port: number) {

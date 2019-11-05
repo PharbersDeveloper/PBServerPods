@@ -5,6 +5,7 @@ import { ModelConf } from "./modelConf"
 import { MongoConf } from "./mongoConf"
 import { OAuthConf } from "./oauthConf"
 import { OssConf } from "./ossConf"
+import { ModuleConf } from "./moduleConf"
 
 @JsonObject("ServerConf")
 export class ServerConf {
@@ -23,4 +24,7 @@ export class ServerConf {
 
     @JsonProperty("kfk", KfkConf)
     public kfk: KfkConf = undefined
+
+    @JsonProperty("modules", [ModuleConf])
+    public modules: ModuleConf[] = undefined
 }

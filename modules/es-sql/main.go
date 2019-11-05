@@ -10,11 +10,12 @@ import (
 const EsServer string = "http://192.168.100.174:9200"
 
 func main() {
+
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/sql", handler.SqlHandler)
 
-	port := "3000"
+	port := "30000"
 
 	log.Println("Listening...", port)
 	http.ListenAndServe(fmt.Sprint(":", port), mux)

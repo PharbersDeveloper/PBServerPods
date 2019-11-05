@@ -34,3 +34,9 @@ oss:
 kfk:
   kafkaBrokerList: "http://pharbers.com:8082"
   kafkaTopic: "alfredtest"
+modules:
+  - protocol: http
+    host: localhost
+    port: 30000
+    routers:
+      - sql
