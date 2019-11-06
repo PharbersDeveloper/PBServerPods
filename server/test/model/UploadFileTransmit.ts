@@ -41,9 +41,11 @@ class UploadFileTransmit {
         const am = new Asset().getModel()
 
         const contents = await sim.find({})
+        // @ts-ignore
         await Promise.all(contents.map( async (content) => {
             const owner = content.account
             const filesIds = content.files
+            // @ts-ignore
             await Promise.all(filesIds.map( async (id) => {
                 const fd = await fdm.findOne({
                     _id: id
@@ -68,6 +70,7 @@ class UploadFileTransmit {
                  * 2. 将JobID 创建出来的DataSet MetaData化
                  */
                 const jIds = fd.jobIds
+                // @ts-ignore
                 const dfs = await Promise.all(jIds.map( async (jid) => {
                     const ds = new DataSet()
                     ds.jobId = jid
@@ -83,6 +86,7 @@ class UploadFileTransmit {
                 asset.traceId = fd.traceID
                 asset.dataType = "file"
                 asset.file = fc
+                // @ts-ignore
                 asset.dfs = dfs
                 asset.owner = fd.ownerID
                 asset.accessibility = "w"
