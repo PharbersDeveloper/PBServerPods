@@ -1,2 +1,0 @@
-{"Time": "2019-11-05 21:02:51","Hostname": "AlfredYangMac","ProjectName": "ph-sandbox","File": "events.js:215","Func": "","JobId": "","TraceId": "","UserId": "","Message": "::1 - GET /sql HTTP/1.1 404 ","Level": "ERROR"}
-{"Time": "2019-11-05 21:07:44","Hostname": "AlfredYangMac","ProjectName": "ph-sandbox","File": "events.js:215","Func": "","JobId": "","TraceId": "","UserId": "","Message": "::1 - POST /sql HTTP/1.1 404 ","Level": "ERROR"}
