@@ -1,6 +1,6 @@
 models:
   - file: SandboxIndex
-    reg: sandbox-indices
+    reg: PhSandBox-indices
   - file: FileVersion
     reg: file-versions
   - file: FileDetail
@@ -33,7 +33,7 @@ oss:
   region: oss-cn-beijing
   accessKeyId: LTAIEoXgk4DOHDGi
   accessKeySecret: x75sK6191dPGiu9wBMtKE6YcBBh8EI
-  bucket: pharbers-sandbox
+  bucket: pharbers-PhSandBox
 
 kfk:
   kafkaBrokerList: "http://pharbers.com:8082"
@@ -45,3 +45,8 @@ modules:
     port: 30000
     routers:
       - sql
+  - protocol: http
+      host: localhost
+      port: 30001
+      routers:
+        - identify
