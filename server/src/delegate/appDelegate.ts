@@ -212,7 +212,8 @@ export default class AppDelegate {
             if (module.protocol === "http") {
                 const sql = module.routers.forEach( (router) => {
                     this.router.post("/" + router, async (req, res) => {
-                        res.json( await axios.get(`http://${host}:${port}/${router}`, null))
+                        const result = await axios.post(`http://${host}:${port}/${router}`, req.body)
+                        res.json(result.data)
                     } )
                 } )
             } else {
