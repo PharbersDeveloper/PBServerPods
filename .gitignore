@@ -2,7 +2,7 @@
 .idea/
 server/dist
 log
-server/node_modules
+# server/node_modules
 server/docs
 .nyc_output
 tmp/*
