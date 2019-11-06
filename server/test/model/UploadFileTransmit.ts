@@ -18,7 +18,7 @@ class UploadFileTransmit {
 
     public static before() {
         PhLogger.info(`before starting the test`)
-        mongoose.connect("mongodb://pharbers.com:5555/pharbers-sandbox-3")
+        mongoose.connect("mongodb://127.0.0.1:27017/pharbers-sandbox-3")
     }
 
     public static after() {

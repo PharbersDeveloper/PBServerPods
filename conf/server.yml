@@ -13,6 +13,7 @@ models:
     reg: db-sources
   - file: File
     reg: files
+
 mongo:
   algorithm: mongodb
 #  host: pharbers.com
@@ -23,19 +24,23 @@ mongo:
   pwd: "12345"
   coll: "pharbers-sandbox-3"
   auth: false
+
 oauth:
   debugging: true
   oauthHost: oauth.pharbers.com
   oauthPort: ""
   oauthApiNamespace: "v0"
+
 oss:
   region: oss-cn-beijing
   accessKeyId: LTAIEoXgk4DOHDGi
   accessKeySecret: x75sK6191dPGiu9wBMtKE6YcBBh8EI
   bucket: pharbers-sandbox
+
 kfk:
   kafkaBrokerList: "http://pharbers.com:8082"
   kafkaTopic: "alfredtest"
+
 modules:
   - protocol: http
     host: localhost
