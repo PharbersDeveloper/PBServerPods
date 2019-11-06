@@ -16,10 +16,8 @@ models:
 
 mongo:
   algorithm: mongodb
-#  host: pharbers.com
-#  port: 5555
-  host: 127.0.0.1
-  port: 27017
+  host: pharbers.com
+  port: 5555
   username: alfredyang
   pwd: "12345"
   coll: "pharbers-sandbox-3"
