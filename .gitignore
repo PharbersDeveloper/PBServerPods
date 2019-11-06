@@ -1,5 +1,15 @@
 
-\.idea/
+.idea/
+server/dist
+log
+server/node_modules
+server/docs
+.nyc_output
+tmp/*
+secrets/*
+*.DS_Store
+
+go\.sum
 
 go\.sum
 
