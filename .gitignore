@@ -11,6 +11,6 @@ secrets/*
 
 go\.sum
 
-go\.sum
-
 resources/
+
+*.swp
