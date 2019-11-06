@@ -84,9 +84,10 @@ func dealAboveBuckets(data map[string]interface{}) map[string][]interface{} {
 				delete(bucket, "doc_count")
 
 				sub := dealAboveBuckets(bucket)
-				//TODO: check one map
+				//TODO: 优雅的 check subMap
 				if len(sub) > 1 {
 					for k, _ := range bucket {
+						result[k] = append(result[k], sub[k][:]...)
 						delete(sub, k)
 					}
 				}
@@ -105,6 +106,3 @@ func dealAboveBuckets(data map[string]interface{}) map[string][]interface{} {
 
 	return result
 }
-
-
-
