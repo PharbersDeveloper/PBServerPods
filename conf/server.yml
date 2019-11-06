@@ -1,0 +1,42 @@
+models:
+  - file: SandboxIndex
+    reg: sandbox-indices
+  - file: FileVersion
+    reg: file-versions
+  - file: FileDetail
+    reg: file-details
+  - file: Asset
+    reg: assets
+  - file: DataSet
+    reg: data-sets
+  - file: DbSource
+    reg: db-sources
+  - file: File
+    reg: files
+mongo:
+  algorithm: mongodb
+  host: pharbers.com
+  port: 5555
+  username: alfredyang
+  pwd: "12345"
+  coll: "pharbers-sandbox-3"
+  auth: false
+oauth:
+  debugging: true
+  oauthHost: oauth.pharbers.com
+  oauthPort: ""
+  oauthApiNamespace: "v0"
+oss:
+  region: oss-cn-beijing
+  accessKeyId: LTAIEoXgk4DOHDGi
+  accessKeySecret: x75sK6191dPGiu9wBMtKE6YcBBh8EI
+  bucket: pharbers-sandbox
+kfk:
+  kafkaBrokerList: "http://pharbers.com:8082"
+  kafkaTopic: "alfredtest"
+modules:
+  - protocol: http
+    host: localhost
+    port: 30000
+    routers:
+      - sql
