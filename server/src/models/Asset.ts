@@ -53,7 +53,7 @@ class Asset extends Typegoose implements IModelBase<Asset> {
     public geoCover: string[]
 
     @arrayProp({ items: String, default: [], required: true } )
-    public Labels: string[]
+    public labels: string[]
 
     public getModel() {
         return this.getModelForClass(Asset)
