@@ -50,7 +50,7 @@ class ModifyTagsExport2Excel {
 
         const result = await Promise.all(allAm.map ( async (asset) => {
             let sourceType = this.concatArray2String(asset.providers).split(",")
-            let source:string[] = []
+            const source:string[] = []
 
             if (sourceType.indexOf("CPA") !== -1) {
                 source.push("CPA")
