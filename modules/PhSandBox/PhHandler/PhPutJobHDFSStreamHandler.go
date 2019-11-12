@@ -38,13 +38,13 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = p.Produce("oss_task_submit", []byte(""), buf.Bytes())
-	if err != nil {
-		log.NewLogicLoggerBuilder().Build().Error(err.Error())
-		result = err.Error()
-		return
-	}
-	result = "ok"
-	w.Header().Set("Content-Type", "application/json")
-	_, _ = w.Write([]byte(result))
+	//err = p.Produce("oss_task_submit", []byte(""), buf.Bytes())
+	//if err != nil {
+	//	log.NewLogicLoggerBuilder().Build().Error(err.Error())
+	//	result = err.Error()
+	//	return
+	//}
+	//result = "ok"
+	//w.Header().Set("Content-Type", "application/json")
+	//_, _ = w.Write([]byte(result))
 }

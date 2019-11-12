@@ -15,10 +15,18 @@ import (
 )
 
 type OssTask struct {
-	JobId    string
-	TraceId  string
-	OssKey   string
-	FileType string
+	JobId     string
+	TraceId   string
+	OssKey    string
+	FileType  string
+	FileName  string
+	SheetName string
+	Labels    []string
+	DataCover []string
+	GeoCover  []string
+	Markets   []string
+	Molecules []string
+	Providers []string
 }
 
 func NewOssTaskWriter(writer io.Writer, codec container.Codec, recordsPerBlock int64) (*container.Writer, error) {
@@ -43,7 +51,7 @@ func NewOssTask() *OssTask {
 }
 
 func (r *OssTask) Schema() string {
-	return "{\"fields\":[{\"name\":\"jobId\",\"type\":\"string\"},{\"name\":\"traceId\",\"type\":\"string\"},{\"name\":\"ossKey\",\"type\":\"string\"},{\"name\":\"fileType\",\"type\":\"string\"}],\"name\":\"OssTask\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"jobId\",\"type\":\"string\"},{\"name\":\"traceId\",\"type\":\"string\"},{\"name\":\"ossKey\",\"type\":\"string\"},{\"name\":\"fileType\",\"type\":\"string\"},{\"name\":\"fileName\",\"type\":\"string\"},{\"name\":\"sheetName\",\"type\":\"string\"},{\"name\":\"labels\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"dataCover\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"geoCover\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"markets\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"molecules\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"providers\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"OssTask\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
 }
 
 func (r *OssTask) SchemaName() string {
@@ -72,6 +80,28 @@ func (r *OssTask) Get(i int) types.Field {
 		return (*types.String)(&r.OssKey)
 	case 3:
 		return (*types.String)(&r.FileType)
+	case 4:
+		return (*types.String)(&r.FileName)
+	case 5:
+		return (*types.String)(&r.SheetName)
+	case 6:
+		r.Labels = make([]string, 0)
+		return (*ArrayStringWrapper)(&r.Labels)
+	case 7:
+		r.DataCover = make([]string, 0)
+		return (*ArrayStringWrapper)(&r.DataCover)
+	case 8:
+		r.GeoCover = make([]string, 0)
+		return (*ArrayStringWrapper)(&r.GeoCover)
+	case 9:
+		r.Markets = make([]string, 0)
+		return (*ArrayStringWrapper)(&r.Markets)
+	case 10:
+		r.Molecules = make([]string, 0)
+		return (*ArrayStringWrapper)(&r.Molecules)
+	case 11:
+		r.Providers = make([]string, 0)
+		return (*ArrayStringWrapper)(&r.Providers)
 
 	}
 	panic("Unknown field index")

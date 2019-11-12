@@ -13,48 +13,36 @@ models:
     reg: db-sources
   - file: File
     reg: files
-
 mongo:
   algorithm: mongodb
   host: 127.0.0.1
   port: 27017
-  username: alfredyang
-  pwd: "12345"
-  coll: "pharbers-sandbox-4"
+  username: ""
+  pwd: ""
+  coll: "alex"
   auth: false
-
 oauth:
   debugging: true
   oauthHost: oauth.pharbers.com
   oauthPort: ""
   oauthApiNamespace: "v0"
-
 oss:
   region: oss-cn-beijing
   accessKeyId: LTAIEoXgk4DOHDGi
   accessKeySecret: x75sK6191dPGiu9wBMtKE6YcBBh8EI
   bucket: pharbers-PhSandBox
-
 kfk:
   kafkaBrokerList: "http://pharbers.com:8082"
   kafkaTopic: "alfredtest"
-
 modules:
   - protocol: http
     host: localhost
     port: 30000
     routers:
       - sql
-
   - protocol: http
-      host: localhost
-      port: 30001
-      routers:
-        - identify
-        - putJob2Stream
-
-  - protocol: http
-      host: localhost
-      port: 30002
-      routers:
-        - convertSchema2Mongo
+    host: localhost
+    port: 30001
+    routers:
+      - identify
+      - putJob2Stream

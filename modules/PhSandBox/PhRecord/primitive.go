@@ -76,6 +76,20 @@ func encodeInt(w io.Writer, byteCount int, encoded uint64) error {
 
 }
 
+func writeArrayString(r []string, w io.Writer) error {
+	err := writeLong(int64(len(r)), w)
+	if err != nil || len(r) == 0 {
+		return err
+	}
+	for _, e := range r {
+		err = writeString(e, w)
+		if err != nil {
+			return err
+		}
+	}
+	return writeLong(0, w)
+}
+
 func writeLong(r int64, w io.Writer) error {
 	downShift := uint64(63)
 	encoded := uint64((r << 1) ^ (r >> downShift))
@@ -101,6 +115,38 @@ func writeOssTask(r *OssTask, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeString(r.FileName, w)
+	if err != nil {
+		return err
+	}
+	err = writeString(r.SheetName, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayString(r.Labels, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayString(r.DataCover, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayString(r.GeoCover, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayString(r.Markets, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayString(r.Molecules, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayString(r.Providers, w)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -116,4 +162,25 @@ func writeString(r string, w io.Writer) error {
 		_, err = w.Write([]byte(r))
 	}
 	return err
+}
+
+type ArrayStringWrapper []string
+
+func (_ *ArrayStringWrapper) SetBoolean(v bool)                { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) SetInt(v int32)                   { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) SetLong(v int64)                  { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) SetFloat(v float32)               { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) SetDouble(v float64)              { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) SetBytes(v []byte)                { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) SetString(v string)               { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) SetUnionElem(v int64)             { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) Get(i int) types.Field            { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) AppendMap(key string) types.Field { panic("Unsupported operation") }
+func (_ *ArrayStringWrapper) Finalize()                        {}
+func (_ *ArrayStringWrapper) SetDefault(i int)                 { panic("Unsupported operation") }
+func (r *ArrayStringWrapper) AppendArray() types.Field {
+	var v string
+
+	*r = append(*r, v)
+	return (*types.String)(&(*r)[len(*r)-1])
 }
