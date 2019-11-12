@@ -135,15 +135,17 @@ export default class AppDelegate {
         if (auth) {
             PhLogger.info(`connect mongodb with ${ username } and ${ pwd }`)
             mongoose.connect(prefix + "://" + username + ":" + pwd + "@" + host + ":" + port + "/" + coll,
-                { useNewUrlParser: true },
-                (err) => {
+                // { useNewUrlParser: true },
+                (err: any) => {
                     if (err != null) {
                         PhLogger.error(err)
                     }
                 })
         } else {
             PhLogger.info(`connect mongodb without auth`)
-            mongoose.connect(prefix + "://" + host + ":" + port + "/" + coll, { useNewUrlParser: true }, (err) => {
+            mongoose.connect(prefix + "://" + host + ":" + port + "/" + coll,
+                // { useNewUrlParser: true },
+                (err: any) => {
                 if (err != null) {
                     PhLogger.error(err)
                 }
