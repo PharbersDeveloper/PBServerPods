@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>pharbers.com</groupId>
+    <artifactId>PhConvertSchema2Mongo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- Maven profiles allow you to support both Scala 2.10, 2.11 and Scala 2.12 with
+    the right dependencies for modules specified for each version separately -->
+    <profiles>
+        <profile>
+            <id>scala-2.11</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <properties>
+                <scalaVersion>2.11.8</scalaVersion>
+                <scalaBinaryVersion>2.11</scalaBinaryVersion>
+                <spark.version>2.3.0</spark.version>
+                <hadoop.version>2.7.2</hadoop.version>
+                <scalatest.version>3.0.1</scalatest.version>
+                <log4j.version>2.11.2</log4j.version>
+                <confluent.version>5.2.1</confluent.version>
+                <kafka.version>2.2.1</kafka.version>
+                <confluent.version>5.2.1</confluent.version>
+            </properties>
+
+            <repositories>
+                <repository>
+                    <id>Sonatype-public</id>
+                    <name>SnakeYAML repository</name>
+                    <url>http://oss.sonatype.org/content/groups/public/</url>
+                </repository>
+                <repository>
+                    <id>confluent</id>
+                    <url>http://packages.confluent.io/maven/</url>
+                </repository>
+            </repositories>
+
+            <dependencies>
+                <!-- scala lib -->
+                <dependency>
+                    <groupId>org.scala-lang</groupId>
+                    <artifactId>scala-library</artifactId>
+                    <version>${scalaVersion}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.scala-lang.modules</groupId>
+                    <artifactId>scala-xml_${scalaBinaryVersion}</artifactId>
+                    <version>1.0.6</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.scala-lang.modules</groupId>
+                    <artifactId>scala-parser-combinators_${scalaBinaryVersion}</artifactId>
+                    <version>1.0.5</version>
+                </dependency>
+
+                <!-- Mongo -->
+                <dependency>
+                    <groupId>org.mongodb</groupId>
+                    <artifactId>casbah_2.11</artifactId>
+                    <version>3.1.1</version>
+                    <type>pom</type>
+                </dependency>
+
+                <!-- FastJson -->
+                <dependency>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                    <version>1.2.58</version>
+                </dependency>
+
+                <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+                <dependency>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                    <version>3.4</version>
+                </dependency>
+
+                <!-- hadoop -->
+                <dependency>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-common</artifactId>
+                    <version>${hadoop.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-hdfs</artifactId>
+                    <version>${hadoop.version}</version>
+                </dependency>
+
+                <!--log4j-->
+                <dependency>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                    <version>${log4j.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-core</artifactId>
+                    <version>${log4j.version}</version>
+                </dependency>
+
+                <!-- https://mvnrepository.com/artifact/com.typesafe.scala-logging/scala-logging -->
+                <dependency>
+                    <groupId>com.typesafe.scala-logging</groupId>
+                    <artifactId>scala-logging_2.11</artifactId>
+                    <version>3.4.0</version>
+                </dependency>
+
+                <!-- specs test -->
+                <dependency>
+                    <groupId>org.specs2</groupId>
+                    <artifactId>specs2_2.11</artifactId>
+                    <version>3.7</version>
+                    <type>pom</type>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.scalatest</groupId>
+                    <artifactId>scalatest_2.11</artifactId>
+                    <version>3.0.1</version>
+                    <scope>test</scope>
+                </dependency>
+                <!--confluent-->
+                <!-- https://mvnrepository.com/artifact/io.confluent/kafka-schema-registry -->
+                <dependency>
+                    <groupId>io.confluent</groupId>
+                    <artifactId>kafka-schema-registry</artifactId>
+                    <version>${confluent.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.confluent</groupId>
+                    <artifactId>kafka-avro-serializer</artifactId>
+                    <version>${confluent.version}</version>
+                </dependency>
+                <!-- https://mvnrepository.com/artifact/io.confluent/common-config -->
+                <dependency>
+                    <groupId>io.confluent</groupId>
+                    <artifactId>common-config</artifactId>
+                    <version>${confluent.version}</version>
+                </dependency>
+
+            </dependencies>
+        </profile>
+    </profiles>
+    <build>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <!--<include>**/*.json</include>-->
+                    <!--<include>**/*.properties</include>-->
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>scala-test-compile</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <args>
+                        <!-- work-around for https://issues.scala-lang.org/browse/SI-8358 -->
+                        <arg>-nobootcp</arg>
+                    </args>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest-maven-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <junitxml>.</junitxml>
+                    <filereports>WDF TestSuite.txt</filereports>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

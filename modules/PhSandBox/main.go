@@ -17,7 +17,7 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/identify", Handler.IdentifyHandler)
-	//mux.HandleFunc("/", nil)
+	mux.HandleFunc("/putJob2Stream", Handler.PutJobHDFS2Stream)
 	//mux.HandleFunc("/", nil)
 	//mux.HandleFunc("/", nil)
 

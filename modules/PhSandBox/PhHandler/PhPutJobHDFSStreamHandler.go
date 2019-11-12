@@ -11,6 +11,7 @@ import (
 )
 
 func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
+	var result = ""
 	params := map[string]string{}
 	res, _ := ioutil.ReadAll(r.Body)
 	_ = json.Unmarshal(res, &params)
@@ -18,6 +19,7 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 	p, err := kafka.NewKafkaBuilder().BuildProducer()
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
+		result = err.Error()
 		return
 	}
 	record := Record.OssTask {
@@ -32,12 +34,17 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 	err = record.Serialize(&buf)
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
+		result = err.Error()
 		return
 	}
 
 	err = p.Produce("oss_task_submit", []byte(""), buf.Bytes())
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
+		result = err.Error()
 		return
 	}
+	result = "ok"
+	w.Header().Set("Content-Type", "application/json")
+	_, _ = w.Write([]byte(result))
 }

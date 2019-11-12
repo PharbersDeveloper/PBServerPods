@@ -45,8 +45,16 @@ modules:
     port: 30000
     routers:
       - sql
+
   - protocol: http
       host: localhost
       port: 30001
       routers:
         - identify
+        - putJob2Stream
+
+  - protocol: http
+      host: localhost
+      port: 30002
+      routers:
+        - convertSchema2Mongo
