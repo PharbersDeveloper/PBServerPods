@@ -136,10 +136,27 @@
     "@types/bson" "*"
     "@types/node" "*"
 
+"@types/mongodb@~3.1.28":
+  version "3.1.32"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.1.32.tgz#f57cf9ab3fba2ed3bf0345e64ed46bca98e49c9f"
+  integrity sha512-4epw+XB6XbpeTeK4dvsBO0hGwKOA+1QJF2Dt2Dl0HCOjqgAKx8/9ohuiWLi14TjXtBjo4hO7ibXbnbkQepVyeA==
+  dependencies:
+    "@types/bson" "*"
+    "@types/node" "*"
+
 "@types/mongoose@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.0.2.tgz#7fe0015bb473d70e33ac953cdc56d60a5fe2e3f9"
   integrity sha512-jvKEtqBZqIlIpIyq03i98KQ7/UmEyTxU/y/nnCmr/aS0V8LMs3+HiTvVb7WrKvXVIyZdBzhRjeyFwGeH4lCrMA==
+  dependencies:
+    "@types/events" "*"
+    "@types/mongodb" "*"
+    "@types/node" "*"
+
+"@types/mongoose@~5.0.2":
+  version "5.0.18"
+  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.0.18.tgz#4cb671e870f8312df86d734f9563a5c1b9d1ec6e"
+  integrity sha512-NTZYnHKJcIuVU7sqojZVG84SoitGEBHC6iDAT/hgGIzDHZ+mwO+snjUnglkHdS9+jJ2YssCJbSZp80i86fCBvQ==
   dependencies:
     "@types/events" "*"
     "@types/mongodb" "*"
@@ -451,7 +468,7 @@ browser-stdout@1.3.1:
   resolved "https://registry.yarnpkg.com/browser-stdout/-/browser-stdout-1.3.1.tgz#baa559ee14ced73452229bad7326467c61fabd60"
   integrity sha512-qhAVI1+Av2X7qelOfAIYwXONood6XlZE/fXaBSmW/T5SzLAmCgzi+eiWE7fUvbHaeNBQH13UftjpXxsfLkMpgw==
 
-bson@~1.0.4:
+bson@~1.0.4, bson@~1.0.5:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/bson/-/bson-1.0.9.tgz#12319f8323b1254739b7c6bef8d3e89ae05a2f57"
   integrity sha512-IQX9/h7WdMBIW/q/++tGd+emQr0XMdeZ6icnT/74Xk9fnabWn+gZgpE+9V+gujL3hhJOoNrnDVY7tWdzc7NUTg==
@@ -1508,6 +1525,11 @@ kareem@2.0.5:
   resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.0.5.tgz#437e1e40f1be304ee21b3e4790eb3a05418b35ca"
   integrity sha512-dfvpj3mCGJLZuADInhYrKaXkGarJxDqnTEiF91wK6fqwdCRmN+O4aEp8575UjZlQzDkzLI1WDL1uU7vyupURqw==
 
+kareem@2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.0.7.tgz#8d260366a4df4236ceccec318fcf10c17c5beb22"
+  integrity sha512-p8+lEpsNs4N0fvNOC1/zzDO0wDrD3Pb1G+OwfIG+gKVK3MyY5jeaGYh+9Qx6jb4fEG2b3E6U98vaE9MH7Gilsw==
+
 kind-of@^3.0.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -1742,12 +1764,27 @@ mongodb-core@3.0.2:
     bson "~1.0.4"
     require_optional "^1.0.1"
 
+mongodb-core@3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-3.0.8.tgz#8d401f4eab6056c0d874a3d5844a4844f761d4d7"
+  integrity sha512-dFxfhH9N7ohuQnINyIl6dqEF8sYOE0WKuymrFf3L3cipJNrx+S8rAbNOTwa00/fuJCjBMJNFsaA+R2N16//UIw==
+  dependencies:
+    bson "~1.0.4"
+    require_optional "^1.0.1"
+
 mongodb@3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.0.2.tgz#28172302ed4e9388d8091e2cc4618057e6f5debc"
   integrity sha512-E50FmpSQchZAimn2uPIegoNoH9UQYR1yiGHtQPmmg8/Ekc97w6owHoqaBoz+assnd9V5LxMzmQ/VEWMsQMgZhQ==
   dependencies:
     mongodb-core "3.0.2"
+
+mongodb@3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.0.8.tgz#2c1daecac9a0ec2de2f2aea4dc97d76ae70f8951"
+  integrity sha512-mj7yIUyAr9xnO2ev8pcVJ9uX7gSum5LLs1qIFoWLxA5Il50+jcojKtaO1/TbexsScZ9Poz00Pc3b86GiSqJ7WA==
+  dependencies:
+    mongodb-core "3.0.8"
 
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
@@ -1771,10 +1808,32 @@ mongoose@5.0.7:
     regexp-clone "0.0.1"
     sliced "1.0.1"
 
+mongoose@~5.0.7:
+  version "5.0.18"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.0.18.tgz#2d04c70f0800959b4c8180e5e70db13bc18d3826"
+  integrity sha512-13+gKxvViIVp4esPkgQYTdfisLLWxghvsj7aBg4oBurvb0LAXcSXFZpFORZnxtOdyxM7kJiSV9kjFjerEm3Bhw==
+  dependencies:
+    async "2.1.4"
+    bson "~1.0.5"
+    kareem "2.0.7"
+    lodash.get "4.4.2"
+    mongodb "3.0.8"
+    mongoose-legacy-pluralize "1.0.2"
+    mpath "0.4.1"
+    mquery "3.0.0"
+    ms "2.0.0"
+    regexp-clone "0.0.1"
+    sliced "1.0.1"
+
 mpath@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.3.0.tgz#7a58f789e9b5fd3c94520634157960f26bd5ef44"
   integrity sha1-elj3iem1/TyUUgY0FXlg8mvV70Q=
+
+mpath@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.4.1.tgz#ed10388430380bf7bbb5be1391e5d6969cb08e89"
+  integrity sha512-NNY/MpBkALb9jJmjpBlIi6GRoLveLUM0pJzgbp9vY9F7IQEb/HREC/nxrixechcQwd1NevOhJnWWV8QQQRE+OA==
 
 mquery@3.0.0:
   version "3.0.0"
