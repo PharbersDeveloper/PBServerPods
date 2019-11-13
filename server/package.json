@@ -5,14 +5,14 @@
   "main": "dist/src/index.js",
   "scripts": {
     "docs": "typedoc -out docs src",
+    "prepare": "./prepare.sh",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
     "pretest": "tsc",
     "test": "mocha",
-    "watch": "mocha-typescript-watch",
-    "prepare": "tsc"
+    "watch": "mocha-typescript-watch"
   },
   "keywords": [
     "Sandbox"
@@ -27,7 +27,6 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.5",
     "@types/uuid": "^3.4.6",
-    
     "ali-oss": "^6.1.1",
     "axios": "^0.19.0",
     "chai": "^4.2.0",
