@@ -5,14 +5,14 @@
   "main": "dist/src/index.js",
   "scripts": {
     "docs": "typedoc -out docs src",
+    "prepare": "./prepare.sh",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
     "pretest": "tsc",
     "test": "mocha",
-    "watch": "mocha-typescript-watch",
-    "prepare": "tsc"
+    "watch": "mocha-typescript-watch"
   },
   "keywords": [
     "Sandbox"
@@ -32,7 +32,6 @@
     "chai": "^4.2.0",
     "express": "^4.17.1",
     "js-yaml": "^3.13.1",
-    "json-api": "^3.0.0-rc.6.0.1",
     "json2typescript": "^1.2.3",
     "log4js": "^5.3.0",
     "mocha": "^6.2.2",
@@ -41,7 +40,11 @@
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.16",
     "typedoc": "^0.15.0",
+    "mongoose": "~5.0.7",
     "typegoose": "~4.0.1",
+    "@types/mongoose": "~5.0.2",
+    "@types/mongodb": "~3.1.28",
+    "json-api": "^3.0.0-rc.6.0.1",
     "uuid": "^3.3.3",
     "xlsx": "^0.15.1"
   },
