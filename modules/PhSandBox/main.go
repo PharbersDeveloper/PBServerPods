@@ -18,7 +18,6 @@ func main() {
 
 	mux.HandleFunc("/identify", Handler.IdentifyHandler)
 	mux.HandleFunc("/putJob2Stream", Handler.PutJobHDFS2Stream)
-	mux.HandleFunc("/updateMongoWithJobId", Handler.UpdateMongoWithJobId)
 	//mux.HandleFunc("/", nil)
 
 	port := "30001"
