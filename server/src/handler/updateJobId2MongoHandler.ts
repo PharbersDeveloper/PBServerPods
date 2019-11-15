@@ -29,10 +29,12 @@ export class UpdateJobId2MongoHandler {
     async updateJobId2Datasets(body: any) {
         const jobId = body.jobId
         const ds = await new DataSet().getModel().findOne({jobId})
-        ds.colNames = body.columnName
-        ds.length = body.length
+        if (body.columnName !== null && body.columnName !== undefined) {
+            ds.colNames = body.columnName
+            ds.description = body.sheetName
+            ds.length = body.length
+        }
         ds.url = body.path
-        ds.description = body.sheetName
         await ds.save()
     }
 }
