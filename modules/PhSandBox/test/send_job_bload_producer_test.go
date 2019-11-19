@@ -13,6 +13,7 @@ import (
 func TestSendJobBloodProducer(t *testing.T) {
 	env.SetLocalEnv()
 	t.Parallel()
+
 	Convey("SendDataSet Producer Test", t, func() {
 		p, err := kafka.NewKafkaBuilder().BuildProducer()
 		if err != nil {
@@ -21,7 +22,7 @@ func TestSendJobBloodProducer(t *testing.T) {
 		}
 
 		record, err := kafka.EncodeAvroRecord(&PhDataSet.DataSet{
-			ParentIds: []string{"001"}, //JobID
+			ParentIds: []string{}, //JobID
 			JobId: "001",
 			ColName: []string{"A", "B", "C"},
 			TabName: "TabName",

@@ -66,45 +66,58 @@ func dataSetFunc(key interface{}, value interface{}) {
 	// 查询是否有Job
 	jobId := msgValue.JobId
 	jobResult := http.Get("http://localhost:8080/jobs?filter=(:and,(jobId,:eq,`"+ jobId +"`))")
-	findResult := findResult{}
-	err = json.Unmarshal(jobResult, &findResult)
+	isFindResult := findResult{}
+	err = json.Unmarshal(jobResult, &isFindResult)
 	if err != nil { log.NewLogicLoggerBuilder().Build().Error(err.Error());return }
 
 	var jobObjId = ""
 
-	//if len(findResult.Data) > 0 {
-	//	jobObjId = findResult.Data[0]["id"].(string)
-	//} else {
-	//	// 创建Job记录
-	//	timeN := time.Now().UnixNano() / 1e6
-	//	jobParam, err := json.Marshal(map[string]interface{}{
-	//		"data": map[string]interface{}{
-	//			"attributes": job{
-	//				JobId: jobId,
-	//				Status: "commit",
-	//				Create: timeN,
-	//				Update: timeN,
-	//			},
-	//			"type": "jobs",
-	//		},
-	//	})
-	//	jobInsResult := http.Post("http://localhost:8080/jobs",
-	//		map[string]string{"Content-Type": "application/vnd.api+json"},
-	//		strings.NewReader(string(jobParam)))
-	//	jobInsertResult := insertResult{}
-	//	err = json.Unmarshal(jobInsResult, &jobInsertResult)
-	//	if err != nil {log.NewLogicLoggerBuilder().Build().Error(err.Error());return}
-	//	jobObjId = jobInsertResult.Data["id"].(string)
-	//}
+	if len(isFindResult.Data) > 0 {
+		jobObjId = isFindResult.Data[0]["id"].(string)
+	} else {
+		// 创建Job记录
+		timeN := time.Now().UnixNano() / 1e6
+		jobParam, err := json.Marshal(map[string]interface{}{
+			"data": map[string]interface{}{
+				"attributes": job{
+					JobId: jobId,
+					Status: "commit",
+					Create: timeN,
+					Update: timeN,
+				},
+				"type": "jobs",
+			},
+		})
+		jobInsResult := http.Post("http://localhost:8080/jobs",
+			map[string]string{"Content-Type": "application/vnd.api+json"},
+			strings.NewReader(string(jobParam)))
+		jobInsertResult := insertResult{}
+		err = json.Unmarshal(jobInsResult, &jobInsertResult)
+		if err != nil {log.NewLogicLoggerBuilder().Build().Error(err.Error());return}
+		jobObjId = jobInsertResult.Data["id"].(string)
+	}
 
 	// 创建DataSets记录并与Job记录关联
 	var parentNode []interface{} = []interface{}{}
-	for _, v := range msgValue.ParentIds {
-		parentNode = append(parentNode, map[string]interface{}{
-			"id": v,
-			"type": "data-sets",
-		})
+	var jobObjectIds []string
+	jobIds, _ := json.Marshal(msgValue.ParentIds)
+	// 查出jobs表中是否包含这些id的，包含的取出id，再到dataSets表中查询
+	isContainsResult := http.Get("http://localhost:8080/jobs?filter=(jobId,:in,"+strings.ReplaceAll(string(jobIds), "\"", "")+")")
+	jobData := findResult{}
+	_ = json.Unmarshal(isContainsResult, &jobData)
+
+	for _, v := range jobData.Data {
+		jobObjectIds = append(jobObjectIds, v["id"].(string))
 	}
+
+	http.Get("http://localhost:8080/data-set?filter=(job,:in,"+strings.ReplaceAll(string(jobIds), "\"", "")+")")
+
+	//for _, v := range jobData.Data {
+	//	parentNode = append(parentNode, map[string]interface{}{
+	//		"id": v["id"],
+	//		"type": "data-sets",
+	//	})
+	//}
 
 	dataSetParam, err := json.Marshal(map[string]interface{}{
 		"data": map[string]interface{}{
