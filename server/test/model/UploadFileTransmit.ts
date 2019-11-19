@@ -73,7 +73,7 @@ class UploadFileTransmit {
                 // @ts-ignore
                 const dfs = await Promise.all(jIds.map( async (jid) => {
                     const ds = new DataSet()
-                    ds.jobId = jid
+                    // ds.jobId = jid
                     return await dsm.create(ds)
                 } ) )
 

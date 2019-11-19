@@ -11,13 +11,16 @@ class DbSource extends Typegoose implements IModelBase<DbSource> {
     public url: string
 
     @prop({ default: "", required: true })
-    public userName: number
+    public user: number
 
     @prop({ default: "", required: true })
     public pwd: number
 
     @prop({ default: "", required: true })
     public dbName: number
+
+    @prop({default: 0, required: true})
+    public create: number
 
     public getModel() {
         return this.getModelForClass(DbSource)

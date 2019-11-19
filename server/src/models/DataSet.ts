@@ -1,6 +1,7 @@
 "use strict"
 import {arrayProp, prop, Ref, Typegoose} from "typegoose"
 import IModelBase from "./modelBase"
+import Job from "./Job"
 
 class DataSet extends Typegoose implements IModelBase<DataSet> {
 
@@ -16,11 +17,14 @@ class DataSet extends Typegoose implements IModelBase<DataSet> {
     @prop({ default: "", required: false } )
     public description?: string
 
-    @prop({ ref: DataSet, required: false } )
-    public parent?: Ref<DataSet>
+    @prop({ default: "", required: false } )
+    public tabName?: string
 
-    @prop({ default: "", required: true } )
-    public jobId: string
+    @arrayProp({ itemsRef: DataSet, required: false } )
+    public parent?: Ref<DataSet>[]
+
+    @prop({ ref: Job, required: false })
+    public job?: Ref<Job>
 
     public getModel() {
         return this.getModelForClass(DataSet)

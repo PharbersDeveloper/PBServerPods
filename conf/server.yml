@@ -9,6 +9,8 @@ models:
     reg: assets
   - file: DataSet
     reg: data-sets
+  - file: Job
+    reg: jobs
   - file: DbSource
     reg: db-sources
   - file: File

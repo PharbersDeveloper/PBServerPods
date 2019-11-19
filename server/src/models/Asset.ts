@@ -25,6 +25,9 @@ class Asset extends Typegoose implements IModelBase<Asset> {
     @prop({default: 0, required: true})
     public version: number
 
+    @prop({default: true, required: true})
+    public isNewVersion: boolean
+
     @prop({ default: "file", required: true } )
     public dataType: string // candidate: database, file, stream, application
 
