@@ -20,7 +20,7 @@ func main() {
 	mux.HandleFunc("/putJob2Stream", Handler.PutJobHDFS2Stream)
 	//mux.HandleFunc("/", nil)
 
-	// TODO: 简略启动Consumer
+	// TODO: 简略粗暴启动Consumer
 	go func(){
 		Handler.DataSetConsumerHandler()
 	}()
@@ -29,6 +29,7 @@ func main() {
 	}()
 
 	port := "30001"
+
 
 	log.Println("Listening...", port)
 	http.ListenAndServe(fmt.Sprint(":", port), mux)

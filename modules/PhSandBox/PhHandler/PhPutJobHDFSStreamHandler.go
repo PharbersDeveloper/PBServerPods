@@ -2,7 +2,6 @@ package Handler
 
 import (
 	"PhSandBox/PhRecord/PhOssTask"
-	"bytes"
 	"encoding/json"
 	"github.com/PharbersDeveloper/bp-go-lib/kafka"
 	"github.com/PharbersDeveloper/bp-go-lib/log"
@@ -62,15 +61,14 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 		Providers: interface2ArrString(params["providers"]),
 	}
 
-	var buf bytes.Buffer
-	log.NewLogicLoggerBuilder().Build().Infof("Serializing struct: %#v\n", record)
-	err = record.Serialize(&buf)
+	specificRecordByteArr, err := kafka.EncodeAvroRecord(&record)
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		result = err.Error()
 		return
 	}
-	err = p.Produce("oss_task_submit", []byte("value"), buf.Bytes())
+
+	err = p.Produce("oss_task_submit", []byte("value"), specificRecordByteArr)
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		result = err.Error()
