@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 )
-// TODO：没用TS写kafka，没写好，巨丑无比，很畸形
+// TODO：没用TS写kafka，没写好，巨丑无比，很畸形，写的真累，没设计好
 type findResult struct {
 	Data []map[string]interface{} `json:"data"`
 }
@@ -102,22 +102,24 @@ func dataSetFunc(key interface{}, value interface{}) {
 	var jobObjectIds []string
 	jobIds, _ := json.Marshal(msgValue.ParentIds)
 	// 查出jobs表中是否包含这些id的，包含的取出id，再到dataSets表中查询
-	isContainsResult := http.Get("http://localhost:8080/jobs?filter=(jobId,:in,"+strings.ReplaceAll(string(jobIds), "\"", "")+")")
+	isContainsJobResult := http.Get("http://localhost:8080/jobs?filter=(jobId,:in,"+strings.ReplaceAll(string(jobIds), "\"", "`")+")")
 	jobData := findResult{}
-	_ = json.Unmarshal(isContainsResult, &jobData)
+	_ = json.Unmarshal(isContainsJobResult, &jobData)
 
 	for _, v := range jobData.Data {
 		jobObjectIds = append(jobObjectIds, v["id"].(string))
 	}
+	jobObjectIdsJson,  _ := json.Marshal(jobObjectIds)
 
-	http.Get("http://localhost:8080/data-set?filter=(job,:in,"+strings.ReplaceAll(string(jobIds), "\"", "")+")")
-
-	//for _, v := range jobData.Data {
-	//	parentNode = append(parentNode, map[string]interface{}{
-	//		"id": v["id"],
-	//		"type": "data-sets",
-	//	})
-	//}
+	isContainsDataSetResult := http.Get("http://localhost:8080/data-sets?filter=(job,:in,"+strings.ReplaceAll(string(jobObjectIdsJson), "\"", "`")+")")
+	dataSetData := findResult{}
+	err = json.Unmarshal(isContainsDataSetResult, &dataSetData)
+	for _, v := range dataSetData.Data {
+		parentNode = append(parentNode, map[string]interface{}{
+			"id": v["id"],
+			"type": "data-sets",
+		})
+	}
 
 	dataSetParam, err := json.Marshal(map[string]interface{}{
 		"data": map[string]interface{}{
