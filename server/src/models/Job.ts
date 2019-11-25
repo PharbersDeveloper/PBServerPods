@@ -5,7 +5,16 @@ import IModelBase from "./modelBase"
 class Job extends Typegoose implements IModelBase<Job> {
 
     @prop({ default: "", required: false})
-    public dataProvider?: string
+    public codeProvider?: string
+
+    @prop({ default: "", required: false})
+    public codeRepository?: string
+
+    @prop({ default: "", required: false})
+    public codeBranch?: string
+
+    @prop({ default: "", required: false})
+    public codeVersion?: string
 
     @prop({ default: "", required: true } )
     public jobId?: string
