@@ -1,3 +1,5 @@
+package com.pharbers.convert;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,17 +21,25 @@ import javax.xml.stream.events.Namespace;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-class OoXmlStrictConverter {
+public class OoXmlStrictConverter {
 
-	private static final XMLEventFactory XEF = XMLEventFactory.newInstance();
-	private static final XMLInputFactory XIF = XMLInputFactory.newInstance();
-	static  XMLOutputFactory XOF = XMLOutputFactory.newInstance();
-	private static final QName CONFORMANCE = new QName("conformance");
+	private static XMLInputFactory XIF;
+	private static XMLEventFactory XEF;
+	private static XMLOutputFactory XOF;
+	private static QName CONFORMANCE;
 
-	static void transform(final String inFile, final String outFile, final Properties mappings) throws Exception {
+	public OoXmlStrictConverter(XMLEventFactory XEF, XMLInputFactory XIF, XMLOutputFactory XOF, QName CONFORMANCE) {
+		OoXmlStrictConverter.XEF = XEF;
+		OoXmlStrictConverter.XIF = XIF;
+		OoXmlStrictConverter.XOF = XOF;
+		OoXmlStrictConverter.CONFORMANCE = CONFORMANCE;
+		OoXmlStrictConverter.XOF.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES, true);
+	}
+
+	public void transform(final String inFile, final String outFile, final Properties mappings) throws Exception {
 		System.out.println("transforming " + inFile + " to " + outFile);
 		try(ZipInputStream zis = new ZipInputStream(new FileInputStream(inFile));
-		    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(outFile));) {
+		    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(outFile))) {
 			ZipEntry ze;
 			while((ze = zis.getNextEntry()) != null) {
 				ZipEntry newZipEntry = new ZipEntry(ze.getName());
@@ -136,24 +146,6 @@ class OoXmlStrictConverter {
 			}
 		}
 		return qn;
-	}
-
-	static Properties readMappings() throws IOException {
-		Properties props = new Properties();
-		try(InputStream is = new FileInputStream(new File(System.getenv("PH_TS_SANDBOX_HOME") + "/conf/ooxml-strict-mappings.properties"));
-		    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "ISO-8859-1"))) {
-			String line;
-			while((line = reader.readLine()) != null) {
-				String[] vals = line.split("=");
-				if(vals.length >= 2) {
-					props.setProperty(vals[0], vals[1]);
-				} else if(vals.length == 1) {
-					props.setProperty(vals[0], "");
-				}
-
-			}
-		}
-		return props;
 	}
 
 	private static boolean isBlank(final String str) {

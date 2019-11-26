@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "ConvertExcel",
+  "namespace": "com.pharbers.kafka.schema",
+  "fields": [
+    {
+      "name": "traceId",
+      "type": "string"
+    },
+    {
+      "name": "jobId",
+      "type": "string"
+    },
+    {
+      "name": "type",
+      "type": "string"
+    }
+  ]
+}

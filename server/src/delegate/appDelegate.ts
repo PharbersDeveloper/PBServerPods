@@ -10,7 +10,8 @@ import PhLogger from "../logger/phLogger"
 import { urlEncodeFilterParser } from "./urlEncodeFilterParser"
 import phLogger from "../logger/phLogger"
 import { CONFIG } from "../shared/config"
-import { UpdateJobId2MongoHandler } from "../handler/updateJobId2MongoHandler"
+import {FindFilePathHandler} from "../handler/findFilePathHandler"
+import {UpdateFilePathHandler} from "../handler/updateFilePathHandler"
 
 /**
  * The summary section should be brief. On a documentation web site,
@@ -184,13 +185,13 @@ export default class AppDelegate {
         phLogger.info(CONFIG.modules)
 
         // TODO：先实现功能，在结构
-        // this.router.post("/createInfoWithJobId" , async (req, res) => {
-        //     res.json(await new UpdateJobId2MongoHandler().createJobId2Datasets(req.body))
-        // } )
-        //
-        // this.router.post("/updateInfoWithJobId" , async (req, res) => {
-        //     res.json(await new UpdateJobId2MongoHandler().updateJobId2Datasets(req.body))
-        // } )
+        this.router.post("/findFilePathWithTraceId" , async (req, res) => {
+            res.json(await new FindFilePathHandler().findFilePathWithTraceId(req.body))
+        } )
+
+        this.router.post("/updateAssetVersion" , async (req, res) => {
+            res.json(await new UpdateFilePathHandler().updateAssetVersion(req.body))
+        } )
 
         CONFIG.modules.forEach( (module) => {
             const host = module.host

@@ -13,7 +13,7 @@ class Asset extends Typegoose implements IModelBase<Asset> {
     @prop({default: "", required: true})
     public name: string
 
-    @prop({default: "", required: true})
+    @prop({default: "", required: false})
     public description: string
 
     @prop({default: "", required: true})
