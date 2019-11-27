@@ -4,6 +4,13 @@
   "namespace": "com.pharbers.kafka.schema",
   "fields": [
     {
+      "name": "titleIndex",
+      "type": {
+        "items": "int",
+        "type": "array"
+      }
+    },
+    {
       "name": "jobId",
       "type": "string"
     },

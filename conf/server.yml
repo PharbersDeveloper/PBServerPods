@@ -17,11 +17,11 @@ models:
     reg: files
 mongo:
   algorithm: mongodb
-  host: 127.0.0.1
-  port: 27017
+  host: pharbers.com
+  port: 5555
   username: ""
   pwd: ""
-  coll: "alex"
+  coll: "pharbers-sandbox-600"
   auth: false
 oauth:
   debugging: true

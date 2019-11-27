@@ -76,6 +76,20 @@ func encodeInt(w io.Writer, byteCount int, encoded uint64) error {
 
 }
 
+func writeArrayInt(r []int32, w io.Writer) error {
+	err := writeLong(int64(len(r)), w)
+	if err != nil || len(r) == 0 {
+		return err
+	}
+	for _, e := range r {
+		err = writeInt(e, w)
+		if err != nil {
+			return err
+		}
+	}
+	return writeLong(0, w)
+}
+
 func writeArrayString(r []string, w io.Writer) error {
 	err := writeLong(int64(len(r)), w)
 	if err != nil || len(r) == 0 {
@@ -90,6 +104,13 @@ func writeArrayString(r []string, w io.Writer) error {
 	return writeLong(0, w)
 }
 
+func writeInt(r int32, w io.Writer) error {
+	downShift := uint32(31)
+	encoded := uint64((uint32(r) << 1) ^ uint32(r>>downShift))
+	const maxByteSize = 5
+	return encodeInt(w, maxByteSize, encoded)
+}
+
 func writeLong(r int64, w io.Writer) error {
 	downShift := uint64(63)
 	encoded := uint64((r << 1) ^ (r >> downShift))
@@ -99,6 +120,10 @@ func writeLong(r int64, w io.Writer) error {
 
 func writeOssTask(r *OssTask, w io.Writer) error {
 	var err error
+	err = writeArrayInt(r.TitleIndex, w)
+	if err != nil {
+		return err
+	}
 	err = writeString(r.JobId, w)
 	if err != nil {
 		return err
@@ -183,4 +208,25 @@ func (r *ArrayStringWrapper) AppendArray() types.Field {
 
 	*r = append(*r, v)
 	return (*types.String)(&(*r)[len(*r)-1])
+}
+
+type ArrayIntWrapper []int32
+
+func (_ *ArrayIntWrapper) SetBoolean(v bool)                { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) SetInt(v int32)                   { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) SetLong(v int64)                  { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) SetFloat(v float32)               { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) SetDouble(v float64)              { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) SetBytes(v []byte)                { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) SetString(v string)               { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) SetUnionElem(v int64)             { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) Get(i int) types.Field            { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) AppendMap(key string) types.Field { panic("Unsupported operation") }
+func (_ *ArrayIntWrapper) Finalize()                        {}
+func (_ *ArrayIntWrapper) SetDefault(i int)                 { panic("Unsupported operation") }
+func (r *ArrayIntWrapper) AppendArray() types.Field {
+	var v int32
+
+	*r = append(*r, v)
+	return (*types.Int)(&(*r)[len(*r)-1])
 }

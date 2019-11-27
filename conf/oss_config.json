@@ -1,0 +1,8 @@
+{
+  "sandbox": {
+    "endpoint": "oss-cn-beijing.aliyuncs.com",
+    "accessKeyId": "LTAIEoXgk4DOHDGi",
+    "accessKeySecret": "x75sK6191dPGiu9wBMtKE6YcBBh8EI",
+    "bucketName": "pharbers-sandbox"
+  }
+}

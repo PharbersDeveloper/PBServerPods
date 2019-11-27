@@ -12,6 +12,8 @@ import phLogger from "../logger/phLogger"
 import { CONFIG } from "../shared/config"
 import {FindFilePathHandler} from "../handler/findFilePathHandler"
 import {UpdateFilePathHandler} from "../handler/updateFilePathHandler"
+import {ReCommitJobHandler} from "../handler/reCommitJobHandler"
+import {UpdateJobId2MongoHandler} from "../handler/updateJobId2MongoHandler"
 
 /**
  * The summary section should be brief. On a documentation web site,
@@ -185,12 +187,20 @@ export default class AppDelegate {
         phLogger.info(CONFIG.modules)
 
         // TODO：先实现功能，在结构
+        this.router.post("/updateJobId2DataSets" , async (req, res) => {
+            res.json(await new UpdateJobId2MongoHandler().updateJobId2DataSets(req.body))
+        } )
+
         this.router.post("/findFilePathWithTraceId" , async (req, res) => {
             res.json(await new FindFilePathHandler().findFilePathWithTraceId(req.body))
         } )
 
         this.router.post("/updateAssetVersion" , async (req, res) => {
             res.json(await new UpdateFilePathHandler().updateAssetVersion(req.body))
+        } )
+
+        this.router.post("/reCommitJobWithTraceId" , async (req, res) => {
+            res.json(await new ReCommitJobHandler().reCommitJobWithTraceId(req.body))
         } )
 
         CONFIG.modules.forEach( (module) => {

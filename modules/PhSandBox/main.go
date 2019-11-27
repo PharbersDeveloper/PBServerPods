@@ -27,6 +27,9 @@ func main() {
 	go func() {
 		Handler.JobConsumerHandler()
 	}()
+	go func() {
+		Handler.FileUploadEndHandler()
+	}()
 
 	port := "30001"
 

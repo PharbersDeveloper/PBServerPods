@@ -47,6 +47,7 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	record := PhOssTask.OssTask {
+		TitleIndex: nil,
  		JobId: "",
 		TraceId: params["traceId"].(string),
 		OssKey: params["ossKey"].(string),
@@ -67,7 +68,8 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 		result = err.Error()
 		return
 	}
-
+	//log.NewLogicLoggerBuilder().Build().Info(specificRecordByteArr)
+	//log.NewLogicLoggerBuilder().Build().Info(p)
 	err = p.Produce("oss_task_submit", []byte("value"), specificRecordByteArr)
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
