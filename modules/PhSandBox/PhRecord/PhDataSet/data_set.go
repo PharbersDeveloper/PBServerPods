@@ -15,13 +15,14 @@ import (
 )
 
 type DataSet struct {
-	ParentIds   []string
-	JobId       string
-	ColName     []string
-	TabName     string
-	Length      int32
-	Url         string
-	Description string
+	ParentIds      []string
+	MongoId        string
+	JobContainerId string
+	ColName        []string
+	TabName        string
+	Length         int32
+	Url            string
+	Description    string
 }
 
 func NewDataSetWriter(writer io.Writer, codec container.Codec, recordsPerBlock int64) (*container.Writer, error) {
@@ -46,7 +47,7 @@ func NewDataSet() *DataSet {
 }
 
 func (r *DataSet) Schema() string {
-	return "{\"fields\":[{\"name\":\"parentIds\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"jobId\",\"type\":\"string\"},{\"name\":\"colName\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"tabName\",\"type\":\"string\"},{\"name\":\"length\",\"type\":\"int\"},{\"name\":\"url\",\"type\":\"string\"},{\"name\":\"description\",\"type\":\"string\"}],\"name\":\"DataSet\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"parentIds\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"mongoId\",\"type\":\"string\"},{\"name\":\"jobContainerId\",\"type\":\"string\"},{\"name\":\"colName\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"tabName\",\"type\":\"string\"},{\"name\":\"length\",\"type\":\"int\"},{\"name\":\"url\",\"type\":\"string\"},{\"name\":\"description\",\"type\":\"string\"}],\"name\":\"DataSet\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
 }
 
 func (r *DataSet) SchemaName() string {
@@ -71,17 +72,19 @@ func (r *DataSet) Get(i int) types.Field {
 		r.ParentIds = make([]string, 0)
 		return (*ArrayStringWrapper)(&r.ParentIds)
 	case 1:
-		return (*types.String)(&r.JobId)
+		return (*types.String)(&r.MongoId)
 	case 2:
+		return (*types.String)(&r.JobContainerId)
+	case 3:
 		r.ColName = make([]string, 0)
 		return (*ArrayStringWrapper)(&r.ColName)
-	case 3:
-		return (*types.String)(&r.TabName)
 	case 4:
-		return (*types.Int)(&r.Length)
+		return (*types.String)(&r.TabName)
 	case 5:
-		return (*types.String)(&r.Url)
+		return (*types.Int)(&r.Length)
 	case 6:
+		return (*types.String)(&r.Url)
+	case 7:
 		return (*types.String)(&r.Description)
 
 	}

@@ -2,11 +2,15 @@
 import {arrayProp, prop, Ref, Typegoose} from "typegoose"
 import IModelBase from "./modelBase"
 import Job from "./Job"
+import * as mongoose from "mongoose"
 
 class DataSet extends Typegoose implements IModelBase<DataSet> {
 
     @arrayProp({ items: String, default: [], required: false } )
     public colNames?: string[]
+
+    @prop({ required: true} )
+    public _id?: object
 
     @prop({ default: 0, required: false} )
     public length?: number

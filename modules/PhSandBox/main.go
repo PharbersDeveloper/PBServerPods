@@ -24,9 +24,9 @@ func main() {
 	go func(){
 		Handler.DataSetConsumerHandler()
 	}()
-	go func() {
-		Handler.JobConsumerHandler()
-	}()
+	//go func() {
+	//	Handler.JobConsumerHandler()
+	//}()
 	go func() {
 		Handler.FileUploadEndHandler()
 	}()

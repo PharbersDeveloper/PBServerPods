@@ -14,6 +14,7 @@ import {FindFilePathHandler} from "../handler/findFilePathHandler"
 import {UpdateFilePathHandler} from "../handler/updateFilePathHandler"
 import {ReCommitJobHandler} from "../handler/reCommitJobHandler"
 import {UpdateJobId2MongoHandler} from "../handler/updateJobId2MongoHandler"
+import {JobBloodHandler} from "../handler/jobBloodHandler"
 
 /**
  * The summary section should be brief. On a documentation web site,
@@ -187,8 +188,8 @@ export default class AppDelegate {
         phLogger.info(CONFIG.modules)
 
         // TODO：先实现功能，在结构
-        this.router.post("/updateJobId2DataSets" , async (req, res) => {
-            res.json(await new UpdateJobId2MongoHandler().updateJobId2DataSets(req.body))
+        this.router.post("/uploadFileEnd" , async (req, res) => {
+            res.json(await new UpdateJobId2MongoHandler().uploadFileEnd(req.body))
         } )
 
         this.router.post("/findFilePathWithTraceId" , async (req, res) => {
@@ -201,6 +202,10 @@ export default class AppDelegate {
 
         this.router.post("/reCommitJobWithTraceId" , async (req, res) => {
             res.json(await new ReCommitJobHandler().reCommitJobWithTraceId(req.body))
+        } )
+
+        this.router.post("/createDataSetsAndJob" , async (req, res) => {
+            res.json(await new JobBloodHandler().createDataSetsAndJob(req.body))
         } )
 
         CONFIG.modules.forEach( (module) => {

@@ -96,7 +96,11 @@ func writeDataSet(r *DataSet, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeString(r.JobId, w)
+	err = writeString(r.MongoId, w)
+	if err != nil {
+		return err
+	}
+	err = writeString(r.JobContainerId, w)
 	if err != nil {
 		return err
 	}

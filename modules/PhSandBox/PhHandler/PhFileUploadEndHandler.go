@@ -28,10 +28,10 @@ func uploadEndFunc(key interface{}, value interface{}) {
 	if err != nil { log.NewLogicLoggerBuilder().Build().Error(err.Error());return }
 
 	param, err := json.Marshal(map[string]string{
-		"jobId": msgValue.JobId,
+		"dataSetId": msgValue.DataSetId,
 		"traceId": msgValue.TraceId,
 	})
-	http.Post("http://localhost:8080/updateJobId2DataSets",
+	http.Post("http://localhost:8080/uploadFileEnd",
 		map[string]string{"Content-Type": "application/json"},
 		strings.NewReader(string(param)))
 

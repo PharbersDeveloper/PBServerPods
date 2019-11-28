@@ -15,8 +15,8 @@ import (
 )
 
 type UploadEnd struct {
-	JobId   string
-	TraceId string
+	DataSetId string
+	TraceId   string
 }
 
 func NewUploadEndWriter(writer io.Writer, codec container.Codec, recordsPerBlock int64) (*container.Writer, error) {
@@ -41,7 +41,7 @@ func NewUploadEnd() *UploadEnd {
 }
 
 func (r *UploadEnd) Schema() string {
-	return "{\"fields\":[{\"name\":\"jobId\",\"type\":\"string\"},{\"name\":\"traceId\",\"type\":\"string\"}],\"name\":\"UploadEnd\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"dataSetId\",\"type\":\"string\"},{\"name\":\"traceId\",\"type\":\"string\"}],\"name\":\"UploadEnd\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
 }
 
 func (r *UploadEnd) SchemaName() string {
@@ -63,7 +63,7 @@ func (_ *UploadEnd) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *UploadEnd) Get(i int) types.Field {
 	switch i {
 	case 0:
-		return (*types.String)(&r.JobId)
+		return (*types.String)(&r.DataSetId)
 	case 1:
 		return (*types.String)(&r.TraceId)
 

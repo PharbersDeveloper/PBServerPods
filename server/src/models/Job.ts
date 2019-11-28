@@ -17,19 +17,19 @@ class Job extends Typegoose implements IModelBase<Job> {
     public codeVersion?: string
 
     @prop({ default: "", required: true } )
-    public jobId?: string
+    public jobContainerId?: string
 
     @prop({ default: 0, required: true })
     public create?: number
 
-    @prop({ default: 0, required: true })
-    public update?: number
-
-    @prop({ default: "", required: true })
-    public status?: string
-
-    @prop({ default: "", required: false })
-    public error?: string
+    // @prop({ default: 0, required: true })
+    // public update?: number
+    //
+    // @prop({ default: "", required: true })
+    // public status?: string
+    //
+    // @prop({ default: "", required: false })
+    // public error?: string
 
     @prop({ default: "", required: false })
     public description?: string

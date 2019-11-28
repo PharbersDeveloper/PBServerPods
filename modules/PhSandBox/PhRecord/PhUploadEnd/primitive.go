@@ -98,7 +98,7 @@ func writeString(r string, w io.Writer) error {
 
 func writeUploadEnd(r *UploadEnd, w io.Writer) error {
 	var err error
-	err = writeString(r.JobId, w)
+	err = writeString(r.DataSetId, w)
 	if err != nil {
 		return err
 	}
