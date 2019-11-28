@@ -2,6 +2,7 @@
 import PhLogger from "../logger/phLogger"
 import Asset from "../models/Asset"
 import File from "../models/File"
+import uuid from "uuid/v1"
 
 export class UpdateFilePathHandler {
     constructor() {
@@ -24,7 +25,7 @@ export class UpdateFilePathHandler {
         const fileModel = await new File().getModel().create(file)
 
         const asset = new Asset()
-        asset.traceId = preAssetVersion.traceId
+        asset.traceId = uuid()
         asset.name = preAssetVersion.name
         asset.owner = preAssetVersion.owner
         asset.accessibility = preAssetVersion.accessibility
