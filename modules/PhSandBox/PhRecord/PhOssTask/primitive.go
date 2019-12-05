@@ -124,6 +124,10 @@ func writeOssTask(r *OssTask, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeString(r.AssetId, w)
+	if err != nil {
+		return err
+	}
 	err = writeString(r.JobId, w)
 	if err != nil {
 		return err

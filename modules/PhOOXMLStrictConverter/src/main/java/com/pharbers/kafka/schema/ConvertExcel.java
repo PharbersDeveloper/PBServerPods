@@ -10,11 +10,11 @@ import org.apache.avro.specific.SpecificData;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 1054576739383436681L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ConvertExcel\",\"namespace\":\"com.pharbers.kafka.schema\",\"fields\":[{\"name\":\"traceId\",\"type\":\"string\"},{\"name\":\"jobId\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"}]}");
+  private static final long serialVersionUID = -6010935530319630724L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ConvertExcel\",\"namespace\":\"com.pharbers.kafka.schema\",\"fields\":[{\"name\":\"traceId\",\"type\":\"string\"},{\"name\":\"assetId\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.CharSequence traceId;
-  @Deprecated public java.lang.CharSequence jobId;
+  @Deprecated public java.lang.CharSequence assetId;
   @Deprecated public java.lang.CharSequence type;
 
   /**
@@ -27,12 +27,12 @@ public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase im
   /**
    * All-args constructor.
    * @param traceId The new value for traceId
-   * @param jobId The new value for jobId
+   * @param assetId The new value for assetId
    * @param type The new value for type
    */
-  public ConvertExcel(java.lang.CharSequence traceId, java.lang.CharSequence jobId, java.lang.CharSequence type) {
+  public ConvertExcel(java.lang.CharSequence traceId, java.lang.CharSequence assetId, java.lang.CharSequence type) {
     this.traceId = traceId;
-    this.jobId = jobId;
+    this.assetId = assetId;
     this.type = type;
   }
 
@@ -41,7 +41,7 @@ public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase im
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return traceId;
-    case 1: return jobId;
+    case 1: return assetId;
     case 2: return type;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
@@ -52,7 +52,7 @@ public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase im
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: traceId = (java.lang.CharSequence)value$; break;
-    case 1: jobId = (java.lang.CharSequence)value$; break;
+    case 1: assetId = (java.lang.CharSequence)value$; break;
     case 2: type = (java.lang.CharSequence)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
@@ -75,19 +75,19 @@ public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase im
   }
 
   /**
-   * Gets the value of the 'jobId' field.
-   * @return The value of the 'jobId' field.
+   * Gets the value of the 'assetId' field.
+   * @return The value of the 'assetId' field.
    */
-  public java.lang.CharSequence getJobId() {
-    return jobId;
+  public java.lang.CharSequence getAssetId() {
+    return assetId;
   }
 
   /**
-   * Sets the value of the 'jobId' field.
+   * Sets the value of the 'assetId' field.
    * @param value the value to set.
    */
-  public void setJobId(java.lang.CharSequence value) {
-    this.jobId = value;
+  public void setAssetId(java.lang.CharSequence value) {
+    this.assetId = value;
   }
 
   /**
@@ -139,7 +139,7 @@ public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase im
     implements org.apache.avro.data.RecordBuilder<ConvertExcel> {
 
     private java.lang.CharSequence traceId;
-    private java.lang.CharSequence jobId;
+    private java.lang.CharSequence assetId;
     private java.lang.CharSequence type;
 
     /** Creates a new Builder */
@@ -157,8 +157,8 @@ public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase im
         this.traceId = data().deepCopy(fields()[0].schema(), other.traceId);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.jobId)) {
-        this.jobId = data().deepCopy(fields()[1].schema(), other.jobId);
+      if (isValidValue(fields()[1], other.assetId)) {
+        this.assetId = data().deepCopy(fields()[1].schema(), other.assetId);
         fieldSetFlags()[1] = true;
       }
       if (isValidValue(fields()[2], other.type)) {
@@ -177,8 +177,8 @@ public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase im
         this.traceId = data().deepCopy(fields()[0].schema(), other.traceId);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.jobId)) {
-        this.jobId = data().deepCopy(fields()[1].schema(), other.jobId);
+      if (isValidValue(fields()[1], other.assetId)) {
+        this.assetId = data().deepCopy(fields()[1].schema(), other.assetId);
         fieldSetFlags()[1] = true;
       }
       if (isValidValue(fields()[2], other.type)) {
@@ -227,40 +227,40 @@ public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase im
     }
 
     /**
-      * Gets the value of the 'jobId' field.
+      * Gets the value of the 'assetId' field.
       * @return The value.
       */
-    public java.lang.CharSequence getJobId() {
-      return jobId;
+    public java.lang.CharSequence getAssetId() {
+      return assetId;
     }
 
     /**
-      * Sets the value of the 'jobId' field.
-      * @param value The value of 'jobId'.
+      * Sets the value of the 'assetId' field.
+      * @param value The value of 'assetId'.
       * @return This builder.
       */
-    public com.pharbers.kafka.schema.ConvertExcel.Builder setJobId(java.lang.CharSequence value) {
+    public com.pharbers.kafka.schema.ConvertExcel.Builder setAssetId(java.lang.CharSequence value) {
       validate(fields()[1], value);
-      this.jobId = value;
+      this.assetId = value;
       fieldSetFlags()[1] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'jobId' field has been set.
-      * @return True if the 'jobId' field has been set, false otherwise.
+      * Checks whether the 'assetId' field has been set.
+      * @return True if the 'assetId' field has been set, false otherwise.
       */
-    public boolean hasJobId() {
+    public boolean hasAssetId() {
       return fieldSetFlags()[1];
     }
 
 
     /**
-      * Clears the value of the 'jobId' field.
+      * Clears the value of the 'assetId' field.
       * @return This builder.
       */
-    public com.pharbers.kafka.schema.ConvertExcel.Builder clearJobId() {
-      jobId = null;
+    public com.pharbers.kafka.schema.ConvertExcel.Builder clearAssetId() {
+      assetId = null;
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -309,7 +309,7 @@ public class ConvertExcel extends org.apache.avro.specific.SpecificRecordBase im
       try {
         ConvertExcel record = new ConvertExcel();
         record.traceId = fieldSetFlags()[0] ? this.traceId : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.jobId = fieldSetFlags()[1] ? this.jobId : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.assetId = fieldSetFlags()[1] ? this.assetId : (java.lang.CharSequence) defaultValue(fields()[1]);
         record.type = fieldSetFlags()[2] ? this.type : (java.lang.CharSequence) defaultValue(fields()[2]);
         return record;
       } catch (Exception e) {

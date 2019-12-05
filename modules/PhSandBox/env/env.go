@@ -38,7 +38,7 @@ func SetLocalEnv() {
 	_ = os.Setenv(LogTimeFormat, "2006-01-02 15:04:05")
 	_ = os.Setenv(LogOutput, "console")
 	//_ = os.Setenv(env.LogOutput, "/Users/qianpeng/bplogs/mqtt-message-storage.log")
-	_ = os.Setenv(LogLevel, "info")
+	_ = os.Setenv(LogLevel, "debug")
 	//_ = os.Setenv("EMAIL_TEMPLATE", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/email-template.txt"))
 	//_ = os.Setenv("EMAILADDRESS", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/emails.json"))
 

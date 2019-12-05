@@ -70,7 +70,6 @@ class ModifyTagsExport2Excel {
 
             return [
                 asset._id.toString(),
-                asset.traceId,
                 asset.name,
                 asset.description,
                 asset.owner.toString(),

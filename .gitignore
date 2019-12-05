@@ -16,3 +16,4 @@ resources/
 *.swp
 
 export/*
+modules/PhOOXMLStrictConverter/target/

@@ -11,6 +11,10 @@
       }
     },
     {
+      "name": "assetId",
+      "type": "string"
+    },
+    {
       "name": "jobId",
       "type": "string"
     },

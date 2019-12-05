@@ -9,7 +9,7 @@ class DataSet extends Typegoose implements IModelBase<DataSet> {
     @arrayProp({ items: String, default: [], required: false } )
     public colNames?: string[]
 
-    @prop({ required: true} )
+    @prop({ required: false} )
     public _id?: object
 
     @prop({ default: 0, required: false} )

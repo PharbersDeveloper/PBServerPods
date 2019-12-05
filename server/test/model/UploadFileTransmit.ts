@@ -83,7 +83,6 @@ class UploadFileTransmit {
                 const asset = new Asset()
                 asset.name= fd.name
                 asset.description= fd.name
-                asset.traceId = fd.traceID
                 asset.dataType = "file"
                 asset.file = fc
                 // @ts-ignore

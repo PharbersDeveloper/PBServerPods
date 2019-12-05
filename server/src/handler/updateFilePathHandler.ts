@@ -2,7 +2,7 @@
 import PhLogger from "../logger/phLogger"
 import Asset from "../models/Asset"
 import File from "../models/File"
-import uuid from "uuid/v1"
+import mongoose = require("mongoose")
 
 export class UpdateFilePathHandler {
     constructor() {
@@ -11,7 +11,7 @@ export class UpdateFilePathHandler {
     // TODO: 未做异常处理
     async updateAssetVersion(body: any) {
         // 上一个版本的历史
-        const preAssetVersion = await new Asset().getModel().findOne({traceId: body.traceId})
+        const preAssetVersion = await new Asset().getModel().findById(new mongoose.mongo.ObjectId(body.assetId))
         preAssetVersion.isNewVersion = false
         await preAssetVersion.save()
 
@@ -25,7 +25,7 @@ export class UpdateFilePathHandler {
         const fileModel = await new File().getModel().create(file)
 
         const asset = new Asset()
-        asset.traceId = uuid()
+        asset._id = new mongoose.mongo.ObjectId()
         asset.name = preAssetVersion.name
         asset.owner = preAssetVersion.owner
         asset.accessibility = preAssetVersion.accessibility
@@ -43,6 +43,6 @@ export class UpdateFilePathHandler {
         asset.description = preAssetVersion.description
 
         await new Asset().getModel().create(asset)
-        return {"status": "ok"}
+        return {"status": "ok", "assetId": asset._id.toString()}
     }
 }

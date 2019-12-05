@@ -10,7 +10,7 @@ import (
 )
 
 func DataSetConsumerHandler() {
-	c, err := kafka.NewKafkaBuilder().BuildConsumer()
+	c, err := kafka.NewKafkaBuilder().SetGroupId("data_set_job").BuildConsumer()
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		return
@@ -23,6 +23,7 @@ func DataSetConsumerHandler() {
 }
 
 func dataSetFunc(key interface{}, value interface{}) {
+	log.NewLogicLoggerBuilder().Build().Debug("进入 DataSet Kafka")
 	var msgValue PhDataSet.DataSet
 	err := kafka.DecodeAvroRecord(value.([]byte), &msgValue)
 

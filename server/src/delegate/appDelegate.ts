@@ -192,16 +192,16 @@ export default class AppDelegate {
             res.json(await new UpdateJobId2MongoHandler().uploadFileEnd(req.body))
         } )
 
-        this.router.post("/findFilePathWithTraceId" , async (req, res) => {
-            res.json(await new FindFilePathHandler().findFilePathWithTraceId(req.body))
+        this.router.post("/findFilePathWithId" , async (req, res) => {
+            res.json(await new FindFilePathHandler().findFilePathWithId(req.body))
         } )
 
         this.router.post("/updateAssetVersion" , async (req, res) => {
             res.json(await new UpdateFilePathHandler().updateAssetVersion(req.body))
         } )
 
-        this.router.post("/reCommitJobWithTraceId" , async (req, res) => {
-            res.json(await new ReCommitJobHandler().reCommitJobWithTraceId(req.body))
+        this.router.post("/reCommitJobWithAssetId" , async (req, res) => {
+            res.json(await new ReCommitJobHandler().reCommitJobWithAssetId(req.body))
         } )
 
         this.router.post("/createDataSetsAndJob" , async (req, res) => {

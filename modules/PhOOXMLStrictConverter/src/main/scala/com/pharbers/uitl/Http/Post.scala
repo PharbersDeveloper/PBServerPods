@@ -6,7 +6,7 @@ case class Post(url: String, body: String, contentType: String) {
 	def exec(): String = {
 		val rsp = Http(url).postData(body)
 			.header("Content-Type", contentType)
-			.header("Charset", "UTF-8")
+			.header("Accept-Encoding", "gzip, deflate")
 			.option(HttpOptions.readTimeout(10000)).asString
 		rsp.code match {
 			case 200 => rsp.body

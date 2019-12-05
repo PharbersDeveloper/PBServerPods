@@ -102,7 +102,7 @@ func writeUploadEnd(r *UploadEnd, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeString(r.TraceId, w)
+	err = writeString(r.AssetId, w)
 	if err != nil {
 		return err
 	}

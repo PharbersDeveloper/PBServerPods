@@ -15,40 +15,18 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 	res, _ := ioutil.ReadAll(r.Body)
 	_ = json.Unmarshal(res, &params)
 
-	//data, _ := ioutil.ReadFile("avsc/OssTask.avsc")
-	//rawMetricsSchema := strings.ReplaceAll(strings.ReplaceAll(string(data), "\n", ""), " ", "")
-	//bkc, _ := bmkafka.GetConfigInstance()
-	//schema, _ := avro.ParseSchema(rawMetricsSchema)
-	//record := avro.NewGenericRecord(schema)
-	//
-	//record.Set("jobId", "")
-	//record.Set("traceId", params["traceId"])
-	//record.Set("ossKey", params["ossKey"])
-	//record.Set("fileType", params["fileType"])
-	//record.Set("fileName", params["fileName"])
-	//record.Set("sheetName","")
-	//record.Set("labels", params["labels"])
-	//record.Set("dataCover", params["dataCover"])
-	//record.Set("geoCover", params["geoCover"])
-	//record.Set("markets", params["markets"])
-	//record.Set("molecules", params["molecules"])
-	//record.Set("providers", params["providers"])
-	//
-	//encoder := kafkaAvro.NewKafkaAvroEncoder(bkc.SchemaRegistryUrl)
-	//recordByteArr, _ := encoder.Encode(record)
-	//
-	//topic := "oss_task_submit"
-	//bkc.Produce(&topic, recordByteArr)
-
 	p, err := kafka.NewKafkaBuilder().BuildProducer()
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		result = err.Error()
 		return
 	}
+
+	//providers := append(interface2ArrString(params["providers"]), "CPA&GYC")
 	record := PhOssTask.OssTask {
 		TitleIndex: nil,
- 		JobId: "",
+		AssetId: params["assetId"].(string),
+ 		JobId: params["jobId"].(string),
 		TraceId: params["traceId"].(string),
 		OssKey: params["ossKey"].(string),
 		FileType: params["fileType"].(string),
@@ -70,7 +48,7 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 	}
 	//log.NewLogicLoggerBuilder().Build().Info(specificRecordByteArr)
 	//log.NewLogicLoggerBuilder().Build().Info(p)
-	err = p.Produce("oss_task_submit", []byte("value"), specificRecordByteArr)
+	err = p.Produce("oss_task_submit", []byte(params["jobId"].(string)), specificRecordByteArr)
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		result = err.Error()

@@ -7,8 +7,10 @@ import File from "./File"
 
 class Asset extends Typegoose implements IModelBase<Asset> {
 
-    @prop({ default: "", required: true })
-    public traceId: string
+    // @prop({ default: "", required: true })
+    // public traceId: string
+    @prop({ required: false} )
+    public _id?: object
 
     @prop({default: "", required: true})
     public name: string

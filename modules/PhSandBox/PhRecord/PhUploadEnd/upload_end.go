@@ -16,7 +16,7 @@ import (
 
 type UploadEnd struct {
 	DataSetId string
-	TraceId   string
+	AssetId   string
 }
 
 func NewUploadEndWriter(writer io.Writer, codec container.Codec, recordsPerBlock int64) (*container.Writer, error) {
@@ -41,7 +41,7 @@ func NewUploadEnd() *UploadEnd {
 }
 
 func (r *UploadEnd) Schema() string {
-	return "{\"fields\":[{\"name\":\"dataSetId\",\"type\":\"string\"},{\"name\":\"traceId\",\"type\":\"string\"}],\"name\":\"UploadEnd\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"dataSetId\",\"type\":\"string\"},{\"name\":\"assetId\",\"type\":\"string\"}],\"name\":\"UploadEnd\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
 }
 
 func (r *UploadEnd) SchemaName() string {
@@ -65,7 +65,7 @@ func (r *UploadEnd) Get(i int) types.Field {
 	case 0:
 		return (*types.String)(&r.DataSetId)
 	case 1:
-		return (*types.String)(&r.TraceId)
+		return (*types.String)(&r.AssetId)
 
 	}
 	panic("Unknown field index")
