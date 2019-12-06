@@ -34,8 +34,10 @@ func uploadEndFunc(key interface{}, value interface{}) {
 		"assetId": msgValue.AssetId,
 	})
 	//fmt.Println(param)
-	http.Post("http://localhost:8080/uploadFileEnd",
-		map[string]string{"Content-Type": "application/json"},
-		strings.NewReader(string(param)))
+	go func() {
+		http.Post("http://localhost:8080/uploadFileEnd",
+			map[string]string{"Content-Type": "application/json"},
+			strings.NewReader(string(param)))
+	}()
 
 }

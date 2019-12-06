@@ -58,15 +58,17 @@ case class ConvertStrictExcelListener() extends Listener {
 		val result = new ConvertStrictExcel().exec(Map("inputPath" -> downloadPath))
 		if (result._1) {
 			Oss.upload(result._2, objectName)
-
+			
+			// TODO：这块儿有问题，不能一直等待返回值出现，如果崩了，就都崩溃了
 			val updateResponse = Http.Post("http://localhost:8080/updateAssetVersion",
 				JSON.toJSONString(Map("assetId" -> record.value().getAssetId.toString, "url" -> objectName).asJava, true),
 				"application/json").exec()
-
+			
+			
 			// TODO：暂时在我这里做，其实不在我这边进行重新提交，只是发送一个消息
-			Http.Post("http://localhost:8080/reCommitJobWithAssetId",
-				JSON.toJSONString(Map("assetId" -> JSON.parseObject(updateResponse).getString("assetId")).asJava, true),
-				"application/json").exec()
+//			Http.Post("http://localhost:8080/reCommitJobWithAssetId",
+//				JSON.toJSONString(Map("assetId" -> JSON.parseObject(updateResponse).getString("assetId")).asJava, true),
+//				"application/json").exec()
 		} else {
 			// TODO:再次进入错误队列
 		}
