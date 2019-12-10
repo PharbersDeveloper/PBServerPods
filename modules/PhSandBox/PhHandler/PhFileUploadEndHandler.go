@@ -35,7 +35,7 @@ func uploadEndFunc(key interface{}, value interface{}) {
 	})
 	//fmt.Println(param)
 	go func() {
-		http.Post("http://localhost:8080/uploadFileEnd",
+		_, _ = http.Post("http://localhost:8080/uploadFileEnd",
 			map[string]string{"Content-Type": "application/json"},
 			strings.NewReader(string(param)))
 	}()

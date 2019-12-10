@@ -46,7 +46,7 @@ func dataSetFunc(key interface{}, value interface{}) {
 	}
 
 	go func() {
-		http.Post("http://localhost:8080/createDataSetsAndJob",
+		_, _ = http.Post("http://localhost:8080/createDataSetsAndJob",
 			map[string]string{"Content-Type": "application/json"},
 			strings.NewReader(string(param)))
 	}()

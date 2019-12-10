@@ -16,21 +16,37 @@ export class UpdateJobId2MongoHandler {
             return new Promise((resolve)=>setTimeout(resolve,ms))
         }
 
-        function getDs() {
-            return new DataSet()
-                .getModel().findById(new mongoose.mongo.ObjectId(body.dataSetId)).then(async ds => {
-                if (ds !== null) {
-                    const asset = await new Asset()
-                        .getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})
-                    asset.dfs = asset.dfs.concat(ds)
-                    await asset.save()
-                    return {status: "ok"}
-                } else {
-                    PhLogger.info("DS Is Null，进入等待")
-                    await sleep(1000)
-                    await getDs()
-                }
-            })
+        async function getDs() {
+            const ds = await new DataSet().getModel().findById(new mongoose.mongo.ObjectId(body.dataSetId))
+
+            if (ds !== null) {
+                PhLogger.info("ObjectId AssetId ======> " + body.assetId)
+                const asset = await new Asset()
+                    .getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})
+                asset.dfs = asset.dfs.concat(ds)
+                await asset.save()
+                return {status: "ok"}
+            } else {
+                PhLogger.info("DS Is Null，进入等待")
+                await sleep(1000)
+                await getDs()
+            }
+
+
+            // return new DataSet()
+            //     .getModel().findById(new mongoose.mongo.ObjectId(body.dataSetId)).then(async ds => {
+            //     if (ds !== null) {
+            //         const asset = await new Asset()
+            //             .getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})
+            //         asset.dfs = asset.dfs.concat(ds)
+            //         await asset.save()
+            //         return {status: "ok"}
+            //     } else {
+            //         PhLogger.info("DS Is Null，进入等待")
+            //         await sleep(1000)
+            //         await getDs()
+            //     }
+            // })
         }
         return getDs()
     }
