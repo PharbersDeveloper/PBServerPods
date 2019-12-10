@@ -43,7 +43,7 @@ func SetLocalEnv() {
 	//_ = os.Setenv("EMAILADDRESS", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/emails.json"))
 
 	//kafka
-	_ = os.Setenv(KafkaConfigPath, os.Getenv("SANDBOX_HOME_CONFIG"))
+	_ = os.Setenv(KafkaConfigPath, os.Getenv("KAFKA_HOME_CONFIG"))
 
 	_ = os.Setenv(SchemaRegistryUrl, "http://pharbers.com:8081")
 

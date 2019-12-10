@@ -18,5 +18,5 @@ object main extends App {
 	
 	val list = ConvertStrictExcelListener() :: Nil
 	KafkaStartProcess().start(list)
-	println("Fuck You")
+	println("Consumer Start")
 }
