@@ -18,7 +18,7 @@ export class UpdateFilePathHandler {
         const preFileVersion = await new File().getModel().findById(preAssetVersion.file)
         const file = new File()
         file.fileName = preFileVersion.fileName
-        file.extension = preFileVersion.extension
+        file.extension = preFileVersion.extension === "xls" ? "xlsx" : preFileVersion.extension
         file.uploaded = new Date().getTime()
         file.size = preFileVersion.size
         file.url = body.url

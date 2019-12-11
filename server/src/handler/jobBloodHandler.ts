@@ -13,6 +13,8 @@ export class JobBloodHandler {
         jobModel.create = new Date().getTime()
         const job = await new Job().getModel().create(jobModel)
 
+        // tslint:disable-next-line:no-console
+        console.info(body)
         datasetModel._id = new mongoose.mongo.ObjectId(body.mongoId)
         datasetModel.parent = body.parent
         datasetModel.colNames = body.colNames

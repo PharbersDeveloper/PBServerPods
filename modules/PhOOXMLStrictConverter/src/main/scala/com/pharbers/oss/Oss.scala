@@ -6,7 +6,7 @@ import com.aliyun.oss.{OSS, OSSClientBuilder}
 import com.aliyun.oss.model.GetObjectRequest
 import com.pharbers.uitl.Conf
 
-object Oss {
+case class Oss() {
 	lazy val conf: Map[String, String] = Conf.Config.loadOssConfig()("sandbox")
 	
 	lazy val endpoint: String = conf("endpoint")

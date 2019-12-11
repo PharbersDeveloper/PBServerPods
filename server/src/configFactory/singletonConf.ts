@@ -15,7 +15,7 @@ export class SingletonInitConf {
     private static init() {
         if (!SingletonInitConf.conf) {
             PhLogger.info("Init Config......")
-            const path = process.env.PH_TS_SANDBOX_HOME + "/conf"
+            const path = process.env.PHPRODSHOME + "/conf"
             const jsonConvert: JsonConvert = new JsonConvert()
             const doc = yaml.safeLoad(fs.readFileSync(path + "/server.yml", "utf8"))
             jsonConvert.ignorePrimitiveChecks = false

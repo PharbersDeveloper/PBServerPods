@@ -12,7 +12,7 @@ import scala.collection.JavaConversions._
 object PhReadMapping {
 	def exec(): Properties = {
 		val props = new Properties()
-		val source = fromFile(sys.env("PH_TS_SANDBOX_HOME") + "/conf/ooxml_config.json", "ISO-8859-1")
+		val source = fromFile(sys.env("PHPRODSHOME") + "/conf/ooxml_config.json", "ISO-8859-1")
 		val jsonStr = source.getLines().mkString("").replace(" ", "")
 		val jsonObject = JSON.parseObject(jsonStr)
 		props.setProperty("output", jsonObject.getString("output"))

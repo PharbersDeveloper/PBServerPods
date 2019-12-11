@@ -96,7 +96,7 @@ export default class AppDelegate {
 
     protected generateModels(): any {
         const prefix = "/server/dist/src/models/"
-        const path = process.env.PH_TS_SANDBOX_HOME + prefix
+        const path = process.env.PHPRODSHOME + prefix
         const suffix = ".js"
         const result: {[index: string]: any} = {}
         CONFIG.models.forEach((ele) => {
