@@ -8,8 +8,6 @@ import com.pharbers.kafka.consumer.PharbersKafkaConsumer
 import com.pharbers.kafka.schema.ConvertExcel
 import com.pharbers.oss.Oss
 import com.pharbers.uitl.ThreadExecutor.ThreadExecutor
-import javax.xml.namespace.QName
-import javax.xml.stream.{XMLEventFactory, XMLInputFactory, XMLOutputFactory}
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import com.pharbers.uitl.Http
 
@@ -26,7 +24,6 @@ case class ConvertStrictExcelListener() extends Listener {
 	}
 	// TODO: 设计问题，先跑起来，后续改为策略
 	val process: ConsumerRecord[String, ConvertExcel] => Unit = (record: ConsumerRecord[String, ConvertExcel]) => {
-		println("进入错误Handler")
 		val uuid = UUID.randomUUID().toString
 		val objectName = s"$uuid/${System.currentTimeMillis()}"
 
@@ -34,8 +31,6 @@ case class ConvertStrictExcelListener() extends Listener {
 		val response = Http.Post("http://localhost:8080/findFilePathWithId", p, "application/json").exec()
 		val ossPath = JSON.parseObject(response).getString("ossPath")
 		val downloadPath = PhReadMapping.exec().getProperty("input") + "/" + ossPath.substring(ossPath.lastIndexOf("/") + 1)
-		println(ossPath)
-		println(downloadPath)
 		Oss().down(downloadPath, ossPath)
 		if (record.value().getType.toString == "xls") {
 			val result = ConvertXls2Xlsx().exec(Map("inputPath" -> downloadPath))

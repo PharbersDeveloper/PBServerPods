@@ -1,10 +1,7 @@
 package test
 
 import (
-	"PhSandBox/PhRecord/PhUploadEnd"
 	"PhSandBox/env"
-	"github.com/PharbersDeveloper/bp-go-lib/kafka"
-	"github.com/PharbersDeveloper/bp-go-lib/log"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )
@@ -66,24 +63,37 @@ func TestSendJobBloodProducer(t *testing.T) {
 	//	}
 	//})
 
-	Convey("SendJob Producer Test", t, func() {
-		p, err := kafka.NewKafkaBuilder().BuildProducer()
-		if err != nil {
-			log.NewLogicLoggerBuilder().Build().Error(err.Error())
-			return
-		}
+	//Convey("SendJob Producer Test", t, func() {
+	//	p, err := kafka.NewKafkaBuilder().BuildProducer()
+	//	if err != nil {
+	//		log.NewLogicLoggerBuilder().Build().Error(err.Error())
+	//		return
+	//	}
+	//
+	//	record, err := kafka.EncodeAvroRecord(&PhUploadEnd.UploadEnd{TraceId: "000", DataSetId: "000"})
+	//	log.NewLogicLoggerBuilder().Build().Infof("Serializing struct: %#v\n", record)
+	//	if err != nil {
+	//		log.NewLogicLoggerBuilder().Build().Error(err.Error())
+	//		return
+	//	}
+	//	err = p.Produce("upload_end_job", []byte("value"), record)
+	//	if err != nil {
+	//		log.NewLogicLoggerBuilder().Build().Error(err.Error())
+	//		return
+	//	}
+	//})
 
-		record, err := kafka.EncodeAvroRecord(&PhUploadEnd.UploadEnd{TraceId: "000", DataSetId: "000"})
-		log.NewLogicLoggerBuilder().Build().Infof("Serializing struct: %#v\n", record)
-		if err != nil {
-			log.NewLogicLoggerBuilder().Build().Error(err.Error())
-			return
-		}
-		err = p.Produce("upload_end_job", []byte("value"), record)
-		if err != nil {
-			log.NewLogicLoggerBuilder().Build().Error(err.Error())
-			return
-		}
+	Convey("push job", func() {
+
+
+		//param, _ := json.Marshal(map[string]string{
+		//
+		//})
+		//go func() {
+		//	_, _ = http.Post("http://localhost:8080/putJob2Stream",
+		//		map[string]string{"Content-Type": "application/json"},
+		//		strings.NewReader(string(param)))
+		//}()
 	})
 }
 
