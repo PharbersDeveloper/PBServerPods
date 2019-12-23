@@ -28,11 +28,7 @@ oauth:
   oauthHost: oauth.pharbers.com
   oauthPort: ""
   oauthApiNamespace: "v0"
-oss:
-  region: oss-cn-beijing
-  accessKeyId: LTAIEoXgk4DOHDGi
-  accessKeySecret: x75sK6191dPGiu9wBMtKE6YcBBh8EI
-  bucket: pharbers-PhSandBox
+
 kfk:
   kafkaBrokerList: "http://pharbers.com:8082"
   kafkaTopic: "alfredtest"
