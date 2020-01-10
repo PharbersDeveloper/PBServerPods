@@ -258,7 +258,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.pharbers.Main</mainClass>
+                            <mainClass>com.pharbers.main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

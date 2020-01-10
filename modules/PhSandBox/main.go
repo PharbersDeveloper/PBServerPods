@@ -2,9 +2,9 @@ package main
 
 import (
 	Handler "PhSandBox/PhHandler"
-	"PhSandBox/env"
+	//"PhSandBox/env"
 	"fmt"
-	"log"
+	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"net/http"
 )
 
@@ -12,7 +12,7 @@ import (
 func main() {
 
 	// 本地调试打开
-	env.SetLocalEnv()
+	//env.SetLocalEnv()
 
 	mux := http.NewServeMux()
 
@@ -33,7 +33,6 @@ func main() {
 
 	port := "30001"
 
-
-	log.Println("Listening...", port)
+	log.NewLogicLoggerBuilder().Build().Debug("Listening...", port)
 	http.ListenAndServe(fmt.Sprint(":", port), mux)
 }
