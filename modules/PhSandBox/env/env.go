@@ -39,13 +39,16 @@ func SetLocalEnv() {
 	_ = os.Setenv(LogOutput, "console")
 	//_ = os.Setenv(env.LogOutput, "/Users/qianpeng/bplogs/mqtt-message-storage.log")
 	_ = os.Setenv(LogLevel, "debug")
-	//_ = os.Setenv("EMAIL_TEMPLATE", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/email-template.txt"))
+	//_ = os.Setenv("EMAIL_TEMPLATE", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/email-template.html"))
 	//_ = os.Setenv("EMAILADDRESS", fmt.Sprint(os.Getenv("SANDBOX_HOME"), "/resource/emails.json"))
 
 	//kafka
 	_ = os.Setenv(KafkaConfigPath, os.Getenv("KAFKA_HOME_CONFIG"))
 
 	_ = os.Setenv(SchemaRegistryUrl, "http://pharbers.com:8081")
+
+	_ = os.Setenv("EMAIL_TEMPLATE", "/Users/qianpeng/GitHub/PBServerPods/conf/email-template.html")
+	_ = os.Setenv("EMAILADDRESS", "/Users/qianpeng/GitHub/PBServerPods/conf/emails.json")
 
 	//_ = os.Setenv(KafkaBroker, "pharbers.com:9092")
 	//_ = os.Setenv(SchemaRegistryUrl, "http://pharbers.com:8081")

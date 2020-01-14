@@ -2,7 +2,7 @@ package main
 
 import (
 	Handler "PhSandBox/PhHandler"
-	//"PhSandBox/env"
+	"PhSandBox/env"
 	"fmt"
 	"github.com/PharbersDeveloper/bp-go-lib/log"
 	"net/http"
@@ -12,7 +12,7 @@ import (
 func main() {
 
 	// 本地调试打开
-	//env.SetLocalEnv()
+	env.SetLocalEnv()
 
 	mux := http.NewServeMux()
 

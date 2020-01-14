@@ -27,4 +27,7 @@ export class ServerConf {
 
     @JsonProperty("modules", [ModuleConf])
     public modules: ModuleConf[] = undefined
+
+    // @JsonProperty("handlers", [String])
+    // public handlers: string[] = undefined
 }
