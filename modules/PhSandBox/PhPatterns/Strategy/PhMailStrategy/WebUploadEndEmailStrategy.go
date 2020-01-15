@@ -19,10 +19,11 @@ func (w * WebUploadEndEmailStrategy) DoExec(mail PhModel.Mail) (interface{}, err
 	dataTimeStr := time.Unix( mail.CreateTime / 1000, 0).Format("2006-01-02 15:04:05")
 	b, _ := ioutil.ReadFile(os.Getenv("EMAIL_TEMPLATE"))
 	reg := regexp.MustCompile("\t|\r|\n")
-	userName := strings.ReplaceAll(string(b), "**UserName**", "Demo") // TODO: 写死
+	userName := strings.ReplaceAll(string(b), "**UserName**", mail.Operation)
 	fileName := strings.ReplaceAll(userName, "**FileName**", mail.FileName)
 	fileType := strings.ReplaceAll(fileName, "**FileType**", mail.FileType)
-	html := strings.ReplaceAll(fileType, "**UploadTime**", dataTimeStr)
+	uploadTime := strings.ReplaceAll(fileType, "**UploadTime**", dataTimeStr)
+	html := strings.ReplaceAll(uploadTime, "**Status**", mail.Status)
 	content := reg.ReplaceAllString(html, "")
 
 	for _, e := range BmConfig.BmGetConfigMap(os.Getenv("EMAILADDRESS"))["address"].([]interface{}) {

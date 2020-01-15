@@ -21,7 +21,7 @@ mongo:
   port: 5555
   username: ""
   pwd: ""
-  coll: "pharbers-sandbox-600"
+  coll: "pharbers-sandbox-600-test"
   auth: false
 oauth:
   debugging: true
@@ -44,3 +44,10 @@ modules:
     routers:
       - identify
       - putJob2Stream
+      - sendEmail
+#handlers:
+#  - uploadFileEnd
+#  - findFilePathWithId
+#  - updateAssetVersion
+#  - reCommitJobWithAssetId
+#  - createDataSetsAndJob
