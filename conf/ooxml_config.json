@@ -1,6 +1,4 @@
 {
-  "input": "/Users/qianpeng/Desktop/convert_excel/input",
-  "output": "/Users/qianpeng/Desktop/convert_excel/output",
   "replace": [
     "http://purl.oclc.org/ooxml/drawingml/chart=http://schemas.openxmlformats.org/drawingml/2006/chart",
     "http://purl.oclc.org/ooxml/drawingml/chartDrawing=http://schemas.openxmlformats.org/drawingml/2006/chartDrawing",

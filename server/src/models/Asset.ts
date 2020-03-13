@@ -4,6 +4,7 @@ import DataSet from "./DataSet"
 import DbSource from "./DbSource"
 import IModelBase from "./modelBase"
 import File from "./File"
+import Mart from "./Mart"
 
 class Asset extends Typegoose implements IModelBase<Asset> {
 
@@ -31,7 +32,7 @@ class Asset extends Typegoose implements IModelBase<Asset> {
     public isNewVersion: boolean
 
     @prop({ default: "file", required: true } )
-    public dataType: string // candidate: database, file, stream, application
+    public dataType: string // candidate: database, file, stream, application, mart, cube
 
     @prop({ ref: File, required: false } )
     public file?: Ref<File>
@@ -39,8 +40,11 @@ class Asset extends Typegoose implements IModelBase<Asset> {
     @prop({ ref: DbSource, required: false } )
     public dbs?: Ref<DbSource>
 
-    @arrayProp({ itemsRef: DataSet, required: true } )
+    @arrayProp({ itemsRef: DataSet, required: false } )
     public dfs: Ref<DataSet>[]
+
+    @prop({ ref: Mart, required: false } )
+    public mart?: Ref<Mart>
 
     @arrayProp({ items: String, default: [], required: true } )
     public providers: string[]
@@ -59,6 +63,9 @@ class Asset extends Typegoose implements IModelBase<Asset> {
 
     @arrayProp({ items: String, default: [], required: true } )
     public labels: string[]
+
+    @prop({ default: "", required: false })
+    public createTime: number
 
     public getModel() {
         return this.getModelForClass(Asset)

@@ -6,11 +6,10 @@ import com.pharbers.factory.Convert
 
 case class ConvertXls2Xlsx() extends Convert {
 	override def exec(parameter: Map[String, Any]): (Boolean, String) = {
-		val mappings = PhReadMapping.exec()
 		val fileConversionXLSToXLXS = new FileConversionXLSToXLXS()
-		val outputPath = s"${mappings.getProperty("output")}/${System.currentTimeMillis()}"
+		val outputPath = s"${sys.env("CONVERTOUTPUT")}/${System.currentTimeMillis()}"
 		try {
-			isExistFile(s"${parameter("inputPath")}")
+			isExistFile(parameter("inputPath").toString)
 			fileConversionXLSToXLXS.convertXLS2XLSX(s"${parameter("inputPath")}", outputPath)
 			(true, outputPath)
 		} catch {

@@ -5,11 +5,9 @@ import File from "../models/File"
 import mongoose = require("mongoose")
 
 export class UpdateFilePathHandler {
-    constructor() {
-        PhLogger.info("凸(艹皿艹 )")
-    }
     // TODO: 未做异常处理
     async updateAssetVersion(body: any) {
+        PhLogger.info("更新Asset版本")
         // 上一个版本的历史
         const preAssetVersion = await new Asset().getModel().findById(new mongoose.mongo.ObjectId(body.assetId))
         preAssetVersion.isNewVersion = false
@@ -19,7 +17,7 @@ export class UpdateFilePathHandler {
         const file = new File()
         file.fileName = preFileVersion.fileName
         file.extension = preFileVersion.extension === "xls" ? "xlsx" : preFileVersion.extension
-        file.uploaded = new Date().getTime()
+        // file.uploaded = new Date().getTime()
         file.size = preFileVersion.size
         file.url = body.url
         const fileModel = await new File().getModel().create(file)
@@ -41,6 +39,7 @@ export class UpdateFilePathHandler {
         asset.file = fileModel
         asset.dfs = preAssetVersion.dfs
         asset.description = preAssetVersion.description
+        asset.createTime = new Date().getTime()
 
         await new Asset().getModel().create(asset)
         return {"status": "ok", "assetId": asset._id.toString()}

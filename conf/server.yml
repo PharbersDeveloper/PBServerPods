@@ -21,14 +21,18 @@ mongo:
   port: 5555
   username: ""
   pwd: ""
-  coll: "pharbers-sandbox-600-test"
+  coll: "pharbers-sandbox-test"
   auth: false
 oauth:
   debugging: true
   oauthHost: oauth.pharbers.com
   oauthPort: ""
   oauthApiNamespace: "v0"
-
+oss:
+  region: oss-cn-beijing
+  accessKeyId: LTAI4Fuc5oo46peAcc3LmHb3
+  accessKeySecret: aJRr3DP4nXCFDR3KGRICpIhq5bHfTm
+  bucket: pharbers-PhSandBox
 kfk:
   kafkaBrokerList: "http://pharbers.com:8082"
   kafkaTopic: "alfredtest"

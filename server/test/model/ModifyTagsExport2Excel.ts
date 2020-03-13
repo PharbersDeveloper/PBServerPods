@@ -86,7 +86,7 @@ class ModifyTagsExport2Excel {
                 "",     // 文件本身属性数据分割
                 file.fileName,
                 file.extension,
-                this.timestamp2String(file.uploaded),
+                this.timestamp2String(asset.createTime),
                 file.url,
                 this.bytes2MB(file.size)
             ]
@@ -139,7 +139,7 @@ class ModifyTagsExport2Excel {
 
     private timestamp2String(stamp: number): string {
         const date = new Date()
-        date.setTime(stamp)
+        date.setTime(stamp || 0)
         return date.toUTCString()
     }
 

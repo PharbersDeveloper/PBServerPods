@@ -8,7 +8,6 @@ import (
 	"net/http"
 )
 
-
 func main() {
 
 	// 本地调试打开
@@ -18,15 +17,13 @@ func main() {
 
 	mux.HandleFunc("/identify", Handler.IdentifyHandler)
 	mux.HandleFunc("/putJob2Stream", Handler.PutJobHDFS2Stream)
-	//mux.HandleFunc("/", nil)
+	mux.HandleFunc("/sendEmail", Handler.SendEmail)
 
 	// TODO: 简略粗暴启动Consumer
-	go func(){
+	go func() {
 		Handler.DataSetConsumerHandler()
 	}()
-	//go func() {
-	//	Handler.JobConsumerHandler()
-	//}()
+
 	go func() {
 		Handler.FileUploadEndHandler()
 	}()

@@ -63,7 +63,7 @@ class UploadFileTransmit {
                 f.size = fv.size
                 f.fileName = fd.name
                 f.extension = fd.extension
-                f.uploaded = fd.created
+                // f.uploaded = fd.created
                 const fc = await fm.create(f)
 
                 /**
@@ -90,6 +90,7 @@ class UploadFileTransmit {
                 asset.owner = fd.ownerID
                 asset.accessibility = "w"
                 asset.version = 0
+                asset.createTime = fd.created
 
                 /**
                  * 4. 为数据添加tags
