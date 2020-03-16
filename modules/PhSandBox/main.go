@@ -28,6 +28,10 @@ func main() {
 		Handler.FileUploadEndHandler()
 	}()
 
+	go func() {
+		Handler.DataMartConsumerHandler()
+	}()
+
 	port := "30001"
 
 	log.NewLogicLoggerBuilder().Build().Debug("Listening...", port)

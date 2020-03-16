@@ -15,6 +15,7 @@ import {UpdateFilePathHandler} from "../handler/updateFilePathHandler"
 import {ReCommitJobHandler} from "../handler/reCommitJobHandler"
 import {UpdateJobId2MongoHandler} from "../handler/updateJobId2MongoHandler"
 import {JobBloodHandler} from "../handler/jobBloodHandler"
+import { AssetDataMartHandler } from "../handler/AssetDataMartHandler"
 
 /**
  * The summary section should be brief. On a documentation web site,
@@ -206,6 +207,10 @@ export default class AppDelegate {
 
         this.router.post("/createDataSetsAndJob" , async (req, res) => {
             res.json(await new JobBloodHandler().createDataSetsAndJob(req.body))
+        } )
+
+        this.router.post("/assetDataMart" , async (req, res) => {
+            res.json(await new AssetDataMartHandler().assetDataMart(req.body))
         } )
 
         CONFIG.modules.forEach( (module) => {

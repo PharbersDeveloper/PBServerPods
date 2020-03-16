@@ -7,6 +7,14 @@ import mongoose = require("mongoose")
 export class UpdateFilePathHandler {
     // TODO: 未做异常处理
     async updateAssetVersion(body: any) {
+
+        function convertVersion(version: string) {
+            const nums = version.split(".")
+            const lastNum = Number(nums.pop()) + 1
+            nums.concat(lastNum.toString())
+            return nums.join(".")
+        }
+
         PhLogger.info("更新Asset版本")
         // 上一个版本的历史
         const preAssetVersion = await new Asset().getModel().findById(new mongoose.mongo.ObjectId(body.assetId))
@@ -27,7 +35,7 @@ export class UpdateFilePathHandler {
         asset.name = preAssetVersion.name
         asset.owner = preAssetVersion.owner
         asset.accessibility = preAssetVersion.accessibility
-        asset.version = preAssetVersion.version + 1
+        asset.version = convertVersion(preAssetVersion.version)
         asset.isNewVersion = true
         asset.dataType = preAssetVersion.dataType
         asset.providers = preAssetVersion.providers

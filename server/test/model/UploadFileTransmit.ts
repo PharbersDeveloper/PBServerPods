@@ -89,7 +89,7 @@ class UploadFileTransmit {
                 asset.dfs = dfs
                 asset.owner = fd.ownerID
                 asset.accessibility = "w"
-                asset.version = 0
+                asset.version = "0.0.0"
                 asset.createTime = fd.created
 
                 /**

@@ -5,8 +5,8 @@ import DataSet from "./DataSet"
 
 class Mart extends Typegoose implements IModelBase<Mart> {
 
-    @prop({ ref: DataSet, required: false } )
-    public dfs?: Ref<DataSet>
+    @arrayProp({ itemsRef: DataSet, required: false } )
+    public dfs: Ref<DataSet>[]
 
     @prop({ default: "", required: true })
     public name: string
@@ -15,9 +15,9 @@ class Mart extends Typegoose implements IModelBase<Mart> {
     public url: string
 
     @prop({ default: "", required: true })
-    public dataTpe: string
+    public dataType: string
 
-    @prop({ default: "", required: true })
+    @prop({ default: "", required: false })
     public description: string
 
     public getModel() {
