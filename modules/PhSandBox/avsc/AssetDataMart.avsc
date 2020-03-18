@@ -79,6 +79,10 @@
     {
       "name": "martDataType",
       "type": "string"
+    },
+    {
+      "name": "saveMode",
+      "type": "string"
     }
   ]
 }

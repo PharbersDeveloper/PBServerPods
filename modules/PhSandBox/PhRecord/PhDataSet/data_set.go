@@ -20,7 +20,7 @@ type DataSet struct {
 	JobContainerId string
 	ColName        []string
 	TabName        string
-	Length         int32
+	Length         int64
 	Url            string
 	Description    string
 }
@@ -47,7 +47,7 @@ func NewDataSet() *DataSet {
 }
 
 func (r *DataSet) Schema() string {
-	return "{\"fields\":[{\"name\":\"parentIds\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"mongoId\",\"type\":\"string\"},{\"name\":\"jobContainerId\",\"type\":\"string\"},{\"name\":\"colName\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"tabName\",\"type\":\"string\"},{\"name\":\"length\",\"type\":\"int\"},{\"name\":\"url\",\"type\":\"string\"},{\"name\":\"description\",\"type\":\"string\"}],\"name\":\"DataSet\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"parentIds\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"mongoId\",\"type\":\"string\"},{\"name\":\"jobContainerId\",\"type\":\"string\"},{\"name\":\"colName\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"tabName\",\"type\":\"string\"},{\"name\":\"length\",\"type\":\"long\"},{\"name\":\"url\",\"type\":\"string\"},{\"name\":\"description\",\"type\":\"string\"}],\"name\":\"DataSet\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
 }
 
 func (r *DataSet) SchemaName() string {
@@ -81,7 +81,7 @@ func (r *DataSet) Get(i int) types.Field {
 	case 4:
 		return (*types.String)(&r.TabName)
 	case 5:
-		return (*types.Int)(&r.Length)
+		return (*types.Long)(&r.Length)
 	case 6:
 		return (*types.String)(&r.Url)
 	case 7:

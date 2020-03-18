@@ -29,6 +29,7 @@ type AssetDataMart struct {
 	MartName         string
 	MartUrl          string
 	MartDataType     string
+	SaveMode         string
 }
 
 func NewAssetDataMartWriter(writer io.Writer, codec container.Codec, recordsPerBlock int64) (*container.Writer, error) {
@@ -53,7 +54,7 @@ func NewAssetDataMart() *AssetDataMart {
 }
 
 func (r *AssetDataMart) Schema() string {
-	return "{\"fields\":[{\"name\":\"assetName\",\"type\":\"string\"},{\"name\":\"assetDescription\",\"type\":\"string\"},{\"name\":\"assetVersion\",\"type\":\"string\"},{\"name\":\"assetDataType\",\"type\":\"string\"},{\"name\":\"providers\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"markets\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"molecules\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"dataCover\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"geoCover\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"labels\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"dfs\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"martName\",\"type\":\"string\"},{\"name\":\"martUrl\",\"type\":\"string\"},{\"name\":\"martDataType\",\"type\":\"string\"}],\"name\":\"AssetDataMart\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"assetName\",\"type\":\"string\"},{\"name\":\"assetDescription\",\"type\":\"string\"},{\"name\":\"assetVersion\",\"type\":\"string\"},{\"name\":\"assetDataType\",\"type\":\"string\"},{\"name\":\"providers\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"markets\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"molecules\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"dataCover\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"geoCover\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"labels\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"dfs\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"martName\",\"type\":\"string\"},{\"name\":\"martUrl\",\"type\":\"string\"},{\"name\":\"martDataType\",\"type\":\"string\"},{\"name\":\"saveMode\",\"type\":\"string\"}],\"name\":\"AssetDataMart\",\"namespace\":\"com.pharbers.kafka.schema\",\"type\":\"record\"}"
 }
 
 func (r *AssetDataMart) SchemaName() string {
@@ -109,6 +110,8 @@ func (r *AssetDataMart) Get(i int) types.Field {
 		return (*types.String)(&r.MartUrl)
 	case 13:
 		return (*types.String)(&r.MartDataType)
+	case 14:
+		return (*types.String)(&r.SaveMode)
 
 	}
 	panic("Unknown field index")

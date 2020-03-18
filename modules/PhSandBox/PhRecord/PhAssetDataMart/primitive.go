@@ -148,6 +148,10 @@ func writeAssetDataMart(r *AssetDataMart, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeString(r.SaveMode, w)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

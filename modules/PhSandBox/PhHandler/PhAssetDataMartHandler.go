@@ -46,6 +46,7 @@ func dataMartFunc(key interface{}, value interface{}) {
 		"martName": msgValue.MartName,
 		"martUrl": msgValue.MartUrl,
 		"martDataType": msgValue.MartDataType,
+		"saveMode": msgValue.SaveMode,
 	})
 
 	if err != nil {

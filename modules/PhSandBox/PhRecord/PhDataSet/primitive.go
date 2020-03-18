@@ -112,7 +112,7 @@ func writeDataSet(r *DataSet, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeInt(r.Length, w)
+	err = writeLong(r.Length, w)
 	if err != nil {
 		return err
 	}
@@ -126,13 +126,6 @@ func writeDataSet(r *DataSet, w io.Writer) error {
 	}
 
 	return nil
-}
-
-func writeInt(r int32, w io.Writer) error {
-	downShift := uint32(31)
-	encoded := uint64((uint32(r) << 1) ^ uint32(r>>downShift))
-	const maxByteSize = 5
-	return encodeInt(w, maxByteSize, encoded)
 }
 
 func writeLong(r int64, w io.Writer) error {
