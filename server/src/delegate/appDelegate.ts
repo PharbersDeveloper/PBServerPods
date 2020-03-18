@@ -15,7 +15,7 @@ import {UpdateFilePathHandler} from "../handler/updateFilePathHandler"
 import {ReCommitJobHandler} from "../handler/reCommitJobHandler"
 import {UpdateJobId2MongoHandler} from "../handler/updateJobId2MongoHandler"
 import {JobBloodHandler} from "../handler/jobBloodHandler"
-import { AssetDataMartHandler } from "../handler/AssetDataMartHandler"
+import { AssetDataMartHandler } from "../handler/assetDataMartHandler"
 
 /**
  * The summary section should be brief. On a documentation web site,
