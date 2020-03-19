@@ -2,7 +2,7 @@ package com.pharbers.listener
 import java.util.UUID
 
 import com.alibaba.fastjson.JSON
-import com.pharbers.convert.{ConvertStrictExcel, ConvertXls2Xlsx, OoXmlStrictConverter, PhReadMapping}
+import com.pharbers.convert.{ConvertStrictExcel, ConvertXls2Xlsx, OoXmlStrictConverter}
 import com.pharbers.factory.{Convert, Listener}
 import com.pharbers.kafka.consumer.PharbersKafkaConsumer
 import com.pharbers.kafka.schema.ConvertExcel
@@ -30,7 +30,8 @@ case class ConvertStrictExcelListener() extends Listener {
 		val p = JSON.toJSONString(Map("assetId" -> record.value().getAssetId.toString).asJava, true)
 		val response = Http.Post("http://localhost:8080/findFilePathWithId", p, "application/json").exec()
 		val ossPath = JSON.parseObject(response).getString("ossPath")
-		val downloadPath = PhReadMapping.exec().getProperty("input") + "/" + ossPath.substring(ossPath.lastIndexOf("/") + 1)
+//		val downloadPath = PhReadMapping.exec().getProperty("input") + "/" + ossPath.substring(ossPath.lastIndexOf("/") + 1)
+		val downloadPath = s"${sys.env("CONVERTINPUT")}/${ossPath.substring(ossPath.lastIndexOf("/") + 1)}"
 		Oss().down(downloadPath, ossPath)
 		if (record.value().getType.toString == "xls") {
 			val result = ConvertXls2Xlsx().exec(Map("inputPath" -> downloadPath))

@@ -16,16 +16,16 @@ RUN echo http://mirrors.aliyun.com/alpine/edge/main > /etc/apk/repositories \
 ENV GOPROXY https://goproxy.io
 ENV GO111MODULE on
 
-WORKDIR /go/src/github.com/PharbersDeveloper/PBServerPods
-# WORKDIR /go/src/github.com/PharbersDeveloper/
-# RUN git clone https://github.com/PharbersDeveloper/PBServerPods.git
+# WORKDIR /go/src/github.com/PharbersDeveloper/PBServerPods
+WORKDIR /go/src/github.com/PharbersDeveloper/
+RUN git clone -b Alex https://github.com/PharbersDeveloper/PBServerPods.git
 
 ENV PHPRODSHOME /go/src/github.com/PharbersDeveloper/PBServerPods
 ENV PHSANDBOX ${PHPRODSHOME}/modules/PhSandBox
 ENV EMAIL_TEMPLATE=${PHPRODSHOME}/conf/email-template.html
 ENV EMAILADDRESS=${PHPRODSHOME}/conf/emails.json
 
-COPY ./PBServerPods ${PHPRODSHOME}
+# COPY ./PBServerPods ${PHPRODSHOME}
 
 
 # Kafka Config
@@ -67,15 +67,15 @@ WORKDIR ${PHPRODSHOME}/log
 WORKDIR ${PHPRODSHOME}/conf
 
 # 提取资源文件
-COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/email-template.html ./
-COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/emails.json ./
-COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/kafka_config.json ./
+# COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/email-template.html ./
+# COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/emails.json ./
+# COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/kafka_config.json ./
 
 WORKDIR /go/bin
 
-COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/snakeoil-ca-1.crt ./
-COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/kafkacat-ca1-signed.pem ./
-COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/kafkacat.client.key ./
+# COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/snakeoil-ca-1.crt ./
+# COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/kafkacat-ca1-signed.pem ./
+# COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/conf/kafkacat.client.key ./
 
 # 提取执行文件
 COPY --from=0 /go/src/github.com/PharbersDeveloper/PBServerPods/modules/PhSandBox/PhSandBox ./
