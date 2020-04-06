@@ -5,7 +5,7 @@ import mongoose = require("mongoose")
 import Mart from "../models/Mart"
 import DataSet from "../models/DataSet"
 
-export class AssetDataMartHandler {
+export default class AssetDataMartHandler {
     // TODO Alex自己留，记得重构
     async assetDataMart(body: any) {
         PhLogger.info("进入DataMart")
@@ -68,3 +68,4 @@ export class AssetDataMartHandler {
         return {status: "ok"}
     }
 }
+

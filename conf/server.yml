@@ -51,9 +51,22 @@ modules:
       - identify
       - putJob2Stream
       - sendEmail
-#handlers:
-#  - uploadFileEnd
-#  - findFilePathWithId
-#  - updateAssetVersion
-#  - reCommitJobWithAssetId
-#  - createDataSetsAndJob
+handlers:
+  - name: fileEnd
+    file: updateJobId2MongoHandler
+    entrance: uploadFileEnd
+  - name: findFilePath
+    file: findFilePathHandler
+    entrance: findFilePathWithId
+  - name: updateAssetVersion
+    file: updateFilePathHandler
+    entrance: updateAssetVersion
+  - name: reCommitJob
+    file: reCommitJobHandler
+    entrance: reCommitJobWithAssetId
+  - name: createDFSAndJob
+    file: jobBloodHandler
+    entrance: createDataSetsAndJob
+  - name: dataMark
+    file: assetDataMartHandler
+    entrance: assetDataMart

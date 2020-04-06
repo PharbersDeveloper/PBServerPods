@@ -5,7 +5,7 @@ import {JsonObject, JsonProperty} from "json2typescript"
 export class OAuthConf {
 
     @JsonProperty("debugging", Boolean)
-    public debugging: boolean = false
+    public debugging: boolean = true
 
     @JsonProperty("oauthHost", String)
     public oauthHost: string = undefined

@@ -6,7 +6,7 @@ import uuid from "uuid/v1"
 import mongoose = require("mongoose")
 import PhLogger from "../logger/phLogger"
 
-export class ReCommitJobHandler {
+export default class ReCommitJobHandler {
     async reCommitJobWithAssetId(body: any) {
         PhLogger.info("进入重新提交")
         const asset = await new Asset().getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})

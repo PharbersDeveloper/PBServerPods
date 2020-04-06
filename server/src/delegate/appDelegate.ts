@@ -1,21 +1,14 @@
 "use strict"
 import axios from "axios"
-import bodyParser from "body-parser"
 import express from "express"
 import API, { ResourceTypeRegistry } from "json-api"
 import { APIControllerOpts } from "json-api/build/src/controllers/API"
 import mongoose = require("mongoose")
 import KafkaDelegate from "../kafka/KafkaDelegate"
-import PhLogger from "../logger/phLogger"
 import { urlEncodeFilterParser } from "./urlEncodeFilterParser"
 import phLogger from "../logger/phLogger"
 import { CONFIG } from "../shared/config"
-import {FindFilePathHandler} from "../handler/findFilePathHandler"
-import {UpdateFilePathHandler} from "../handler/updateFilePathHandler"
-import {ReCommitJobHandler} from "../handler/reCommitJobHandler"
-import {UpdateJobId2MongoHandler} from "../handler/updateJobId2MongoHandler"
-import {JobBloodHandler} from "../handler/jobBloodHandler"
-import { AssetDataMartHandler } from "../handler/assetDataMartHandler"
+import MiddlewareDelegate from "../middleware/middlewareDelegate"
 
 /**
  * The summary section should be brief. On a documentation web site,
@@ -36,62 +29,20 @@ export default class AppDelegate {
 
     public exec() {
         this.loadConfiguration()
-        this.configMiddleware()
+        new MiddlewareDelegate().exec(this.app, this.router)
         this.connect2MongoDB()
         this.generateRoutes(this.getModelRegistry())
         this.generateModules()
+        this.generateHandlers()
         this.listen2Port(8080)
-    }
 
-    protected configMiddleware() {
-
-        this.app.use(bodyParser.json())
-        this.app.use( bodyParser.urlencoded( {
-            extended: true
-        } ) )
-
-        if (!CONFIG.oauth.debugging) {
-            // a middleware function with no mount path. This code is executed for every request to the router
-            this.router.use((req, res, next) => {
-                const auth = req.get("Authorization")
-                if (auth === undefined) {
-                    PhLogger.error("no auth")
-                    res.status(500).send({error: "no auth!"})
-                    return
-                }
-
-                const host = CONFIG.oauth.oauthHost
-                const port = CONFIG.oauth.oauthPort
-                const namespace = CONFIG.oauth.oauthApiNamespace
-
-                axios.post(`http://${host}${port}/${namespace}/TokenValidation`, null, {
-                    headers: {
-                        Authorization: auth,
-                    },
-                }).then((response) => {
-                    if (response.data.error !== undefined) {
-                        PhLogger.error("auth error")
-                        res.status(500).send(response.data)
-                        return
-                    } else {
-                        next()
-                    }
-                }).catch((error) => {
-                    PhLogger.error("auth error")
-                    res.status(500).send(error)
-                    return
-                })
-            })
-        }
-
-        this.app.use("/", this.router)
     }
 
     protected loadConfiguration() {
         try {
             this.kafka = new KafkaDelegate(CONFIG.kfk)
         } catch (e) {
-            PhLogger.fatal( e as Error )
+            phLogger.fatal( e as Error )
         }
     }
 
@@ -117,19 +68,19 @@ export default class AppDelegate {
         const coll = CONFIG.mongo.coll
         const auth = CONFIG.mongo.auth
         if (auth) {
-            PhLogger.info(`connect mongodb with ${ username } and ${ pwd }`)
+            phLogger.info(`connect mongodb with ${ username } and ${ pwd }`)
             mongoose.connect(prefix + "://" + username + ":" + pwd + "@" + host + ":" + port + "/" + coll,
                 (err: any) => {
                     if (err != null) {
-                        PhLogger.error(err)
+                        phLogger.error(err)
                     }
                 })
         } else {
-            PhLogger.info(`connect mongodb without auth`)
+            phLogger.info(`connect mongodb without auth`)
             mongoose.connect(prefix + "://" + host + ":" + port + "/" + coll,
                 (err: any) => {
                 if (err != null) {
-                    PhLogger.error(err)
+                    phLogger.error(err)
                 }
             })
         }
@@ -162,7 +113,7 @@ export default class AppDelegate {
             new API.controllers.Documentation(registry, {name: "Pharbers API"})
         )
 
-        PhLogger.startConnectLog(this.app)
+        phLogger.startConnectLog(this.app)
         this.app.get("/", Front.docsRequest)
         const perfix = "/:type"
         const ms = CONFIG.models.map((x) => x.reg).join("|")
@@ -186,33 +137,6 @@ export default class AppDelegate {
     }
 
     protected generateModules() {
-        phLogger.info(CONFIG.modules)
-
-        // TODO：先实现功能，在结构
-        this.router.post("/uploadFileEnd" , async (req, res) => {
-            res.json(await new UpdateJobId2MongoHandler().uploadFileEnd(req.body))
-        } )
-
-        this.router.post("/findFilePathWithId" , async (req, res) => {
-            res.json(await new FindFilePathHandler().findFilePathWithId(req.body))
-        } )
-
-        this.router.post("/updateAssetVersion" , async (req, res) => {
-            res.json(await new UpdateFilePathHandler().updateAssetVersion(req.body))
-        } )
-
-        this.router.post("/reCommitJobWithAssetId" , async (req, res) => {
-            res.json(await new ReCommitJobHandler().reCommitJobWithAssetId(req.body))
-        } )
-
-        this.router.post("/createDataSetsAndJob" , async (req, res) => {
-            res.json(await new JobBloodHandler().createDataSetsAndJob(req.body))
-        } )
-
-        this.router.post("/assetDataMart" , async (req, res) => {
-            res.json(await new AssetDataMartHandler().assetDataMart(req.body))
-        } )
-
         CONFIG.modules.forEach( (module) => {
             const host = module.host
             const port = module.port
@@ -230,10 +154,25 @@ export default class AppDelegate {
         } )
     }
 
+    protected generateHandlers() {
+        const prefix = "/server/dist/src/handler/"
+        const path = process.env.PHPRODSHOME + prefix
+        const suffix = ".js"
+
+        CONFIG.handlers.forEach((ele) => {
+            const filename = path + ele.file + suffix
+            const one = require(filename).default
+            this.router.post("/" + ele.entrance , async (req, res, next) => {
+                res.json(await new one()[ele.entrance](req.body))
+                next()
+            } )
+        })
+    }
+
     protected listen2Port(port: number) {
         // start the Express server
         this.app.listen( port, () => {
-            PhLogger.info( `server started at http://localhost:${ port }` )
+            phLogger.info( `server started at http://localhost:${ port }` )
         } )
     }
 }

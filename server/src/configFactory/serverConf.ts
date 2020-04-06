@@ -6,6 +6,7 @@ import { MongoConf } from "./mongoConf"
 import { OAuthConf } from "./oauthConf"
 import { OssConf } from "./ossConf"
 import { ModuleConf } from "./moduleConf"
+import { HandlerConf } from "./handlerConf"
 
 @JsonObject("ServerConf")
 export class ServerConf {
@@ -28,6 +29,6 @@ export class ServerConf {
     @JsonProperty("modules", [ModuleConf])
     public modules: ModuleConf[] = undefined
 
-    // @JsonProperty("handlers", [String])
-    // public handlers: string[] = undefined
+    @JsonProperty("handlers", [HandlerConf])
+    public handlers: HandlerConf[] = undefined
 }

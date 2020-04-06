@@ -4,7 +4,7 @@ import PhLogger from "../logger/phLogger"
 import DataSet from "../models/DataSet"
 import mongoose = require("mongoose")
 
-export class UpdateJobId2MongoHandler {
+export default class UpdateJobId2MongoHandler {
     async uploadFileEnd(body: any) {
         PhLogger.info("进入修改DS")
 

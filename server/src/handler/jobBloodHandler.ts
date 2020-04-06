@@ -4,7 +4,7 @@ import DataSet from "../models/DataSet"
 import Job from "../models/Job"
 import mongoose = require("mongoose")
 
-export class JobBloodHandler {
+export default class JobBloodHandler {
 
     async createDataSetsAndJob(body: any) {
         const datasetModel = new DataSet()

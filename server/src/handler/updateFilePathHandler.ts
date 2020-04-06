@@ -4,7 +4,7 @@ import Asset from "../models/Asset"
 import File from "../models/File"
 import mongoose = require("mongoose")
 
-export class UpdateFilePathHandler {
+export default class UpdateFilePathHandler {
     // TODO: 未做异常处理
     async updateAssetVersion(body: any) {
 
