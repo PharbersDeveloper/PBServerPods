@@ -64,7 +64,7 @@ class Asset extends Typegoose implements IModelBase<Asset> {
     @arrayProp({ items: String, default: [], required: true } )
     public labels: string[]
 
-    @prop({ default: "", required: false })
+    @prop({ default: 0, required: false })
     public createTime: number
 
     public getModel() {
