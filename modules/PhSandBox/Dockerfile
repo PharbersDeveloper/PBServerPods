@@ -8,7 +8,7 @@ MAINTAINER Pharbers "pqian@pharbers.com"
 RUN echo http://mirrors.aliyun.com/alpine/edge/main > /etc/apk/repositories \
 	&& echo http://mirrors.aliyun.com/alpine/edge/community >> /etc/apk/repositories \
 	&& apk update \
-	&& apk add --no-cache bash tzdata bash git gcc g++ openssl-dev librdkafka-dev pkgconf \
+	&& apk add --no-cache bash tzdata git gcc g++ openssl-dev librdkafka-dev pkgconf \
 	&& rm -rf /var/cache/apk/* \
 	&& cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
