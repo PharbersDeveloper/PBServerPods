@@ -31,7 +31,6 @@ export default class UpdateFilePathHandler {
         const fileModel = await new File().getModel().create(file)
 
         const asset = new Asset()
-        asset._id = new mongoose.mongo.ObjectId()
         asset.name = preAssetVersion.name
         asset.owner = preAssetVersion.owner
         asset.accessibility = preAssetVersion.accessibility
@@ -49,7 +48,7 @@ export default class UpdateFilePathHandler {
         asset.description = preAssetVersion.description
         asset.createTime = new Date().getTime()
 
-        await new Asset().getModel().create(asset)
-        return {"status": "ok", "assetId": asset._id.toString()}
+        const assetResult = await new Asset().getModel().create(asset)
+        return {"status": "ok", "assetId": assetResult.id.toString()}
     }
 }

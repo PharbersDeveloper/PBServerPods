@@ -20,7 +20,6 @@ export default class AssetDataMartHandler {
             martModel.dataType = body.martDataType
             const mart =  await new Mart().getModel().create(martModel)
 
-            assetModel._id = new mongoose.mongo.ObjectId()
             assetModel.name = body.assetName
             assetModel.description = body.assetDescription
             assetModel.version = body.assetVersion
