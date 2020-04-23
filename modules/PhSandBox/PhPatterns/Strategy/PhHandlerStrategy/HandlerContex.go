@@ -13,13 +13,13 @@ type HandlerContext struct {
 func (hc *HandlerContext) mapping() error {
 	var err error
 	switch hc.EventMsg.Type {
-	case "SandBoxDataSet-Test":
+	case "SandBoxDataSet":
 		hc.strategy = &JobBloodStrategy{}
-	case "UploadEndPoint-Test":
+	case "UploadEndPoint":
 		hc.strategy = &UploadEndStrategy{}
-	case "AssetDataMart-Test":
+	case "AssetDataMart":
 		hc.strategy = &DataMartStrategy{}
-	case "Python-FileMetaData-Test":
+	case "Python-FileMetaData-Test": // Test
 		hc.strategy = &TestStrategy{}
 	default:
 		err = errors.New("is not implementation")
