@@ -5,7 +5,6 @@ import File from "../models/File"
 import mongoose = require("mongoose")
 
 export default class UpdateFilePathHandler {
-    // TODO: 未做异常处理
     async updateAssetVersion(body: any) {
 
         function convertVersion(version: string) {
@@ -25,7 +24,6 @@ export default class UpdateFilePathHandler {
         const file = new File()
         file.fileName = preFileVersion.fileName
         file.extension = preFileVersion.extension === "xls" ? "xlsx" : preFileVersion.extension
-        // file.uploaded = new Date().getTime()
         file.size = preFileVersion.size
         file.url = body.url
         const fileModel = await new File().getModel().create(file)

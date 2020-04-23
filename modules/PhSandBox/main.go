@@ -19,17 +19,8 @@ func main() {
 	mux.HandleFunc("/putJob2Stream", Handler.PutJobHDFS2Stream)
 	mux.HandleFunc("/sendEmail", Handler.SendEmail)
 
-	// TODO: 简略粗暴启动Consumer
 	go func() {
-		Handler.DataSetConsumerHandler()
-	}()
-
-	go func() {
-		Handler.FileUploadEndHandler()
-	}()
-
-	go func() {
-		Handler.DataMartConsumerHandler()
+		Handler.EventMsgConsumerHandler()
 	}()
 
 	port := "30001"

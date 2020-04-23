@@ -31,7 +31,7 @@ class ReplaceTime {
 
         await Promise.all(assetResult.map(async data => {
             const fileData = await new File().getModel().findById(data.file)
-            data.createTime = fileData.uploaded
+            // data.createTime = fileData.uploaded
             await data.save()
         }))
     }

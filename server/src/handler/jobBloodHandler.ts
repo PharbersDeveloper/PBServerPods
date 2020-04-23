@@ -13,18 +13,20 @@ export default class JobBloodHandler {
         jobModel.create = new Date().getTime()
         const job = await new Job().getModel().create(jobModel)
 
-        // tslint:disable-next-line:no-console
-        console.info(body)
         datasetModel._id = new mongoose.mongo.ObjectId(body.mongoId)
-        datasetModel.parent = body.parent
-        datasetModel.colNames = body.colNames
+        datasetModel.parent = body.parentIds
+        datasetModel.colNames = body.colName
         datasetModel.length = body.length
         datasetModel.tabName = body.tabName
         datasetModel.url = body.url
         datasetModel.description = body.description
         datasetModel.job = job
 
-        await new DataSet().getModel().create(datasetModel)
-        return {status: "ok"}
+        const ds = await new DataSet().getModel().create(datasetModel)
+        if (ds != null) {
+            return {status: "ok"}
+        } else {
+            return {status: "no"}
+        }
     }
 }

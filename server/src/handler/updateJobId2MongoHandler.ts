@@ -6,6 +6,8 @@ import mongoose = require("mongoose")
 
 export default class UpdateJobId2MongoHandler {
     async uploadFileEnd(body: any) {
+        // TODO: 尝试10次，没有就出大问题，应该通知错误处理，但现在没有
+        let count = 10
         PhLogger.info("进入修改DS")
 
         function sleep(ms: number){
@@ -23,8 +25,13 @@ export default class UpdateJobId2MongoHandler {
                 await asset.save()
                 return {status: "ok"}
             } else {
-                PhLogger.info("DS Is Null，进入等待")
                 await sleep(1000)
+                PhLogger.info(count)
+                count--
+                if (count <= 0 ) {
+                    PhLogger.info("DataSet 数据库中未存在，id为 =====> " + body.dataSetId)
+                    return {status: "no"}
+                }
                 await getDs()
             }
         }
