@@ -19,6 +19,7 @@ func main() {
 	mux.HandleFunc("/putJob2Stream", Handler.PutJobHDFS2Stream)
 	mux.HandleFunc("/sendEmail", Handler.SendEmail)
 
+
 	go func() {
 		Handler.EventMsgConsumerHandler()
 	}()

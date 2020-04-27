@@ -3,6 +3,7 @@ package PhHandlerStrategy
 import (
 	"PhSandBox/PhRecord/PhEventMsg"
 	"errors"
+	"github.com/PharbersDeveloper/bp-go-lib/log"
 )
 
 type HandlerContext struct {
@@ -19,9 +20,10 @@ func (hc *HandlerContext) mapping() error {
 		hc.strategy = &UploadEndStrategy{}
 	case "AssetDataMart":
 		hc.strategy = &DataMartStrategy{}
-	case "Python-FileMetaData-Test": // Test
-		hc.strategy = &TestStrategy{}
+	//case "Python-FileMetaData-Test": // Test
+	//	hc.strategy = &TestStrategy{}
 	default:
+		log.NewLogicLoggerBuilder().Build().Warn("is not implementation")
 		err = errors.New("is not implementation")
 	}
 	return err

@@ -16,6 +16,7 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 	_ = json.Unmarshal(res, &params)
 
 	p, err := kafka.NewKafkaBuilder().BuildProducer()
+
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		result = err.Error()
@@ -46,8 +47,6 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 		result = err.Error()
 		return
 	}
-	//log.NewLogicLoggerBuilder().Build().Info(specificRecordByteArr)
-	//log.NewLogicLoggerBuilder().Build().Info(p)
 	err = p.Produce("oss_task_submit", []byte(params["jobId"].(string)), specificRecordByteArr)
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())

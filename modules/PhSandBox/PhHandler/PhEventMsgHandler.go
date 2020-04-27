@@ -30,10 +30,9 @@ func eventMsgFunc(key interface{}, value interface{}) {
 	}
 
 	context := PhHandlerStrategy.HandlerContext{EventMsg: msgValue}
-	res, e := context.DoExec()
-	if e != nil {
+	_, e := context.DoExec()
+	if e != nil && e.Error() != "is not implementation" {
 		log.NewLogicLoggerBuilder().Build().Error(e.Error())
+		return
 	}
-
-	log.NewLogicLoggerBuilder().Build().Info(res.(string))
 }
