@@ -49,17 +49,16 @@ modules:
     port: 30001
     routers:
       - identify
-      - putJob2Stream
       - sendEmail
 handlers:
   - name: fileEnd
-    file: updateJobId2MongoHandler
+    file: fileEndPointHandler
     entrance: uploadFileEnd
   - name: findFilePath
     file: findFilePathHandler
     entrance: findFilePathWithId
   - name: updateAssetVersion
-    file: updateFilePathHandler
+    file: updateAssetVersionHandler
     entrance: updateAssetVersion
   - name: reCommitJob
     file: reCommitJobHandler
@@ -70,3 +69,6 @@ handlers:
   - name: dataMark
     file: assetDataMartHandler
     entrance: assetDataMart
+  - name: pushJob
+    file: pushJobHandler
+    entrance: pushJob

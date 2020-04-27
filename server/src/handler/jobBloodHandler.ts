@@ -4,6 +4,10 @@ import DataSet from "../models/DataSet"
 import Job from "../models/Job"
 import mongoose = require("mongoose")
 
+/**
+ * 血缘数据处理，针对dfs、job与asset的关联
+ */
+
 export default class JobBloodHandler {
 
     async createDataSetsAndJob(body: any) {

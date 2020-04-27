@@ -5,6 +5,9 @@ import mongoose = require("mongoose")
 import Mart from "../models/Mart"
 import DataSet from "../models/DataSet"
 
+/**
+ * 处理DataMart数据关联到Asset
+ */
 export default class AssetDataMartHandler {
     // TODO Alex自己留，记得重构
     async assetDataMart(body: any) {

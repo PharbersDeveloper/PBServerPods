@@ -6,6 +6,9 @@ import uuid from "uuid/v1"
 import mongoose = require("mongoose")
 import PhLogger from "../logger/phLogger"
 
+/**
+ * 进入重试操作，没用废弃掉
+ */
 export default class ReCommitJobHandler {
     async reCommitJobWithAssetId(body: any) {
         PhLogger.info("进入重新提交")

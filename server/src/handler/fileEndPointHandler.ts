@@ -4,7 +4,7 @@ import PhLogger from "../logger/phLogger"
 import DataSet from "../models/DataSet"
 import mongoose = require("mongoose")
 
-export default class UpdateJobId2MongoHandler {
+export default class FileEndPointHandler {
     async uploadFileEnd(body: any) {
         // TODO: 尝试10次，没有就出大问题，应该通知错误处理，但现在没有
         let count = 10

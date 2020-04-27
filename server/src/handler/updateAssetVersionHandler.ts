@@ -4,7 +4,12 @@ import Asset from "../models/Asset"
 import File from "../models/File"
 import mongoose = require("mongoose")
 
-export default class UpdateFilePathHandler {
+/**
+ * 专门更新文件版本处理
+ * 使用者  Convert Excel的项目中使用
+ */
+
+export default class UpdateAssetVersionHandler {
     async updateAssetVersion(body: any) {
 
         function convertVersion(version: string) {
