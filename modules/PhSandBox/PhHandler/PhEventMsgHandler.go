@@ -14,7 +14,7 @@ func EventMsgConsumerHandler() {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		return
 	}
-	err = c.Consume("oss_msg_test", eventMsgFunc)
+	err = c.Consume("oss_msg", eventMsgFunc)
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		return
@@ -28,6 +28,8 @@ func eventMsgFunc(key interface{}, value interface{}) {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		return
 	}
+
+	//fmt.Println(msgValue)
 
 	context := PhHandlerStrategy.HandlerContext{EventMsg: msgValue}
 	_, e := context.DoExec()
