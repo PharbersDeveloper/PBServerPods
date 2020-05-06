@@ -72,3 +72,6 @@ handlers:
   - name: pushJob
     file: pushJobHandler
     entrance: pushJob
+  - name: complementAsset
+    file: complementAssetHandler
+    entrance: complementAsset

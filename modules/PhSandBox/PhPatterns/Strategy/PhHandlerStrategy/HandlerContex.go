@@ -20,6 +20,8 @@ func (hc *HandlerContext) mapping() error {
 		hc.strategy = &UploadEndStrategy{}
 	case "AssetDataMart":
 		hc.strategy = &DataMartStrategy{}
+	case "ComplementAsset":
+		hc.strategy = &ComplementAssetStrategy{}
 	//case "Python-FileMetaData-Test": // Test
 	//	hc.strategy = &TestStrategy{}
 	default:

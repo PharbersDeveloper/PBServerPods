@@ -23,10 +23,10 @@ func PutJobHDFS2Stream(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//providers := append(interface2ArrString(params["providers"]), "CPA&GYC")
 	record := PhOssTask.OssTask {
-		TitleIndex: nil,
 		AssetId: params["assetId"].(string),
+		Owner: params["owner"].(string),
+		CreateTime: int64(params["createTime"].(float64)),
  		JobId: params["jobId"].(string),
 		TraceId: params["traceId"].(string),
 		OssKey: params["ossKey"].(string),

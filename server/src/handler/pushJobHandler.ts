@@ -3,6 +3,7 @@
 import mongoose = require("mongoose")
 import Asset from "../models/Asset"
 import File from "../models/File"
+import axios from "axios"
 import PhLogger from "../logger/phLogger"
 
 export default class PushJobHandler {
@@ -31,6 +32,8 @@ export default class PushJobHandler {
             assetId:    body.assetId,
             jobId:      body.jobId,
             traceId:    body.traceId,
+            owner:      asset.owner,
+            createTime: asset.createTime,
             ossKey:     file.url,
             fileType:   file.extension,
             fileName:   file.fileName,
@@ -42,6 +45,7 @@ export default class PushJobHandler {
             labels:     asset.labels
         }
 
+        axios.post(`http://127.0.0.1:30001/putJob2Stream`, condition)
 
         return {status: "ok"}
     }
