@@ -75,3 +75,6 @@ handlers:
   - name: complementAsset
     file: complementAssetHandler
     entrance: complementAsset
+  - name: setMartTags2Asset
+    file: assetDataMartHandler
+    entrance: setMartTags2Asset

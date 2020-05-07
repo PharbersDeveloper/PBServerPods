@@ -44,6 +44,9 @@ class Asset extends Typegoose implements IModelBase<Asset> {
     @prop({ ref: Mart, required: false } )
     public mart?: Ref<Mart>
 
+    @arrayProp({ items: String, default: [], required: false } )
+    public martTags: string[]
+
     @arrayProp({ items: String, default: [], required: true } )
     public providers: string[]
 

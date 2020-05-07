@@ -22,6 +22,8 @@ func (hc *HandlerContext) mapping() error {
 		hc.strategy = &DataMartStrategy{}
 	case "ComplementAsset":
 		hc.strategy = &ComplementAssetStrategy{}
+	case "SetMartTags":
+		hc.strategy = &SetMartTagsStrategy{}
 	//case "Python-FileMetaData-Test": // Test
 	//	hc.strategy = &TestStrategy{}
 	default:

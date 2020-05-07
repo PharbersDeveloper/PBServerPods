@@ -69,5 +69,12 @@ export default class AssetDataMartHandler {
         }
         return {status: "ok"}
     }
+
+    async setMartTags2Asset(body: any) {
+        const asset = await new Asset().getModel().findById(new mongoose.mongo.ObjectId(body.assetId))
+        asset.martTags = asset.martTags.concat(body.tag)
+        await asset.save()
+        return {status: "ok"}
+    }
 }
 
