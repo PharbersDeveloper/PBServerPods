@@ -9,8 +9,8 @@ import (
 	"net/http"
 )
 
-// TODO: 重新设计发送不同形式的Email strategy
 func SendEmail(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	var result = ""
 	mail := PhModel.Mail{}
 	body, _ := ioutil.ReadAll(r.Body)
@@ -20,10 +20,12 @@ func SendEmail(w http.ResponseWriter, r *http.Request) {
 	res, e := context.DoExec()
 	if e != nil {
 		log.NewLogicLoggerBuilder().Build().Error(e.Error())
+		result = `{"status": "ERROR"}`
+		_, _ = w.Write([]byte(result))
+		return
 	}
-	result = `{"status"": "邮件已发送"}`
+	result = `{"status": "SUCCESS"}`
 	log.NewLogicLoggerBuilder().Build().Info(res)
 	log.NewLogicLoggerBuilder().Build().Info(result)
-	w.Header().Set("Content-Type", "application/json")
 	_, _ = w.Write([]byte(result))
 }

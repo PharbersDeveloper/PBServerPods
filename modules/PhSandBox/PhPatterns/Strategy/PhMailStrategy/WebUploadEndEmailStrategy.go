@@ -3,6 +3,7 @@ package PhMailStrategy
 import (
 	"PhSandBox/PhModel"
 	"PhSandBox/Uitl/http"
+	"encoding/json"
 	"github.com/alfredyang1986/BmServiceDef/BmConfig"
 	"io/ioutil"
 	"os"
@@ -14,12 +15,29 @@ import (
 type WebUploadEndEmailStrategy struct {}
 
 func (w * WebUploadEndEmailStrategy) DoExec(mail PhModel.Mail) (interface{}, error) {
-	// TODO: 未曾设计参数
-
 	dataTimeStr := time.Unix( mail.CreateTime / 1000, 0).Format("2006-01-02 15:04:05")
 	b, _ := ioutil.ReadFile(os.Getenv("EMAIL_TEMPLATE"))
 	reg := regexp.MustCompile("\t|\r|\n")
-	userName := strings.ReplaceAll(string(b), "**UserName**", mail.Operation)
+
+	param, _ := json.Marshal(map[string]string{
+		"account": mail.Operation,
+	})
+	result, err := http.Post("http://oauth.pharbers.com/v0/GetAccountNameById",
+		map[string]string{"Content-Type": "application/json"},
+		strings.NewReader(string(param)))
+
+	if err != nil {
+		return "no", err
+	}
+
+	context := map[string]interface{}{}
+
+	err = json.Unmarshal(result, &context)
+	if err != nil {
+		return nil, err
+	}
+
+	userName := strings.ReplaceAll(string(b), "**UserName**", context["accountName"].(string))
 	fileName := strings.ReplaceAll(userName, "**FileName**", mail.FileName)
 	fileType := strings.ReplaceAll(fileName, "**FileType**", mail.FileType)
 	uploadTime := strings.ReplaceAll(fileType, "**UploadTime**", dataTimeStr)
