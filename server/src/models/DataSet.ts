@@ -24,6 +24,9 @@ class DataSet extends Typegoose implements IModelBase<DataSet> {
     @prop({ default: "", required: false } )
     public tabName?: string
 
+    @prop({ default: "", required: false } )
+    public status?: string
+
     @arrayProp({ itemsRef: DataSet, required: false } )
     public parent?: Ref<DataSet>[]
 
