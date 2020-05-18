@@ -21,7 +21,9 @@ export default class FileEndPointHandler {
                 PhLogger.info("ObjectId AssetId ======> " + body.assetId)
                 const asset = await new Asset()
                     .getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})
-                asset.dfs = asset.dfs.concat(ds)
+                if (!asset.dfs.map((item) => item.toString()).includes(body.dataSetId)) {
+                    asset.dfs = asset.dfs.concat(ds)
+                }
                 await asset.save()
                 return {status: "ok"}
             } else {

@@ -46,7 +46,7 @@ export default class JobBloodHandler {
             const asset = await new Asset()
                 .getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})
             if (!asset.dfs.map((item) => item.toString()).includes(result.id)) {
-                asset.dfs.concat(result)
+                asset.dfs = asset.dfs.concat(result)
             }
             await asset.save()
         }
