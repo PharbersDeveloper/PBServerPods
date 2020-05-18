@@ -11,7 +11,8 @@ RUN echo http://mirrors.aliyun.com/alpine/edge/main > /etc/apk/repositories \
 WORKDIR /app
 
 # 难顶的网络
-RUN git clone -b Alex https://github.com/PharbersDeveloper/PBServerPods.git
+#RUN git clone -b Alex https://github.com/PharbersDeveloper/PBServerPods.git
+COPY . .
 
 WORKDIR /app/PBServerPods/server
 
@@ -23,7 +24,7 @@ FROM alpine:latest
 # 作者
 MAINTAINER Pharbers "pqian@pharbers.com"
 
-LABEL server.version=0.0.1
+LABEL server.version=0.0.2
 
 # 安装 主要 依赖
 RUN echo http://mirrors.aliyun.com/alpine/edge/main > /etc/apk/repositories \
@@ -43,9 +44,9 @@ ENV PHPRODSHOME /app/PBServerPods
 ENV PHSERVER ${PHPRODSHOME}/server
 
 # 提取执行文件
-COPY --from=builder /app/PBServerPods/server ${PHPRODSHOME}
-# COPY --from=builder /app/PBServerPods/conf ${PHPRODSHOME}
-# COPY --from=builder /app/PBServerPods/log4js.json ${PHPRODSHOME}
+COPY --from=builder /app/PBServerPods/server ${PHSERVER}
+COPY --from=builder /app/PBServerPods/conf ${PHPRODSHOME}/conf
+COPY --from=builder /app/PBServerPods/log4js.json ${PHPRODSHOME}/log4js.json
 
 WORKDIR ${PHSERVER}/log
 WORKDIR ${PHSERVER}
