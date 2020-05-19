@@ -9,7 +9,7 @@ import (
 
 func EventMsgConsumerHandler() {
 	log.NewLogicLoggerBuilder().Build().Info("EventMsg Open")
-	c, err := kafka.NewKafkaBuilder().SetGroupId("oss_msg_golang").BuildConsumer()
+	c, err := kafka.NewKafkaBuilder().BuildConsumer()
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		return
@@ -28,8 +28,6 @@ func eventMsgFunc(key interface{}, value interface{}) {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		return
 	}
-
-	//fmt.Println(msgValue)
 
 	context := PhHandlerStrategy.HandlerContext{EventMsg: msgValue}
 	_, e := context.DoExec()
