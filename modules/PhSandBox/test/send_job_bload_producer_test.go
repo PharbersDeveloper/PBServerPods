@@ -1,13 +1,14 @@
 package test
 
 import (
-	"PhSandBox/env"
+	"fmt"
 	. "github.com/smartystreets/goconvey/convey"
+	"gopkg.in/mgo.v2/bson"
 	"testing"
 )
 
 func TestSendJobBloodProducer(t *testing.T) {
-	env.SetLocalEnv()
+	//env.SetLocalEnv()
 	t.Parallel()
 
 	//Convey("SendDataSet Producer Test", t, func() {
@@ -83,8 +84,20 @@ func TestSendJobBloodProducer(t *testing.T) {
 	//	}
 	//})
 
-	Convey("push job", func() {
+	Convey("push job", t, func() {
 
+		jobs := map[string]interface{}{
+			"schemaJob": map[string]string{"jobId": bson.NewObjectId().Hex()},
+			"pyJob": map[string]string{"jobId": bson.NewObjectId().Hex()},
+			"dataMartJob": map[string]string{"jobId": bson.NewObjectId().Hex()},
+		}
+
+
+		for k, v := range jobs {
+			m := v.(map[string]string)
+			fmt.Println(m["jobId"])
+			fmt.Println(k)
+		}
 
 		//param, _ := json.Marshal(map[string]string{
 		//

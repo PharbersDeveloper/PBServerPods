@@ -19,3 +19,5 @@ export/*
 modules/PhOOXMLStrictConverter/target/
 
 modules/PhOOXMLStrictConverter/PhOOXMLStrictConverter.iml
+
+server/conf
