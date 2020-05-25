@@ -41,15 +41,16 @@ func (ues *PushDsStrategy) DoExec(msg PhEventMsg.EventMsg) (interface{}, error) 
 	var res map[string]string
 	_ = json.Unmarshal(resByte, &res)
 
-	if res["dsId"] != "-1" && res["status"] == "end" {
+	jobs := Job{}
+	nextJob := jobs.getJobDefine()[res["description"]].(map[string]string)["next"]
+
+	if res["dsId"] != "-1" && res["status"] == "end" && nextJob != "null" {
 		// TODO 执行下一个job也就是PyJob，根据空闲的py ds 查询关联的jobId ✅
 		// TODO 其实JobId和RunnerId都应该变成一个微服务 ❎
 		// TODO 现在还差一个initJobs ✅
 		// TODO 与老邓再次对接Connector的发送消息 ❎
 		// TODO 数据存储路径  res["path"]  什么Job运行结束 res["description"] ✅
 
-		jobs := Job{}
-		nextJob := jobs.getJobDefine()[res["description"]].(map[string]string)["next"]
 		param, _ = json.Marshal(map[string]string{
 			"jobName": nextJob,
 			"dsId": res["dsId"],

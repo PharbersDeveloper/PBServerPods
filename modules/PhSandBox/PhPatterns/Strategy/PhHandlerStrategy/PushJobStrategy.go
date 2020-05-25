@@ -64,9 +64,27 @@ func (ues *PushJobStrategy) DoExec(msg PhEventMsg.EventMsg) (interface{}, error)
 		}
 		ues.pushBlood(pyJob)
 	}
-
 	record.JobId = jobId
-	specificRecordByteArr, err := kafka.EncodeAvroRecord(&record)
+
+	rcd := PhOssTask.OssTask{
+		AssetId: record.AssetId,
+		JobId: record.JobId,
+		TraceId: record.TraceId,
+		OssKey: record.OssKey,
+		FileType: record.FileType,
+		FileName: record.FileName,
+		SheetName: record.SheetName,
+		Owner: record.Owner,
+		CreateTime: record.CreateTime,
+		Labels: record.Labels,
+		DataCover: record.DataCover,
+		GeoCover: record.GeoCover,
+		Markets: record.Markets,
+		Molecules: record.Molecules,
+		Providers: record.Providers,
+	}
+
+	specificRecordByteArr, err := kafka.EncodeAvroRecord(&rcd)
 	if err != nil {
 		log.NewLogicLoggerBuilder().Build().Error(err.Error())
 		return "no", err

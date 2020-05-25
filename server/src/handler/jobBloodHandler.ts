@@ -12,46 +12,58 @@ import Asset from "../models/Asset"
 export default class JobBloodHandler {
     // TODO 有时间改写法，现在先这样，这个暂时给老邓那边用  //body.description || result.description
     async createDataSetsAndJob(body: any) {
-        const result = await new DataSet().getModel().findById(new mongoose.mongo.ObjectId(body.mongoId))
-        if (!result) {
-            const model = new DataSet()
-            const jobModel = new Job()
-            jobModel.jobContainerId = body.jobId
-            jobModel.create = new Date().getTime()
-            const job = await new Job().getModel().create(jobModel)
-
-            model._id = new mongoose.mongo.ObjectId(body.mongoId)
-            model.parent = body.parentIds
-            model.colNames = body.colName
-            model.length = body.length
-            model.tabName = body.tabName
-            model.url = body.url
-            model.description = body.description
-            model.status = body.status
-            model.job = job
-            const ds = await new DataSet().getModel().create(model)
-            const asset = await new Asset()
-                .getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})
-            asset.dfs = asset.dfs.concat(ds)
-            await asset.save()
+        const jobRes = await new Job().getModel().findOne({jobContainerId: body.jobId})
+        const dsRes = await new DataSet().getModel().findOne({job: jobRes.id, url: ""})
+        if (dsRes) {
+            dsRes.colNames = body.columnNames || dsRes.colNames
+            dsRes.length = body.length || dsRes.length
+            dsRes.tabName = body.tabName || dsRes.tabName
+            dsRes.url = body.url || dsRes.url
+            dsRes.status = body.status || dsRes.status
+            await dsRes.save()
+            return {status: "ok"}
         } else {
-            result.parent = body.parentIds || result.parent
-            result.colNames = body.colName || result.colNames
-            result.length = body.length || result.length
-            result.tabName = body.tabName || result.tabName
-            result.url = body.url || result.url
-            result.description = result.description
-            result.status = body.status || result.status
-            await result.save()
-            const asset = await new Asset()
-                .getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})
-            if (!asset.dfs.map((item) => item.toString()).includes(result.id)) {
-                asset.dfs = asset.dfs.concat(result)
-            }
-            await asset.save()
+            return {status: "no"}
         }
 
-        return {status: "ok"}
+        // const result = await new DataSet().getModel().findById(new mongoose.mongo.ObjectId(body.mongoId))
+        // if (!result) {
+        //     const model = new DataSet()
+        //     const jobModel = new Job()
+        //     jobModel.jobContainerId = body.jobId
+        //     jobModel.create = new Date().getTime()
+        //     const job = await new Job().getModel().create(jobModel)
+        //
+        //     model._id = new mongoose.mongo.ObjectId(body.mongoId)
+        //     model.parent = body.parentIds
+        //     model.colNames = body.colName
+        //     model.length = body.length
+        //     model.tabName = body.tabName
+        //     model.url = body.url
+        //     model.description = body.description
+        //     model.status = body.status
+        //     model.job = job
+        //     const ds = await new DataSet().getModel().create(model)
+        //     const asset = await new Asset()
+        //         .getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})
+        //     asset.dfs = asset.dfs.concat(ds)
+        //     await asset.save()
+        // } else {
+        //     result.parent = body.parentIds || result.parent
+        //     result.colNames = body.colName || result.colNames
+        //     result.length = body.length || result.length
+        //     result.tabName = body.tabName || result.tabName
+        //     result.url = body.url || result.url
+        //     result.description = result.description
+        //     result.status = body.status || result.status
+        //     await result.save()
+        //     const asset = await new Asset()
+        //         .getModel().findOne({_id: new mongoose.mongo.ObjectId(body.assetId), isNewVersion: true})
+        //     if (!asset.dfs.map((item) => item.toString()).includes(result.id)) {
+        //         asset.dfs = asset.dfs.concat(result)
+        //     }
+        //     await asset.save()
+        // }
     }
 
     async initJobs(body: any) {
@@ -91,7 +103,7 @@ export default class JobBloodHandler {
     async pushDs(body: any) {
         const jobRes = await new Job().getModel().findOne({jobContainerId: body.jobId})
 
-        const dsRes = await new DataSet().getModel().findOne({job: jobRes.id, url: ""})
+        const dsRes = await new DataSet().getModel().findOne({job: jobRes.id}).or([{status: "pending"},{status: "start"}])
         if (dsRes) {
             dsRes.colNames = body.columnNames || dsRes.colNames
             dsRes.length = body.length || dsRes.length
