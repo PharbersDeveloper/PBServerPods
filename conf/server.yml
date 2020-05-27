@@ -19,7 +19,7 @@ models:
     reg: marts
 mongo:
   algorithm: mongodb
-  host: 127.0.0.1
+  host: mongo-main-svc.storage
   port: 27017
   username: ""
   pwd: ""
@@ -36,7 +36,7 @@ oss:
   accessKeySecret: aJRr3DP4nXCFDR3KGRICpIhq5bHfTm
   bucket: pharbers-PhSandBox
 kfk:
-  kafkaBrokerList: "http://pharbers.com:8082"
+  kafkaBrokerList: "http://broker-svc.message:8082"
   kafkaTopic: "alfredtest"
 modules:
   - protocol: http
@@ -66,6 +66,15 @@ handlers:
   - name: createDFSAndJob
     file: jobBloodHandler
     entrance: createDataSetsAndJob
+  - name: initJobs
+    file: jobBloodHandler
+    entrance: initJobs
+  - name: pushDs
+    file: jobBloodHandler
+    entrance: pushDs
+  - name: findNextJob
+    file: jobBloodHandler
+    entrance: findNextJob
   - name: dataMark
     file: assetDataMartHandler
     entrance: assetDataMart

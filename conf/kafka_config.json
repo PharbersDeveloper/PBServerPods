@@ -1,10 +1,5 @@
 {
-	"bootstrap.servers": "123.56.179.133:9092",
-	"security.protocol": "SSL",
-	"ssl.ca.location": "snakeoil-ca-1.crt",
-	"ssl.certificate.location": "kafkacat-ca1-signed.pem",
-	"ssl.key.location": "kafkacat.client.key",
-	"ssl.key.password": "pharbers",
+	"bootstrap.servers": "broker-svc.message:9092",
 	"broker.address.family": "v4",
 	"group.id": "bp-go-lib.kafka.group",
 	"session.timeout.ms": "6000",

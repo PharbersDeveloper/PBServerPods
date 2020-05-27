@@ -45,7 +45,7 @@ func SetLocalEnv() {
 	//kafka
 	_ = os.Setenv(KafkaConfigPath, os.Getenv("KAFKA_HOME_CONFIG"))
 
-	_ = os.Setenv(SchemaRegistryUrl, "http://pharbers.com:8081")
+	_ = os.Setenv(SchemaRegistryUrl, "http://schema.message:8081")
 
 	_ = os.Setenv("EMAIL_TEMPLATE", "/Users/qianpeng/GitHub/PBServerPods/conf/email-template.html")
 	_ = os.Setenv("EMAILADDRESS", "/Users/qianpeng/GitHub/PBServerPods/conf/emails.json")
