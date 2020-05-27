@@ -21,3 +21,5 @@ modules/PhOOXMLStrictConverter/target/
 modules/PhOOXMLStrictConverter/PhOOXMLStrictConverter.iml
 
 server/conf
+
+modules/PhSandBox/conf
