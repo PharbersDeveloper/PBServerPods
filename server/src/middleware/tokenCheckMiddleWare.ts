@@ -9,7 +9,7 @@ export default class TokenCheckMiddleWare {
     }
 
     protected check(req: any, res: any, next: any) {
-        phLogger.info("Token 验证")
+        // phLogger.info("Token 验证")
 
         if (!CONFIG.oauth.debugging) {
             // a middleware function with no mount path. This code is executed for every request to the router

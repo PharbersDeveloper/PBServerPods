@@ -13,17 +13,39 @@ export default class JobBloodHandler {
     // TODO 有时间改写法，现在先这样，这个暂时给老邓那边用  //body.description || result.description
     async createDataSetsAndJob(body: any) {
         const jobRes = await new Job().getModel().findOne({jobContainerId: body.jobId})
-        const dsRes = await new DataSet().getModel().findOne({job: jobRes.id, url: ""})
-        if (dsRes) {
-            dsRes.colNames = body.columnNames || dsRes.colNames
-            dsRes.length = body.length || dsRes.length
-            dsRes.tabName = body.tabName || dsRes.tabName
-            dsRes.url = body.url || dsRes.url
-            dsRes.status = body.status || dsRes.status
-            await dsRes.save()
+        if (jobRes) {
+            const dsRes = await new DataSet().getModel().findOne({job: jobRes.id || "", url: ""})
+            if (dsRes) {
+                dsRes.colNames = body.columnNames || dsRes.colNames
+                dsRes.length = body.length || dsRes.length
+                dsRes.tabName = body.tabName || dsRes.tabName
+                dsRes.url = body.url || dsRes.url
+                dsRes.status = body.status || dsRes.status
+                await dsRes.save()
+            }
             return {status: "ok"}
         } else {
-            return {status: "no"}
+            const datasetModel = new DataSet()
+            const jobModel = new Job()
+            jobModel.jobContainerId = body.jobId
+            jobModel.create = new Date().getTime()
+            const job = await new Job().getModel().create(jobModel)
+
+            datasetModel._id = new mongoose.mongo.ObjectId(body.mongoId)
+            datasetModel.parent = body.parentIds
+            datasetModel.colNames = body.colName
+            datasetModel.length = body.length
+            datasetModel.tabName = body.tabName
+            datasetModel.url = body.url
+            datasetModel.description = body.description
+            datasetModel.job = job
+
+            const ds = await new DataSet().getModel().create(datasetModel)
+            if (ds != null) {
+                return {status: "ok"}
+            } else {
+                return {status: "no"}
+            }
         }
 
         // const result = await new DataSet().getModel().findById(new mongoose.mongo.ObjectId(body.mongoId))
